@@ -19,8 +19,8 @@ compile project(':HttpClientUtils')
 一般的get请求
 一般的post请求
 基于Http Post的文件上传（类似表单）
-文件下载/加载图片 正在开发
-上传下载的进度回调 正在开发
+文件下载/加载图片
+上传下载的进度回调 
 支持session的保持   
 支持自签名网站https的访问，提供方法设置下证书就行
 支持取消某个请求 
@@ -44,9 +44,7 @@ GET请求
             }
         });
     }
-    /**
-     * 初始化参数
-     */
+   
     protected  void initParameter(){
         if (mParams == null) {
             mParams = new BaseParams();
@@ -54,8 +52,10 @@ GET请求
             mParams.clear();
         }
     }
+    
 Post请求数据
-initParameter();
+void initData(){
+        initParameter();
         mParams.put("os", "2");
         mParams.put("device_id", "123871827312");
         mParams.put("version", "1.1");
@@ -63,7 +63,7 @@ initParameter();
         BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
             @Override
             public void onSuccess(String content, Object object, String reqType) {
-                
+
             }
 
             @Override
@@ -71,8 +71,10 @@ initParameter();
 
             }
         });
+    }
 Post文件请求
-initParameter();
+void initData(){
+        initParameter();
         mParams.put("os", "2");
         File file=new File("app.png");
         try {
@@ -92,5 +94,5 @@ initParameter();
 
             }
         });
-
+    }
 
