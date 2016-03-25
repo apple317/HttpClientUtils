@@ -27,9 +27,7 @@ compile project(':HttpClientUtils')
 支持自定义Callback
 用法示例
 GET请求
-/**
-     * 请求数据
-     */
+   
     void initData(){
         initParameter();
         mParams.put("appkey", "56065429");
