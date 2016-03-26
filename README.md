@@ -1,5 +1,5 @@
 # okhttp-utils
-对okhttp的封装类，okhttp见：[https://github.com/square/okhttp](https://github.com/square/okhttp).
+对okhttp的封装类，okhttp见：https://github.com/apple317/HttpClientUtils
 
 
 
