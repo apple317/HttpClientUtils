@@ -14,9 +14,23 @@ public interface BaseHttpImpl {
 	/**
 	 * 网络库接口定义
 	 */
-	void get(String url,BaseParams params,HttpCallback callback);
-	void post(String url, BaseParams params, HttpCallback callback);
-	void post(String url, BaseParams params, HttpCallback callback,Object head,Object config);
-	void get(boolean shouldEncodeUrl,String url,BaseParams params,HttpCallback callback,Object head,Object config);
+	Object get(String url,BaseParams params,HttpCallback callback);
+	Object post(String url, BaseParams params, HttpCallback callback);
+	Object post(String url, BaseParams params, HttpCallback callback,Object head,Object config);
+	Object get(boolean shouldEncodeUrl,String url,BaseParams params,HttpCallback callback,Object head,Object config);
+	Object post(Object tag,String url, BaseParams params, HttpCallback callback,Object head,Object config);
+
+	/**
+	 *
+	 * @param tag 设置tag，用去批量取消或者其它用途
+	 * @param shouldEncodeUrl
+	 * @param url
+	 * @param params
+	 * @param callback
+	 * @param head
+	 * @param config
+	 * @return
+	 */
+	Object get(Object tag,boolean shouldEncodeUrl,String url,BaseParams params,HttpCallback callback,Object head,Object config);
 
 }

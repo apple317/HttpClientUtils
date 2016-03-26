@@ -3,6 +3,7 @@ package com.apple.http.sample;
 import com.apple.http.common.BaseHttpClient;
 import com.apple.http.common.BaseParams;
 import com.apple.http.common.HttpCallback;
+import com.squareup.okhttp.Call;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -53,7 +54,18 @@ public class PostActivity extends AppCompatActivity implements HttpCallback,View
         mParams.put("device_id", "123871827312");
         mParams.put("version", "1.1");
         mParams.put("game", "dota");
-        BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, this);
+       BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
+            @Override
+            public void onSuccess(String content, Object object, String reqType) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable error, String content, String reqType) {
+
+            }
+        });
+
     }
     /**
      * 初始化参数

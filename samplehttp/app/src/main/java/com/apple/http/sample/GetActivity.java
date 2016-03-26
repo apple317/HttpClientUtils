@@ -3,6 +3,7 @@ package com.apple.http.sample;
 import com.apple.http.common.BaseHttpClient;
 import com.apple.http.common.BaseParams;
 import com.apple.http.common.HttpCallback;
+import com.squareup.okhttp.Call;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +55,19 @@ public class GetActivity extends AppCompatActivity implements HttpCallback,View.
         initParameter();
         mParams.put("appkey", "56065429");
         mParams.put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB");
-        BaseHttpClient.getOkClient(getApplicationContext()).sendGetRequest("http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams, this);
+        Call call=BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams, new HttpCallback() {
+            @Override
+            public void onSuccess(String content, Object object, String reqType) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable error, String content, String reqType) {
+
+            }
+        });
+       call.cancel();
+       Log.i("HU","=====cancel=="+call.isCanceled());
     }
     /**
      * 初始化参数

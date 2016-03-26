@@ -53,9 +53,6 @@ public class PostSubFileActivity extends AppCompatActivity implements HttpCallba
     void initData(){
         initParameter();
         mParams.put("os", "2");
-        mParams.put("device_id", "123871827312");
-        mParams.put("version", "1.1");
-        mParams.put("game", "dota");
         File file=new File("app.png");
         try {
             //logo 是文件上传定义的名词，根据服务端定义调整
@@ -63,7 +60,17 @@ public class PostSubFileActivity extends AppCompatActivity implements HttpCallba
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, this);
+        BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
+            @Override
+            public void onSuccess(String content, Object object, String reqType) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable error, String content, String reqType) {
+
+            }
+        });
     }
     /**
      * 初始化参数
