@@ -153,22 +153,43 @@ initParameter();
 ```java
 未开放接口。正在实现。
  
-```
+Call call=BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams, new HttpCallback() {
+            @Override
+            public void onSuccess(String content, Object object, String reqType) {
+
+            }
+
+            @Override
+            public void onFailure(Throwable error, String content, String reqType) {
+
+            }
+        });
+ call.cancel();
 
 ### 根据tag取消请求
 
 目前对于支持的方法都添加了最后一个参数`Object tag`，取消则通过执行。
+第一个参数就是tag传入。
+BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("get","http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams,new HttpCallback(){
+            @Override
+            public void onSuccess(String content, Object object, String reqType) {
 
+            }
+
+            @Override
+            public void onFailure(Throwable error, String content, String reqType) {
+
+            }
+        });
 例如：在Activity中，当Activity销毁取消请求：
-
 ```
 
 @Override
 protected void onDestroy()
 {
     super.onDestroy();
-    //可以取消同一个tag的
-   //取消以Activity.this作为tag的请求
+     //可以取消同一个tag的
+     BaseHttpClient.getBaseClient(getApplicationContext()).cancelTag("tag对象");
 }
 ```
 比如，当前Activity页面所有的请求以Activity对象作为tag，可以在onDestory里面统一取消。
