@@ -184,6 +184,9 @@ BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("get","http
 例如：在Activity中，当Activity销毁取消请求：
 ```
 
+
+```
+比如，在请求中传入tag对象，销魂时候可以统一销毁同一tag对象访问
 @Override
 protected void onDestroy()
 {
@@ -191,9 +194,6 @@ protected void onDestroy()
      //可以取消同一个tag的
      BaseHttpClient.getBaseClient(getApplicationContext()).cancelTag("tag对象");
 }
-```
-比如，当前Activity页面所有的请求以Activity对象作为tag，可以在onDestory里面统一取消。
-
 ## 混淆
 
 ```
