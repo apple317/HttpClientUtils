@@ -1,6 +1,6 @@
 # okhttp-utils
 对okhttp的封装类，okhttp见：https://github.com/apple317/HttpClientUtils
-
+博客地址：http://blog.csdn.net/apple_hsp/article/details/50986497
 
 
 ## 用法
@@ -12,7 +12,7 @@
 	```
 	compile project(':HttpClientUtils')
 	```
-	
+＊代码直接copy到项目中
 
 
 **注意**
@@ -40,13 +40,11 @@
 ### GET请求
 
 ```java
- void initData(){
-        initParameter();
-        mParams.put("appkey", "56065429");
-        mParams.put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB");
-        BaseHttpClient.getOkClient(getApplicationContext()).sendGetRequest("http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams, new HttpCallback() {
+ BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").getRequest(new HttpCallback(){
             @Override
             public void onSuccess(String content, Object object, String reqType) {
+                txt_content.setText(content+"type==="+reqType);
 
             }
 
@@ -55,25 +53,30 @@
 
             }
         });
-    }
-     protected  void initParameter(){
-        if (mParams == null) {
-            mParams = new BaseParams();
-        }else {
-            mParams.clear();
-        }
-    }
 ```
 
 ### POST请求 提交一个Gson字符串到服务器端。
 
 ```java
- initParameter();
-        mParams.put("os", "2");
-        mParams.put("device_id", "123871827312");
-        mParams.put("version", "1.1");
+第一种方式
+BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").postRequest(new HttpCallback() {
+            @Override
+            public void onSuccess(String content, Object object, String reqType) {
+                txt_content.setText(content + "type===" + reqType);
+
+            }
+
+            @Override
+            public void onFailure(Throwable error, String content, String reqType) {
+
+            }
+        });
+第二种方式
+ BaseParams mParams = new BaseParams();
         mParams.put("game", "dota");
-        BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
+
+        BaseHttpClient.getBaseClient().sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
             @Override
             public void onSuccess(String content, Object object, String reqType) {
 
@@ -84,7 +87,6 @@
 
             }
         });
-
 ```
 
 
@@ -92,7 +94,9 @@
 ### Post File
 
 ```java
-initParameter();
+第一种方式
+ 	BaseParams mParams = new BaseParams();
+        mParams.put("game", "dota");
         mParams.put("os", "2");
         File file=new File("app.png");
         try {
@@ -112,36 +116,52 @@ initParameter();
 
             }
         });
+第二种方式
+ try {
+            BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                    .put("logo",file).postRequest(new HttpCallback() {
+                @Override
+                public void onSuccess(String content, Object object, String reqType) {
+                    txt_content.setText(content + "type===" + reqType);
+
+                }
+
+                @Override
+                public void onFailure(Throwable error, String content, String reqType) {
+
+                }
+            });
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 ```
 将文件作为请求体，发送到服务器。
 
 
-### Post表单形式上传文件
+### Post支持多个文件上传
 
 ```java
-initParameter();
-        mParams.put("os", "2");
-        File file=new File("app.png");
-        try {
-            //logo 是文件上传定义的名词，根据服务端定义调整
-            mParams.put("logo", file, FileNameGenerator.getMIMEType(file));
+try {
+            File file=new File("path");
+            ArrayList<File> arrayList=new ArrayList<File>();
+            arrayList.add(file);
+            BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                    .put("logo",arrayList).postRequest(new HttpCallback() {
+                @Override
+                public void onSuccess(String content, Object object, String reqType) {
+                    txt_content.setText(content + "type===" + reqType);
+
+                }
+
+                @Override
+                public void onFailure(Throwable error, String content, String reqType) {
+
+                }
+            });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
-            @Override
-            public void onSuccess(String content, Object object, String reqType) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
-        });
 ```
-
-支持单个多个文件，`addFile`的第一个参数为文件的key，即类别表单中`<input type="file" name="mFile"/>`的name属性。
 
 ### 自定义CallBack
 
@@ -151,11 +171,21 @@ initParameter();
 ### 取消单个请求
 
 ```java
-未开放接口。正在实现。
+ 支持单个操作删除，通过url传入来关闭请求。
+  BaseHttpClient.getBaseClient().cancel("url");
+
  
-Call call=BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams, new HttpCallback() {
+
+
+### 根据tag取消请求
+
+目前对于支持的方法都添加了最后一个参数`Object tag`，取消则通过执行。
+第一个参数就是tag传入。
+ BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").setTag("deals").getRequest(new HttpCallback(){
             @Override
             public void onSuccess(String content, Object object, String reqType) {
+                txt_content.setText(content+"type==="+reqType);
 
             }
 
@@ -164,13 +194,12 @@ Call call=BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("
 
             }
         });
- call.cancel();
-
-### 根据tag取消请求
-
-目前对于支持的方法都添加了最后一个参数`Object tag`，取消则通过执行。
-第一个参数就是tag传入。
-BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("get","http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams,new HttpCallback(){
+传入tag，使用方法setTag,tag是Object对象。
+第二种方式
+BaseParams mParams = new BaseParams();
+        mParams.put("game", "dota");
+        mParams.setTag("tag");//设置tag传入
+        BaseHttpClient.getBaseClient().sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
             @Override
             public void onSuccess(String content, Object object, String reqType) {
 
@@ -192,7 +221,7 @@ protected void onDestroy()
 {
     super.onDestroy();
      //可以取消同一个tag的
-     BaseHttpClient.getBaseClient(getApplicationContext()).cancelTag("tag对象");
+     BaseHttpClient.getBaseClient().cancelTag("tag对象");
 }
 ## 混淆
 
