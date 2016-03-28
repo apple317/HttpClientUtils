@@ -15,22 +15,24 @@ import java.io.FileNotFoundException;
 
 /**
  * post 上传文件
- * @author  hushaoping
+ *
+ * @author hushaoping
  */
-public class PostSubFileActivity extends AppCompatActivity implements HttpCallback,View.OnClickListener{
+public class PostSubFileActivity extends AppCompatActivity implements HttpCallback, View.OnClickListener {
     TextView txt_content;
     BaseParams mParams;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_sub_file);
-        txt_content= (TextView)findViewById(R.id.txt_content);
+        txt_content = (TextView) findViewById(R.id.txt_content);
         findViewById(R.id.txt_get).setOnClickListener(this);
     }
 
     @Override
     public void onSuccess(String content, Object object, String reqType) {
-        txt_content.setText(content+"type==="+reqType);
+        txt_content.setText(content + "type===" + reqType);
 
     }
 
@@ -41,44 +43,47 @@ public class PostSubFileActivity extends AppCompatActivity implements HttpCallba
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.txt_get:
                 initData();
                 break;
         }
     }
+
     /**
      * 请求数据
      */
-    void initData(){
+    void initData() {
         initParameter();
         mParams.put("os", "2");
-        File file=new File("app.png");
+        File file = new File("app.png");
         try {
             //logo 是文件上传定义的名词，根据服务端定义调整
             mParams.put("logo", file, FileNameGenerator.getMIMEType(file));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
-            @Override
-            public void onSuccess(String content, Object object, String reqType) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
-        });
+//        BaseHttpClient.getBaseClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
+//            @Override
+//            public void onSuccess(String content, Object object, String reqType) {
+//                txt_content.setText(content + "type===" + reqType);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable error, String content, String reqType) {
+//
+//            }
+//        });
     }
+
     /**
      * 初始化参数
      */
-    protected  void initParameter(){
+    protected void initParameter() {
         if (mParams == null) {
             mParams = new BaseParams();
-        }else {
+        } else {
             mParams.clear();
         }
     }

@@ -52,12 +52,16 @@ public class GetActivity extends AppCompatActivity implements HttpCallback,View.
      * 请求数据
      */
     void initData(){
-        initParameter();
-        mParams.put("appkey", "56065429");
-        mParams.put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB");
-        Call call=BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams, new HttpCallback() {
+//        initParameter();
+//        mParams.put("appkey", "56065429");
+//        mParams.put("", "");
+
+
+        BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").getRequest(new HttpCallback(){
             @Override
             public void onSuccess(String content, Object object, String reqType) {
+                txt_content.setText(content+"type==="+reqType);
 
             }
 
@@ -66,8 +70,18 @@ public class GetActivity extends AppCompatActivity implements HttpCallback,View.
 
             }
         });
-       call.cancel();
-       Log.i("HU","=====cancel=="+call.isCanceled());
+
+
+
+
+
+//        Call call=BaseHttpClient.getBaseClient(getApplicationContext()).sendGetRequest("http://api.dianping.com/v1/metadata/get_cities_with_deals", mParams, new HttpCallback() {
+//
+//        });
+      // call.cancel();
+        //BaseHttpClient.getBaseClient(getApplicationContext()).cancelTag();
+     //  Log.i("HU", "=====cancel==" + call.isCanceled());
+
     }
     /**
      * 初始化参数

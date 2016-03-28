@@ -54,17 +54,17 @@ public class PostActivity extends AppCompatActivity implements HttpCallback,View
         mParams.put("device_id", "123871827312");
         mParams.put("version", "1.1");
         mParams.put("game", "dota");
-       BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
-            @Override
-            public void onSuccess(String content, Object object, String reqType) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
-        });
+//       BaseHttpClient.getBaseClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
+//            @Override
+//            public void onSuccess(String content, Object object, String reqType) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable error, String content, String reqType) {
+//
+//            }
+//        });
 
     }
     /**

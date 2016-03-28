@@ -5,21 +5,15 @@ import com.apple.http.common.BaseHttpImpl;
 import com.apple.http.common.BaseOkHandler;
 import com.apple.http.common.BaseParams;
 import com.apple.http.common.HttpCallback;
-import com.apple.http.utils.StorageUtils;
-import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.RequestBody;
 
-import android.content.Context;
-import android.util.Log;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +23,6 @@ import javax.net.ssl.SSLSession;
 
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Response;
 
 
 /**
@@ -46,21 +39,50 @@ import com.squareup.okhttp.Response;
 public class OkHttpImpl implements BaseHttpImpl {
 
     //单例模式实现
-    public static OkHttpClient mOkHttpClient;
+    public OkHttpClient mOkHttpClient;
 
-    private final String HTTP_CACHE_FILENAME = "HttpCache";
+    public static OkHttpImpl instance;
+    /**
+     * 网络取消tag设置
+     */
+    Object tag=null;
 
-    static  OkHttpImpl instance;
-
-    public static OkHttpImpl getOkClient(Context context) {
-        if (instance == null)
-            instance= new OkHttpImpl(context);
+    public static OkHttpImpl getOkClient(OkHttpClient okHttpClient) {
+        if (instance == null) {
+            synchronized (OkHttpImpl.class) {
+                if (instance == null) {
+                    instance = new OkHttpImpl(okHttpClient);
+                }
+            }
+        }else{
+            if(okHttpClient!=null){
+                instance.mOkHttpClient=okHttpClient;
+            }
+        }
         return instance;
     }
 
-    public OkHttpImpl(Context context) {
-        if(mOkHttpClient==null)
-             mOkHttpClient= new OkHttpClient();
+    public static OkHttpImpl getOkClient() {
+        if (instance == null) {
+            synchronized (OkHttpImpl.class) {
+                if (instance == null) {
+                    instance = new OkHttpImpl(null);
+                }
+            }
+        }
+        return instance;
+    }
+
+    public OkHttpImpl(OkHttpClient okHttpClient) {
+        if (okHttpClient != null) {
+            mOkHttpClient = okHttpClient;
+        } else {
+            if(mOkHttpClient==null)
+                 mOkHttpClient = new OkHttpClient();
+        }
+        tag=null;
+
+//        mOkHttpClient.networkInterceptors().add();
 //        Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
 //            @Override public Response intercept(Chain chain) throws IOException {
 //                Response originalResponse = chain.proceed(chain.request());
@@ -70,7 +92,7 @@ public class OkHttpImpl implements BaseHttpImpl {
 //                        .build();
 //            }
 //        };
-//
+
 //        mOkHttpClient.setConnectTimeout(15000, TimeUnit.SECONDS);
 //        mOkHttpClient.setReadTimeout(15000, TimeUnit.SECONDS);
 //        mOkHttpClient.setWriteTimeout(15000, TimeUnit.SECONDS);
@@ -80,19 +102,19 @@ public class OkHttpImpl implements BaseHttpImpl {
 //        File httpCacheDirectory =  StorageUtils.getOwnCacheDirectory(context,HTTP_CACHE_FILENAME);
 //        cache = new Cache(httpCacheDirectory, 10 * 1024);
 //        mOkHttpClient.setCache(cache);
-//        mOkHttpClient.networkInterceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-//        //-------------------------------设置http缓存，提升用户体验-----------------------------------
-//
-//       // Handler mDelivery = new Handler(Looper.getMainLooper());
-//
-//        if (false) {
-//            mOkHttpClient.setHostnameVerifier(new HostnameVerifier() {
-//                @Override
-//                public boolean verify(String hostname, SSLSession session) {
-//                    return true;
-//                }
-//            });
-//        }
+        //   mOkHttpClient.networkInterceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+        //-------------------------------设置http缓存，提升用户体验-----------------------------------
+
+        // Handler mDelivery = new Handler(Looper.getMainLooper());
+
+        if (false) {
+            mOkHttpClient.setHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+        }
         /**
          *  final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override public Response intercept(Chain chain) throws IOException {
@@ -140,16 +162,6 @@ public class OkHttpImpl implements BaseHttpImpl {
 
     @Override
     public Call post(String url, BaseParams params, HttpCallback callback, Object head, Object config) {
-        return post(null, url, params, callback, null, null);
-    }
-
-    @Override
-    public Call get(boolean shouldEncodeUrl, String url, BaseParams params, HttpCallback callback, Object head, Object config) {
-        return get(null, false, url, params, callback, null, null);
-    }
-
-    @Override
-    public Call post(Object tag, String url, BaseParams params, HttpCallback callback, Object head, Object config) {
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
         for (ConcurrentHashMap.Entry<String, String> entry : params.urlParams.entrySet()) {
             builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + entry.getKey() + "\""),
@@ -194,29 +206,69 @@ public class OkHttpImpl implements BaseHttpImpl {
     }
 
     @Override
-    public Call get(Object tag, boolean shouldEncodeUrl, String url, BaseParams params, HttpCallback callback, Object head, Object config) {
+    public Call get(boolean shouldEncodeUrl, String url, BaseParams params, HttpCallback callback, Object head, Object config) {
         FormEncodingBuilder body = new FormEncodingBuilder();
         for (ConcurrentHashMap.Entry<String, String> entry : params.urlParams.entrySet()) {
             body.addEncoded(entry.getKey(), entry.getValue());
         }
         Call call = null;
         try {
-            Request request1;
+            Request request;
             if (tag != null) {
-                request1 = new Request.Builder()
+                request = new Request.Builder()
                         .url(URLEncodedUtils.getUrlWithQueryString(shouldEncodeUrl, url, params)).tag(tag)
                         .build();
             } else {
-                request1 = new Request.Builder()
+                request = new Request.Builder()
                         .url(URLEncodedUtils.getUrlWithQueryString(shouldEncodeUrl, url, params))
                         .build();
             }
             BaseOkHandler handler = new BaseOkHandler(callback, url, null);
-            call = mOkHttpClient.newCall(request1);
+            call = mOkHttpClient.newCall(request);
             call.enqueue(handler);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return call;
+    }
+
+
+
+    /**
+     *
+     * @param timeout
+     * @param units
+     */
+    public void setConnectTimeout(int timeout, TimeUnit units) {
+        getOkClient()
+                .setConnectTimeout(timeout, units);
+    }
+
+    /**
+     *
+     * @param timeout
+     * @param units
+     */
+    public void setReadTimeout(int timeout, TimeUnit units) {
+        getOkClient()
+                .setReadTimeout(timeout, units);
+    }
+
+    /**
+     *
+     * @param timeout
+     * @param units
+     */
+    public void setWriteTimeout(int timeout, TimeUnit units) {
+        getOkClient()
+                .setWriteTimeout(timeout, units);
+    }
+
+    /**
+     * 设置tag操作
+     * @param Objects
+     */
+    public void setTag(Object Objects) {
+        tag= Objects;
     }
 }
