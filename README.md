@@ -41,7 +41,8 @@
 
 ```java
  BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
-                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").getRequest(new HttpCallback(){
+                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").
+                getRequest(new HttpCallback(){
             @Override
             public void onSuccess(String content, Object object, String reqType) {
                 txt_content.setText(content+"type==="+reqType);
@@ -60,7 +61,8 @@
 ```java
 第一种方式
 BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
-                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").postRequest(new HttpCallback() {
+                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").
+                postRequest(new HttpCallback() {
             @Override
             public void onSuccess(String content, Object object, String reqType) {
                 txt_content.setText(content + "type===" + reqType);
@@ -105,7 +107,8 @@ BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_c
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        BaseHttpClient.getOkClient(getApplicationContext()).sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
+        BaseHttpClient.getOkClient(getApplicationContext()).
+        sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
             @Override
             public void onSuccess(String content, Object object, String reqType) {
 
@@ -182,7 +185,8 @@ try {
 目前对于支持的方法都添加了最后一个参数`Object tag`，取消则通过执行。
 第一个参数就是tag传入。
  BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
-                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").setTag("deals").getRequest(new HttpCallback(){
+                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB")
+                .setTag("deals").getRequest(new HttpCallback(){
             @Override
             public void onSuccess(String content, Object object, String reqType) {
                 txt_content.setText(content+"type==="+reqType);
@@ -199,7 +203,8 @@ try {
 BaseParams mParams = new BaseParams();
         mParams.put("game", "dota");
         mParams.setTag("tag");//设置tag传入
-        BaseHttpClient.getBaseClient().sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
+        BaseHttpClient.getBaseClient()
+        .sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
             @Override
             public void onSuccess(String content, Object object, String reqType) {
 
