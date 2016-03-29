@@ -1,20 +1,15 @@
 package com.apple.http.sample;
 
+import com.apple.http.Listener.HttpCallback;
 import com.apple.http.common.BaseHttpClient;
 import com.apple.http.common.BaseParams;
-import com.apple.http.common.HttpCallback;
-import com.apple.http.utils.FileNameGenerator;
-import com.squareup.okhttp.Call;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import java.io.File;
 
 import okhttp3.MediaType;
 

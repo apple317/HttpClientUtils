@@ -1,9 +1,12 @@
 package com.apple.http.common;
 
 
+import com.apple.http.Listener.HttpCallback;
 import com.apple.http.impl.OkHttpImpl;
 import com.apple.http.utils.MD5Util;
 
+
+import android.content.Context;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Headers;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 
 
@@ -32,7 +34,8 @@ public class BaseHttpClient {
     //网络通信传入类型
     private String mediaType;
 
-
+    String destFileDir;
+    String destFileName;
 
     /**
      * 网络访问地址
@@ -204,7 +207,7 @@ public class BaseHttpClient {
      * @return
      */
     public BaseHttpClient postStringRequest(HttpCallback callback) {
-        OkHttpImpl.getOkClient().post(url, mParams, callback,"application/json");
+        OkHttpImpl.getOkClient().post(url, mParams, callback, "application/json");
         return this;
     }
 
@@ -220,6 +223,34 @@ public class BaseHttpClient {
 
 
 
+
+    /**
+     *get文件下载
+     * @param callback
+     * @return
+     */
+    public BaseHttpClient downloadFile(Context context,HttpCallback callback) {
+        OkHttpImpl.getOkClient().downloadFile(context,url,callback, mParams,destFileDir,destFileName);
+        return this;
+    }
+
+
+        /**
+         * 设置网络链接超时操作
+         */
+
+    public BaseHttpClient downDir(String dir) {
+        this.destFileDir=dir;
+        return this;
+    }
+
+    /**
+     * 设置网络读超时操作
+     */
+    public BaseHttpClient downName(String fileName) {
+        this.destFileName=fileName;
+        return this;
+    }
 
     /**
      * 设置网络链接超时操作

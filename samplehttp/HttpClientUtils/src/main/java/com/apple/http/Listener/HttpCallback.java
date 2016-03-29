@@ -1,4 +1,4 @@
-package com.apple.http.common;
+package com.apple.http.Listener;
 
 /**
  * 请求callback;
@@ -24,5 +24,5 @@ public interface HttpCallback {
      */
     void onFailure(Throwable error, String content, String reqType);
 
-    void onProgress(long bytesRead,long contentLength,boolean done);
+    void onProgress(long bytesRead, long contentLength, boolean done);
 }

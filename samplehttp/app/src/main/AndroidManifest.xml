@@ -30,6 +30,10 @@
                 android:name=".PostActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <activity
+                android:name=".DownFileActivity"
+                android:screenOrientation="portrait">
+        </activity>
 
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>

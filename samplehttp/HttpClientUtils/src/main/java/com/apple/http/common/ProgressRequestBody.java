@@ -17,6 +17,8 @@ package com.apple.http.common;
 
 
 
+import com.apple.http.Listener.HttpCallback;
+
 import java.io.IOException;
 
 import okhttp3.MediaType;

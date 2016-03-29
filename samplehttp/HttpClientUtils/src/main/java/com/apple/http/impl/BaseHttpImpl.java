@@ -1,7 +1,11 @@
-package com.apple.http.common;
+package com.apple.http.impl;
 
 
-import java.io.File;
+import com.apple.http.Listener.HttpCallback;
+import com.apple.http.common.BaseParams;
+
+import android.content.Context;
+
 
 /**
  * 请求对象模板接口
@@ -15,6 +19,8 @@ public interface BaseHttpImpl {
 	 * 网络库接口定义
 	 */
 	Object get(String url,BaseParams params,HttpCallback callback);
+	Object downloadFile(Context context,String url,HttpCallback callback,BaseParams params,String destFileDir, String destFileNam);
+
 	Object get(boolean shouldEncodeUrl,String url,BaseParams params,HttpCallback callback,Object head,Object config);
 
 	Object post(String url, BaseParams params, HttpCallback callback);

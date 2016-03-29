@@ -15,6 +15,8 @@
  */
 package com.apple.http.common;
 
+import com.apple.http.Listener.HttpCallback;
+
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 

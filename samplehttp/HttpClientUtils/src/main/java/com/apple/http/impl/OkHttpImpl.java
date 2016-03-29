@@ -1,13 +1,15 @@
 package com.apple.http.impl;
 
 
-import com.apple.http.common.BaseHttpImpl;
-import com.apple.http.common.BaseOkHandler;
+import com.apple.http.Listener.BaseOkCall;
+import com.apple.http.Listener.DownFileCall;
+import com.apple.http.Listener.HttpCallback;
 import com.apple.http.common.BaseParams;
-import com.apple.http.common.HttpCallback;
 import com.apple.http.common.ProgressRequestBody;
 import com.apple.http.utils.MD5Util;
 
+
+import android.content.Context;
 
 import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
@@ -161,7 +163,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                         .url(URLEncodedUtils.getUrlWithQueryString(shouldEncodeUrl, url, params))
                         .get().build();
             }
-            BaseOkHandler handler = new BaseOkHandler(callback, url, null);
+            BaseOkCall handler = new BaseOkCall(callback, url, null);
             call = mOkHttpClient.newCall(request);
             call.enqueue(handler);
         } catch (Exception e) {
@@ -260,8 +262,31 @@ public class OkHttpImpl implements BaseHttpImpl {
                     .build();
         }
         try {
-            BaseOkHandler handler = new BaseOkHandler(callback, url, null);
+            BaseOkCall handler = new BaseOkCall(callback, url, null);
             mOkHttpClient.newCall(request).enqueue(handler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return call;
+    }
+
+    @Override
+    public Call downloadFile(Context context, String url, HttpCallback callback, BaseParams params,String destFileDir, String destFileNam) {
+        Call call = null;
+        try {
+            Request request;
+            if (params.tag != null) {
+                request = new Request.Builder()
+                        .url(URLEncodedUtils.getUrlWithQueryString(true, url, params)).tag(params.tag)
+                        .get().build();
+            } else {
+                request = new Request.Builder().tag(MD5Util.md5(url))
+                        .url(URLEncodedUtils.getUrlWithQueryString(true, url, params))
+                        .get().build();
+            }
+            DownFileCall handler = new DownFileCall(context,callback, url, destFileDir,destFileNam);
+            call = mOkHttpClient.newCall(request);
+            call.enqueue(handler);
         } catch (Exception e) {
             e.printStackTrace();
         }

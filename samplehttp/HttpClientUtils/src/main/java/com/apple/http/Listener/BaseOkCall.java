@@ -1,8 +1,7 @@
-package com.apple.http.common;
+package com.apple.http.Listener;
 
 
-import android.os.Handler;
-import android.os.Message;
+
 import android.util.Log;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ import okhttp3.Response;
  *
  * @author 胡少平
  */
-public class BaseOkHandler implements Callback {
+public class BaseOkCall implements Callback {
 
     //httpcallback是自定义的请求返回对象
     HttpCallback callBack;
@@ -28,7 +27,7 @@ public class BaseOkHandler implements Callback {
     String url;
     Object parseObject;
 
-    public BaseOkHandler(HttpCallback response, String requestUrl, Object object) {
+    public BaseOkCall(HttpCallback response, String requestUrl, Object object) {
         this.callBack = response;
         url = requestUrl;
         parseObject = object;
@@ -42,6 +41,7 @@ public class BaseOkHandler implements Callback {
      */
     @Override
     public void onFailure(Call call, IOException e) {
+        Log.i("HU", "======onFailure sucesss==");
 
     }
 
@@ -60,6 +60,8 @@ public class BaseOkHandler implements Callback {
     @Override
     public void onResponse(Call call, Response response) throws IOException {
         try {
+            Log.i("HU", "======onRespon sucesss==");
+
             if (response.isSuccessful()) {
                 //成功得到文本信息
                 String content = response.body().string();

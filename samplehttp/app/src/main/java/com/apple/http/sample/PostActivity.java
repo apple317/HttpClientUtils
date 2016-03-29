@@ -1,8 +1,8 @@
 package com.apple.http.sample;
 
+import com.apple.http.Listener.HttpCallback;
 import com.apple.http.common.BaseHttpClient;
 import com.apple.http.common.BaseParams;
-import com.apple.http.common.HttpCallback;
 import com.apple.http.utils.FileNameGenerator;
 
 import org.json.JSONException;

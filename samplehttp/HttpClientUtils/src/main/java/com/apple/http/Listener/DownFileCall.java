@@ -1,14 +1,9 @@
-package com.apple.http.common;
+package com.apple.http.Listener;
 
 import com.apple.http.utils.MD5Util;
 import com.apple.http.utils.StorageUtils;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import java.io.File;
@@ -16,12 +11,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 
 /**
  *
  @author 胡少平
  */
-public class DownFileCall implements Callback {
+public class DownFileCall implements Callback{
 
     //httpcallback是自定义的请求返回对象
     HttpCallback callBack;
@@ -52,7 +51,7 @@ public class DownFileCall implements Callback {
      * before the failure.
      */
     @Override
-    public void onFailure(Request request, IOException e) {
+    public void onFailure(Call call, IOException e) {
         Log.i("HU", "handle==onFailure=REQ_GET_INIT=reqType=");
 
     }
@@ -69,8 +68,9 @@ public class DownFileCall implements Callback {
      * code like 404 or 500.
      */
     @Override
-    public void onResponse(Response response) throws IOException {
+    public void onResponse(Call call, Response response)  throws IOException {
         try {
+            Log.i("HU","======onResponse==file=");
             if (response.isSuccessful()) {
                 //成功得到文本信息
                  saveFile(response);
@@ -99,8 +99,9 @@ public class DownFileCall implements Callback {
             final long total = response.body().contentLength();
             long sum = 0;
             File dir;
+            //+"/"+mContext.getPackageName()
             if(destFileDir==null||destFileDir.trim().toString().equals("")){
-                destFileDir=StorageUtils.getCacheDirectory(mContext).getAbsolutePath()+"/"+mContext.getPackageName();
+                destFileDir=StorageUtils.getCacheDirectory(mContext).getAbsolutePath();
                 dir = new File(destFileDir);
             }else{
                 dir = new File(destFileDir);
@@ -113,13 +114,15 @@ public class DownFileCall implements Callback {
                 destFileName=MD5Util.md5(url);
             }
             File file = new File(dir, destFileName);
+            Log.i("HU","======bytes==file="+file.getPath());
             fos = new FileOutputStream(file);
             while ((len = is.read(buf)) != -1)
             {
                 sum += len;
                 fos.write(buf, 0, len);
                 final long finalSum = sum;
-                callBack.onProgress(finalSum,total,sum==-1);
+                Log.i("HU","======bytes==="+finalSum);
+                callBack.onProgress(finalSum, total, sum == -1);
             }
             fos.flush();
             return file;

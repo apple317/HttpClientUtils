@@ -1,13 +1,11 @@
 package com.apple.http.sample;
 
-import com.apple.http.common.HttpCallback;
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements HttpCallback, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements  View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,17 +14,11 @@ public class MainActivity extends AppCompatActivity implements HttpCallback, Vie
         findViewById(R.id.txt_get).setOnClickListener(this);
         findViewById(R.id.txt_post).setOnClickListener(this);
         findViewById(R.id.txt_pull).setOnClickListener(this);
-    }
-
-    @Override
-    public void onSuccess(String content, Object object, String reqType) {
+        findViewById(R.id.txt_download).setOnClickListener(this);
 
     }
 
-    @Override
-    public void onFailure(Throwable error, String content, String reqType) {
 
-    }
 
     @Override
     public void onClick(View v) {
@@ -43,11 +35,12 @@ public class MainActivity extends AppCompatActivity implements HttpCallback, Vie
                 Intent intent2=new Intent(getApplicationContext(),PullActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.txt_download:
+                Intent intent3=new Intent(getApplicationContext(),DownFileActivity.class);
+                startActivity(intent3);
+                break;
         }
     }
 
-    @Override
-    public void onProgress(long bytesRead, long contentLength, boolean done) {
 
-    }
 }
