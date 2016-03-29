@@ -3,14 +3,17 @@ package com.apple.http.common;
 
 import com.apple.http.impl.OkHttpImpl;
 import com.apple.http.utils.MD5Util;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.OkHttpClient;
 
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 
 
 /**
@@ -26,6 +29,10 @@ public class BaseHttpClient {
     static BaseHttpClient baseClient = null;
 
     BaseParams mParams;
+    //网络通信传入类型
+    private String mediaType;
+
+
 
     /**
      * 网络访问地址
@@ -103,7 +110,7 @@ public class BaseHttpClient {
      * @param file the file to add.
      * @throws FileNotFoundException throws if wrong File argument was passed
      */
-    public BaseHttpClient put(String key, File[] file) throws FileNotFoundException {
+    public BaseHttpClient put(String key, ArrayList<File> file) throws FileNotFoundException {
         if (key != null && file != null) {
             mParams.put(key, file, null, null);
         }
@@ -175,18 +182,38 @@ public class BaseHttpClient {
      * @return
      */
     public BaseHttpClient getRequest(HttpCallback callback) {
-        OkHttpImpl.getOkClient().setTag(MD5Util.md5(url));
         OkHttpImpl.getOkClient().get(url, mParams, callback);
         return this;
     }
 
     /**
-     *
+     *普通post请求
+     * 表单请求方式 默认以表单提交
      * @param callback
      * @return
      */
     public BaseHttpClient postRequest(HttpCallback callback) {
-        OkHttpImpl.getOkClient().setTag(MD5Util.md5(url));
+        OkHttpImpl.getOkClient().post(url, mParams, callback);
+        return this;
+    }
+
+
+    /**
+     *post提交文本数据
+     * @param callback
+     * @return
+     */
+    public BaseHttpClient postStringRequest(HttpCallback callback) {
+        OkHttpImpl.getOkClient().post(url, mParams, callback,"application/json");
+        return this;
+    }
+
+    /**
+     *post 文件上传
+     * @param callback
+     * @return
+     */
+    public BaseHttpClient postFileRequest(HttpCallback callback) {
         OkHttpImpl.getOkClient().post(url, mParams, callback);
         return this;
     }
@@ -216,7 +243,7 @@ public class BaseHttpClient {
      * 设置tag操作
      */
     public BaseHttpClient setTag(Object tag) {
-        OkHttpImpl.getOkClient().setTag(tag);
+        mParams.setTag(tag);
         return this;
     }
 
@@ -239,13 +266,13 @@ public class BaseHttpClient {
 
     public Call sendPostRequest(String url, BaseParams params, HttpCallback callback) {
         // TODO Auto-generated method stub
-        return OkHttpImpl.getOkClient().post(url, params, callback, null, null);
+        return OkHttpImpl.getOkClient().post(url, params, callback);
     }
 
 
     public Call sendGetRequest(Boolean shouldEncodeUrl, String url, BaseParams params, HttpCallback callback, Headers headers) {
         // TODO Auto-generated method stub
-        return OkHttpImpl.getOkClient().get(shouldEncodeUrl, url, params, callback, headers, null);
+        return OkHttpImpl.getOkClient().get(shouldEncodeUrl, url, params, callback, "", headers);
     }
 
 
@@ -263,7 +290,20 @@ public class BaseHttpClient {
      */
     public void cancel(String url) {
         try {
-            OkHttpImpl.getOkClient().mOkHttpClient.cancel(MD5Util.md5(url));
+            for (okhttp3.Call call :  OkHttpImpl.getOkClient().mOkHttpClient.dispatcher().queuedCalls())
+            {
+                if (MD5Util.md5(url).equals(call.request().tag()))
+                {
+                    call.cancel();
+                }
+            }
+            for (okhttp3.Call call :  OkHttpImpl.getOkClient().mOkHttpClient.dispatcher().runningCalls())
+            {
+                if (MD5Util.md5(url).equals(call.request().tag()))
+                {
+                    call.cancel();
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -276,12 +316,31 @@ public class BaseHttpClient {
      */
     public void cancelTag(Object object) {
         try {
-            OkHttpImpl.getOkClient().mOkHttpClient.cancel(object);
+            for (okhttp3.Call call :  OkHttpImpl.getOkClient().mOkHttpClient.dispatcher().queuedCalls())
+            {
+                if (object.equals(call.request().tag()))
+                {
+                    call.cancel();
+                }
+            }
+            for (okhttp3.Call call :  OkHttpImpl.getOkClient().mOkHttpClient.dispatcher().runningCalls())
+            {
+                if (object.equals(call.request().tag()))
+                {
+                    call.cancel();
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+    public BaseHttpClient mediaType(String mediaType)
+    {
+        this.mediaType = mediaType;
+        return this;
+    }
 
 
 

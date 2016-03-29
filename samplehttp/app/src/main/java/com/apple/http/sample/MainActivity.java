@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements HttpCallback, Vie
         setContentView(R.layout.activity_main);
         findViewById(R.id.txt_get).setOnClickListener(this);
         findViewById(R.id.txt_post).setOnClickListener(this);
-        findViewById(R.id.txt_post_sub_file).setOnClickListener(this);
+        findViewById(R.id.txt_pull).setOnClickListener(this);
     }
 
     @Override
@@ -39,10 +39,15 @@ public class MainActivity extends AppCompatActivity implements HttpCallback, Vie
                 Intent intent1=new Intent(getApplicationContext(),PostActivity.class);
                 startActivity(intent1);
                 break;
-            case R.id.txt_post_sub_file:
-                Intent intent2=new Intent(getApplicationContext(),PostSubFileActivity.class);
+            case R.id.txt_pull:
+                Intent intent2=new Intent(getApplicationContext(),PullActivity.class);
                 startActivity(intent2);
                 break;
         }
+    }
+
+    @Override
+    public void onProgress(long bytesRead, long contentLength, boolean done) {
+
     }
 }

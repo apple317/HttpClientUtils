@@ -104,6 +104,10 @@ public class BaseParams {
 	protected boolean autoCloseInputStreams;
 	protected String contentEncoding = "UTF-8";
 
+	/**
+	 * 设置网络关闭tag
+	 */
+	public Object tag=null;
 
 	/**
 	 * Constructs a new empty {@code RequestParams} instance.
@@ -171,6 +175,15 @@ public class BaseParams {
 		this.forceMultipartEntity = force;
 	}
 
+
+	/**
+	 * 设置网络关闭tag
+	 * @param object
+	 */
+	public void setTag(Object object) {
+		tag=object;
+	}
+
 	/**
 	 * Adds a key/value string pair to the request.
 	 *
@@ -190,7 +203,7 @@ public class BaseParams {
 	 * @param files the files array to add.
 	 * @throws FileNotFoundException if one of passed files is not found at time of assembling the requestparams into request
 	 */
-	public void put(String key, File files[]) throws FileNotFoundException {
+	public void put(String key, ArrayList<File> files) throws FileNotFoundException {
 		put(key, files, null, null);
 	}
 
@@ -203,7 +216,7 @@ public class BaseParams {
 	 * @param customFileName file name to use instead of real file name
 	 * @throws FileNotFoundException throws if wrong File argument was passed
 	 */
-	public void put(String key, File files[], String contentType, String customFileName) throws FileNotFoundException {
+	public void put(String key, ArrayList<File> files, String contentType, String customFileName) throws FileNotFoundException {
 
 		if (key != null) {
 			List<FileWrapper> fileWrappers = new ArrayList<FileWrapper>();

@@ -22,8 +22,8 @@
             android:layout_height="50dp"
             android:id="@+id/txt_post"/>
     <TextView
-            android:text="Post上传文件"
+            android:text="Pull请求"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/txt_post_sub_file"/>
+            android:id="@+id/txt_pull"/>
 </LinearLayout>
