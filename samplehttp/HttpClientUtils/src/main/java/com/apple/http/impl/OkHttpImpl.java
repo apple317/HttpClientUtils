@@ -2,6 +2,7 @@ package com.apple.http.impl;
 
 
 import com.apple.http.Listener.BaseOkCall;
+import com.apple.http.Listener.DownCallback;
 import com.apple.http.Listener.DownFileCall;
 import com.apple.http.Listener.HttpCallback;
 import com.apple.http.common.BaseParams;
@@ -271,7 +272,7 @@ public class OkHttpImpl implements BaseHttpImpl {
     }
 
     @Override
-    public Call downloadFile(Context context, String url, HttpCallback callback, BaseParams params,String destFileDir, String destFileNam) {
+    public Call downloadFile(Context context, String url, DownCallback callback, BaseParams params,String destFileDir, String destFileNam) {
         Call call = null;
         try {
             Request request;

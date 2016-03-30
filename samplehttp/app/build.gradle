@@ -8,8 +8,8 @@ android {
         applicationId "com.apple.http.sample"
         minSdkVersion 8
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 160
+        versionName "1.6.0"
     }
     buildTypes {
         release {

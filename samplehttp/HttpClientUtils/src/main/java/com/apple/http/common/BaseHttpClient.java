@@ -1,6 +1,7 @@
 package com.apple.http.common;
 
 
+import com.apple.http.Listener.DownCallback;
 import com.apple.http.Listener.HttpCallback;
 import com.apple.http.impl.OkHttpImpl;
 import com.apple.http.utils.MD5Util;
@@ -229,7 +230,7 @@ public class BaseHttpClient {
      * @param callback
      * @return
      */
-    public BaseHttpClient downloadFile(Context context,HttpCallback callback) {
+    public BaseHttpClient downloadFile(Context context,DownCallback callback) {
         OkHttpImpl.getOkClient().downloadFile(context,url,callback, mParams,destFileDir,destFileName);
         return this;
     }

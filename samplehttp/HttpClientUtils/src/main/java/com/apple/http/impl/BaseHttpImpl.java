@@ -1,6 +1,7 @@
 package com.apple.http.impl;
 
 
+import com.apple.http.Listener.DownCallback;
 import com.apple.http.Listener.HttpCallback;
 import com.apple.http.common.BaseParams;
 
@@ -19,7 +20,7 @@ public interface BaseHttpImpl {
 	 * 网络库接口定义
 	 */
 	Object get(String url,BaseParams params,HttpCallback callback);
-	Object downloadFile(Context context,String url,HttpCallback callback,BaseParams params,String destFileDir, String destFileNam);
+	Object downloadFile(Context context,String url,DownCallback callback,BaseParams params,String destFileDir, String destFileNam);
 
 	Object get(boolean shouldEncodeUrl,String url,BaseParams params,HttpCallback callback,Object head,Object config);
 

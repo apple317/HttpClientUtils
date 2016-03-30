@@ -1,8 +1,10 @@
 package com.apple.http.sample;
 
+import com.apple.http.Listener.DownCallback;
 import com.apple.http.Listener.HttpCallback;
 import com.apple.http.common.BaseHttpClient;
 import com.apple.http.common.BaseParams;
+import com.apple.http.entity.DownEntity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +18,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.File;
+
 
 /**
  * post 上传文件
@@ -24,40 +28,28 @@ import android.widget.TextView;
  */
 public class DownFileActivity extends AppCompatActivity  {
     ProgressBar id_progress;
-
+    TextView txt_content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_down);
         id_progress = (ProgressBar) findViewById(R.id.id_progress);
+        txt_content = (TextView) findViewById(R.id.txt_content);
+
     }
 
     public void downData(View view){
         /**
          * 第一种写法
          */
-        BaseHttpClient.getBaseClient().addUrl("http://124.14.5.144/vlive.qqvideo.tc.qq.com/o00191p1ed7.m1.mp4?vkey=B77C90F73C0920ACBEEF6EB828C9268B3750196F1B8BE863A01B645746074068AC3A30C2171F6354BD38825049287C540F8A4A632F37B3496DB224F777150FC02A7992D467798AD12612ECE5D4249D920DC51ABB10552327&br=34&platform=2&fmt=msd&sdtfrom=v3010&type=mp4&locid=89489e75-bb18-40e4-989b-89d6b34adf32&size=56306437&ocid=1362567084&ocid=1614225324&locid=36f845b2-b9af-4533-af22-8b2ad4d9287f&size=73601579&ocid=290592172")
-                .downName("util.xml").downloadFile(getApplicationContext(),new HttpCallback() {
+        BaseHttpClient.getBaseClient().addUrl("http://119.188.38.18/65738BF87E9458339EB7752598/030008010056B56763489B144DDF25C34CD015-9088-4C46-DE06-105A955F87E1.mp4.ts?ts_start=5.906&ts_end=9.076&ts_seg_no=1&ts_keyframe=1===info==1")
+                .downName("apple_nba").downloadFile(getApplicationContext(),new DownCallback() {
             @Override
-            public void onSuccess(String content, Object object, String reqType) {
+            public void onProgress(DownEntity entity) {
                 Message msg = new Message();
-                msg.obj = content;
-                msg.what = 0;
-                mHandler.sendMessage(msg);
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
-
-            @Override
-            public void onProgress(long bytesRead, long contentLength, boolean done) {
-                Message msg = new Message();
-                msg.obj = bytesRead * 1.0f / contentLength;
+                msg.obj = entity;
                 msg.what = 1;
                 mHandler.sendMessage(msg);
-                Log.i("HU","======bytes==="+bytesRead+"==contenLength=="+contentLength);
             }
         });
     }
@@ -67,10 +59,15 @@ public class DownFileActivity extends AppCompatActivity  {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 0:
-                    break;
                 case 1:
-                    id_progress.setProgress((int) (100 * (float)msg.obj));
+                    try{
+                        DownEntity entity=(DownEntity)msg.obj;
+                        Log.i("HU", "======bytes===" + entity.currentByte + "==contenLength==" + entity.totalByte);
+                        id_progress.setProgress((int) (100 * (float) entity.currentByte * 1.0f / entity.totalByte));
+                        txt_content.setText("当前下载的文件目录是"+entity.path+"文件名称:"+entity.name+"网络返回code"+entity.httpCode+"===服务端返回消息=="+entity.message);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     break;
