@@ -34,17 +34,30 @@
 * 支持url取消请求    已实现
 * 支持tag取消请求    已实现
 * 支持自定义Callback   已实现
-* 支持DELETE、PATCH、PUT  下版本实现
+* 支持DELETE、PATCH、PUT  已实现
+* 配置、请求过程分离    已实现
 * 支持session的保持  下版本实现
 * 支持自签名网站https的访问，提供方法设置下证书就行
 ##用法示例
+###初始化操作
+```java
+ HttpConfiguration.Builder configuration=new HttpConfiguration.Builder(getApplicationContext());
+        configuration.connectTimeout(2000);
+        configuration.retryOnConnectionFailure(true);
+        configuration.readTimeout(2000);
+        configuration.writeTimeout(2000);
+        configuration.diskCacheSize(1000 * 1024);
+        configuration.diskCacheDir(getCacheDir());
+        BaseHttpClient.getBaseClient().init(configuration.build());
+```
+
 
 ### GET请求
 
 ```java
- BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
-                .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").
-                getRequest(new HttpCallback(){
+ BaseHttpClient.getBaseClient().newBuilder().url("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                .put("appkey", "56065429").put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB")
+                .setTag("deals").build().execute(new HttpCallback(){
             @Override
             public void onSuccess(String content, Object object, String reqType) {
                 txt_content.setText(content+"type==="+reqType);
@@ -66,39 +79,19 @@
 ```java
 第一种方式
 默认是表单上传，所以在这里分离postStringRequest方法，而文本必须是apple_txt为key传入
-BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
-                .put("apple_txt","你好好好").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").
-                postStringRequest(new HttpCallback() {
+BaseHttpClient.getBaseClient().newBuilder().url("url")
+                .content("你好好好").method(METHOD.POST_STRING).build().execute(new HttpCallback() {
             @Override
             public void onSuccess(String content, Object object, String reqType) {
-                txt_content.setText(content + "type===" + reqType);
-
+                Message msg = new Message();
+                msg.obj = content;
+                msg.what = 0;
+                mHandler.sendMessage(msg);
             }
 
             @Override
-            public void onFailure(Throwable error, String content, String reqType) {
+            public void onError(Throwable error, String content, String reqType) {
 
-            }
-             @Override
-            public void onProgress(long bytesRead, long contentLength, boolean done) {
-            }
-        });
-第二种方式
- BaseParams mParams = new BaseParams();
-        mParams.put("apple_txt", "你好好");
-
-        BaseHttpClient.getBaseClient().sendPostStringRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
-            @Override
-            public void onSuccess(String content, Object object, String reqType) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
-             @Override
-            public void onProgress(long bytesRead, long contentLength, boolean done) {
             }
         });
 ```
@@ -109,50 +102,41 @@ BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_c
 
 ```java
 第一种方式
- 	BaseParams mParams = new BaseParams();
-        mParams.put("game", "dota");
-        mParams.put("os", "2");
-        File file=new File("app.png");
-        try {
-            //logo 是文件上传定义的名词，根据服务端定义调整
-            mParams.put("logo", file, FileNameGenerator.getMIMEType(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BaseHttpClient.getOkClient(getApplicationContext()).
-        sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
-            @Override
-            public void onSuccess(String content, Object object, String reqType) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
-             @Override
-            public void onProgress(long bytesRead, long contentLength, boolean done) {
-            }
-        });
-第二种方式
  try {
-            BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
-                    .put("logo",file).postRequest(new HttpCallback() {
-                @Override
-                public void onSuccess(String content, Object object, String reqType) {
-                    txt_content.setText(content + "type===" + reqType);
+            File file = new File(Environment.getExternalStorageDirectory()
+                    , "4cc75752fa532553bf7b6f7e00f26db8.png");
+            BaseHttpClient.getBaseClient().newBuilder().url("url")
+                    .put("game", "lol")
+                    .put("logo", file)
+                    .put("token","ee595bd5078a6e67a110c6bd8828c8e2a2388c12")
+                    .put("version", "2.1.0")
+                    .put("device_id","867905026687709")
+                    .put("os","2")
+                    .method(METHOD.POST_FORM).build()
+                    .execute(new HttpCallback() {
+                        @Override
+                        public void onSuccess(String content, Object object, String reqType) {
+                            Message msg = new Message();
+                            msg.obj = content;
+                            msg.what = 0;
+                            mHandler.sendMessage(msg);
+                        }
 
-                }
+                        @Override
+                        public void onError(Throwable error, String content, String reqType) {
 
-                @Override
-                public void onFailure(Throwable error, String content, String reqType) {
+                        }
 
-                }
-                 @Override
-            	public void onProgress(long bytesRead, long contentLength, boolean done) {
-        	 }
-            });
-        } catch (FileNotFoundException e) {
+                        //                        @Override
+//                        public void onProgress(long bytesRead, long contentLength, boolean done) {
+//                            Log.i("HU", "onprogress=bytesRead=" + bytesRead);
+//                            Message msg = new Message();
+//                            msg.obj = bytesRead * 1.0f / contentLength;
+//                            msg.what = 1;
+//                            mHandler.sendMessage(msg);
+//                        }
+                    });
+        } catch (Exception e) {
             e.printStackTrace();
         }
 ```
@@ -166,30 +150,17 @@ try {
             File file=new File("path");
             ArrayList<File> arrayList=new ArrayList<File>();
             arrayList.add(file);
-            BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
-                    .put("logo",arrayList).postRequest(new HttpCallback() {
-                @Override
-                public void onSuccess(String content, Object object, String reqType) {
-                    txt_content.setText(content + "type===" + reqType);
-
-                }
-
-                @Override
-                public void onFailure(Throwable error, String content, String reqType) {
-
-                }
-            });
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-```
-
-### 自定义CallBack
-
-### 上传文件进度条返回
-```java
-BaseHttpClient.getBaseClient().addUrl("url").put("game","lol").put("logo",file)
-                    .postRequest(new HttpCallback() {
+//            File file = new File(Environment.getExternalStorageDirectory()
+//                    , "4cc75752fa532553bf7b6f7e00f26db8.png");
+            BaseHttpClient.getBaseClient().newBuilder().url("url")
+                    .put("game", "lol")
+                    .put("logo", arrayList)
+                    .put("token","ee595bd5078a6e67a110c6bd8828c8e2a2388c12")
+                    .put("version", "2.1.0")
+                    .put("device_id","867905026687709")
+                    .put("os","2")
+                    .method(METHOD.POST_FORM).build()
+                    .execute(new HttpCallback() {
                         @Override
                         public void onSuccess(String content, Object object, String reqType) {
                             Message msg = new Message();
@@ -199,16 +170,55 @@ BaseHttpClient.getBaseClient().addUrl("url").put("game","lol").put("logo",file)
                         }
 
                         @Override
-                        public void onFailure(Throwable error, String content, String reqType) {
-                            Log.i("HU", "onFailure=content=" + content);
-                            Log.i("HU", "onFailure=error=" + error);
+                        public void onError(Throwable error, String content, String reqType) {
 
+                        }
+
+                        //                        @Override
+//                        public void onProgress(long bytesRead, long contentLength, boolean done) {
+//                            Log.i("HU", "onprogress=bytesRead=" + bytesRead);
+//                            Message msg = new Message();
+//                            msg.obj = bytesRead * 1.0f / contentLength;
+//                            msg.what = 1;
+//                            mHandler.sendMessage(msg);
+//                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+```
+
+### 自定义CallBack
+
+### 上传文件进度条返回
+```java
+  try {
+            File file = new File(Environment.getExternalStorageDirectory()
+                    , "4cc75752fa532553bf7b6f7e00f26db8.png");
+            BaseHttpClient.getBaseClient().newBuilder().url("url")
+                    .put("game", "lol")
+                    .put("logo", file)
+                    .put("token","ee595bd5078a6e67a110c6bd8828c8e2a2388c12")
+                    .put("version", "2.1.0")
+                    .put("device_id","867905026687709")
+                    .put("os","2")
+                    .method(METHOD.POST_FORM_PROGRESS).build()
+                    .execute(new UploadCallback() {
+                        @Override
+                        public void onSuccess(String content, Object object, String reqType) {
+                            Message msg = new Message();
+                            msg.obj = content;
+                            msg.what = 0;
+                            mHandler.sendMessage(msg);
+                        }
+
+                        @Override
+                        public void onError(Throwable error, String content, String reqType) {
 
                         }
 
                         @Override
-                        public void onProgress(long bytesRead, long contentLength, boolean done) {
-                            Log.i("HU", "onprogress=bytesRead=" + bytesRead);
+                        public void uploadProgress(long bytesRead, long contentLength, boolean done) {
                             Message msg = new Message();
                             msg.obj = bytesRead * 1.0f / contentLength;
                             msg.what = 1;
@@ -228,10 +238,10 @@ done如果为true下载完毕
  /**
          * 第一种写法
          */
-        BaseHttpClient.getBaseClient().addUrl("http://119.188.38.18/65738BF87E9458339EB7752598/030008010056B56763489B144DDF25C34CD015-9088-4C46-DE06-105A955F87E1.mp4.ts?ts_start=5.906&ts_end=9.076&ts_seg_no=1&ts_keyframe=1===info==1")
-                .downName("apple_nba").downloadFile(getApplicationContext(),new DownCallback() {
+        BaseHttpClient.getBaseClient().newBuilder().url("http://112.65.235.160/vlive.qqvideo.tc.qq.com/m0019469p4a.mp4?vkey=4C7F305D62ABA38AF8BF474C40A0DF9700C8F07BF29BE26D76F17F8A7E73B9FEB1424CC479C4C863BFBDD095AA5EBE49A0CDE3EAEB32E2AD0C009E7C5B37521C0912AF6905C70C601471E664777B9C38C726B03E8D193D62&br=34&platform=2&fmt=msd&sdtfrom=v3010&type=mp4&locid=89489e75-bb18-40e4-989b-89d6b34adf32&size=56306437&ocid=1362567084")
+                .downName("apple_nba").method(METHOD.DOWNLOAD_FILE).build().execute(new DownCallback() {
             @Override
-            public void onProgress(DownEntity entity) {
+            public void downProgress(DownEntity entity) {
                 Message msg = new Message();
                 msg.obj = entity;
                 msg.what = 1;
