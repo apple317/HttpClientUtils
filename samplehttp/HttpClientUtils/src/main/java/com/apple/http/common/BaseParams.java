@@ -18,7 +18,7 @@
 
 package com.apple.http.common;
 
-import com.apple.http.impl.URLEncodedUtils;
+import com.apple.http.utils.URLEncodedUtils;
 import com.apple.http.utils.BasicNameValuePair;
 
 import java.io.File;
@@ -104,10 +104,6 @@ public class BaseParams {
 	protected boolean autoCloseInputStreams;
 	protected String contentEncoding = "UTF-8";
 
-	/**
-	 * 设置网络关闭tag
-	 */
-	public Object tag=null;
 
 	/**
 	 * Constructs a new empty {@code RequestParams} instance.
@@ -176,13 +172,6 @@ public class BaseParams {
 	}
 
 
-	/**
-	 * 设置网络关闭tag
-	 * @param object
-	 */
-	public void setTag(Object object) {
-		tag=object;
-	}
 
 	/**
 	 * Adds a key/value string pair to the request.

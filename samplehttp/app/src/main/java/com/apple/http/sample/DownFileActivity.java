@@ -1,13 +1,9 @@
 package com.apple.http.sample;
 
-import com.apple.http.Listener.DownCallback;
-import com.apple.http.Listener.HttpCallback;
 import com.apple.http.common.BaseHttpClient;
-import com.apple.http.common.BaseParams;
 import com.apple.http.entity.DownEntity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.apple.http.entity.METHOD;
+import com.apple.http.listener.DownCallback;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,8 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.io.File;
 
 
 /**
@@ -38,14 +32,36 @@ public class DownFileActivity extends AppCompatActivity  {
 
     }
 
+    /**
+     * addUrl 添加url地址
+     * put传入参数可以
+     *setTag 设置tag
+     * downName 下载文件命名
+     * downDir 下载文件目录 如果不传会默认生成一个getCacheDirectory
+     * DownEntity 下载返回数据实体：
+     * public String name;//名称
+     public String path;//保存地址
+     public String url;
+     public int httpCode;//http网络状态
+     //下载是否完成
+     public boolean statue;//下载是否完成
+     public long currentByte;//下载当前字节数
+     public long totalByte;//下载总字节数
+     public boolean isExecuted;//下载是否执行
+     public String dir;//下载目录
+
+     public boolean isCanceled;//下载是否取消
+     public String message;//下载返回消息
+     * @param view
+     */
     public void downData(View view){
         /**
          * 第一种写法
          */
-        BaseHttpClient.getBaseClient().addUrl("http://119.188.38.18/65738BF87E9458339EB7752598/030008010056B56763489B144DDF25C34CD015-9088-4C46-DE06-105A955F87E1.mp4.ts?ts_start=5.906&ts_end=9.076&ts_seg_no=1&ts_keyframe=1===info==1")
-                .downName("apple_nba").downloadFile(getApplicationContext(),new DownCallback() {
+        BaseHttpClient.getBaseClient().newBuilder().url("http://112.65.235.160/vlive.qqvideo.tc.qq.com/m0019469p4a.mp4?vkey=4C7F305D62ABA38AF8BF474C40A0DF9700C8F07BF29BE26D76F17F8A7E73B9FEB1424CC479C4C863BFBDD095AA5EBE49A0CDE3EAEB32E2AD0C009E7C5B37521C0912AF6905C70C601471E664777B9C38C726B03E8D193D62&br=34&platform=2&fmt=msd&sdtfrom=v3010&type=mp4&locid=89489e75-bb18-40e4-989b-89d6b34adf32&size=56306437&ocid=1362567084")
+                .downName("apple_nba").method(METHOD.DOWNLOAD_FILE).build().execute(new DownCallback() {
             @Override
-            public void onProgress(DownEntity entity) {
+            public void downProgress(DownEntity entity) {
                 Message msg = new Message();
                 msg.obj = entity;
                 msg.what = 1;

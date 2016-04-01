@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.apple.http.common;
+package com.apple.http.listener.okhttp;
 
 
 
-import com.apple.http.Listener.HttpCallback;
+
+import com.apple.http.listener.BaseCallback;
+import com.apple.http.listener.UploadCallback;
 
 import java.io.IOException;
 
@@ -34,7 +36,7 @@ public  class ProgressRequestBody extends RequestBody {
     //实际的待包装请求体
     private final RequestBody requestBody;
     //进度回调接口
-    private final HttpCallback progressListener;
+    private final BaseCallback progressListener;
     //包装完成的BufferedSink
     private BufferedSink bufferedSink;
 
@@ -43,7 +45,7 @@ public  class ProgressRequestBody extends RequestBody {
      * @param requestBody 待包装的请求体
      * @param progressListener 回调接口
      */
-    public ProgressRequestBody(RequestBody requestBody, HttpCallback progressListener) {
+    public ProgressRequestBody(RequestBody requestBody, BaseCallback progressListener) {
         this.requestBody = requestBody;
         this.progressListener = progressListener;
     }
@@ -110,7 +112,7 @@ public  class ProgressRequestBody extends RequestBody {
                 bytesWritten += byteCount;
                 //回调
                 if (progressListener!=null) {
-                    progressListener.onProgress(bytesWritten, contentLength,bytesWritten==contentLength);
+                    progressListener.uploadProgress(bytesWritten, contentLength,bytesWritten==contentLength);
                 }
             }
         };

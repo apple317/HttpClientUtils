@@ -1,6 +1,9 @@
-package com.apple.http.Listener;
+package com.apple.http.listener.okhttp;
 
 
+
+import com.apple.http.listener.BaseCallback;
+import com.apple.http.listener.HttpCallback;
 
 import android.util.Log;
 
@@ -22,12 +25,12 @@ import okhttp3.Response;
 public class BaseOkCall implements Callback {
 
     //httpcallback是自定义的请求返回对象
-    HttpCallback callBack;
+    BaseCallback callBack;
     //url是请求地址
     String url;
     Object parseObject;
 
-    public BaseOkCall(HttpCallback response, String requestUrl, Object object) {
+    public BaseOkCall(BaseCallback response, String requestUrl, Object object) {
         this.callBack = response;
         url = requestUrl;
         parseObject = object;

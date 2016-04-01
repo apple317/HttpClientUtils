@@ -1,6 +1,6 @@
 package com.apple.http.sample;
 
-import com.apple.http.Listener.HttpCallback;
+import com.apple.http.listener.HttpCallback;
 import com.apple.http.common.BaseHttpClient;
 import com.apple.http.common.BaseParams;
 
@@ -11,14 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import okhttp3.MediaType;
 
 /**
  * get 请求数据
  *
  * @author hushaoping
  */
-public class GetActivity extends AppCompatActivity{
+public class GetActivity extends AppCompatActivity {
 
     TextView txt_content;
     BaseParams mParams;
@@ -31,16 +30,20 @@ public class GetActivity extends AppCompatActivity{
     }
 
 
-
-
     /**
      * 普通参数请求方式
+     * url 传入网络地址
+     * put传入值
+     * tag设置tag
      */
     public void getParam(View view) {
-        BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
-                .put("appkey", "56065429").put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB").setTag("deals").getRequest(new HttpCallback() {
+        BaseHttpClient.getBaseClient().newBuilder()
+                .url("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                .put("appkey", "56065429")
+                .put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB")
+                .setTag("deals").build().execute(new HttpCallback() {
             @Override
-            public void onSuccess(final String content, Object object, final String reqType) {
+            public void onSuccess(String content, Object object, String reqType) {
                 Message msg = new Message();
                 msg.obj = content;
                 msg.what = 0;
@@ -48,12 +51,7 @@ public class GetActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
-
-            @Override
-            public void onProgress(long bytesRead, long contentLength, boolean done) {
+            public void onError(Throwable error, String content, String reqType) {
 
             }
         });
@@ -61,24 +59,25 @@ public class GetActivity extends AppCompatActivity{
 
     /**
      * 普通参数请求方式
+     * //通过可以设置tag或者addUrl添加url
+     * put传入参数key:value
+     * put("appkey", "56065429")
      */
     public void getParamXml(View view) {
-        BaseHttpClient.getBaseClient().addUrl("http://sec.mobile.tiancity.com/server/mobilesecurity/version.xml").setTag("deals").getRequest(new HttpCallback() {
+        BaseHttpClient.getBaseClient().newBuilder()
+                .url("http://sec.mobile.tiancity.com/server/mobilesecurity/version.xml").
+                setTag("deals").build().execute(new HttpCallback() {
+
             @Override
-            public void onSuccess(final String content, Object object, final String reqType) {
-                Message msg =new Message();
+            public void onSuccess(String content, Object object, String reqType) {
+                Message msg = new Message();
                 msg.obj = content;
-                msg.what=0;
+                msg.what = 0;
                 mHandler.sendMessage(msg);
             }
 
             @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
-
-            @Override
-            public void onProgress(long bytesRead, long contentLength, boolean done) {
+            public void onError(Throwable error, String content, String reqType) {
 
             }
         });
@@ -95,8 +94,7 @@ public class GetActivity extends AppCompatActivity{
                     //通知UI界面
 //                    application/octet-stream
 //                    multipart/form-data
-                    MediaType FORM=MediaType.parse("text/plain;charset=utf-8");
-                    txt_content.setText(msg.obj.toString() + "type==="+FORM.subtype());
+                    txt_content.setText(msg.obj.toString() + "type===" );
 
                     break;
                 default:

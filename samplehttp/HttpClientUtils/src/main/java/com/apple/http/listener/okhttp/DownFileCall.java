@@ -1,6 +1,8 @@
-package com.apple.http.Listener;
+package com.apple.http.listener.okhttp;
 
 import com.apple.http.entity.DownEntity;
+import com.apple.http.listener.BaseCallback;
+import com.apple.http.listener.DownCallback;
 import com.apple.http.utils.MD5Util;
 import com.apple.http.utils.StorageUtils;
 
@@ -23,7 +25,7 @@ import okhttp3.Response;
 public class DownFileCall implements Callback {
 
     //httpcallback是自定义的请求返回对象
-    DownCallback callBack;
+    BaseCallback callBack;
     //url是请求地址
     String url;
     /**
@@ -38,7 +40,7 @@ public class DownFileCall implements Callback {
 
     DownEntity mDownEntity;
 
-    public DownFileCall(Context context, DownCallback response, String requestUrl, String destFileDir, String destFileName) {
+    public DownFileCall(Context context, BaseCallback response, String requestUrl, String destFileDir, String destFileName) {
         this.callBack = response;
         url = requestUrl;
         this.destFileDir = destFileDir;
@@ -50,6 +52,12 @@ public class DownFileCall implements Callback {
             mDownEntity.downDir(destFileDir);
         if (destFileName!=null&&destFileName.trim().toString().equals(""))
             mDownEntity.downName(destFileName);
+    }
+
+
+
+    public Context getContext() {
+        return mContext;
     }
 
     /**
@@ -65,7 +73,7 @@ public class DownFileCall implements Callback {
         mDownEntity.isCanceled = call.isCanceled();
         mDownEntity.isExecuted = call.isExecuted();
         mDownEntity.downMessage(e.toString());
-        callBack.onProgress(mDownEntity);
+        callBack.downProgress(mDownEntity);
     }
 
     /**
@@ -94,7 +102,7 @@ public class DownFileCall implements Callback {
                 mDownEntity.downStatue(false);
                 mDownEntity.downCode(response.code());
                 mDownEntity.downMessage(response.body().toString());
-                callBack.onProgress(mDownEntity);
+                callBack.downProgress(mDownEntity);
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -140,7 +148,7 @@ public class DownFileCall implements Callback {
                 mDownEntity.currentByte(finalSum);
                 mDownEntity.totalByte(total);
                 mDownEntity.downStatue(sum==-1);
-                callBack.onProgress(mDownEntity);
+                callBack.downProgress(mDownEntity);
             }
             fos.flush();
             return file;

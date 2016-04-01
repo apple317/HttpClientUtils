@@ -1,8 +1,11 @@
 package com.apple.http.impl;
 
 
-import com.apple.http.Listener.DownCallback;
-import com.apple.http.Listener.HttpCallback;
+import com.apple.http.common.BaseHttpClient;
+import com.apple.http.common.HttpConfiguration;
+import com.apple.http.listener.BaseCallback;
+import com.apple.http.listener.DownCallback;
+import com.apple.http.listener.HttpCallback;
 import com.apple.http.common.BaseParams;
 
 import android.content.Context;
@@ -18,14 +21,35 @@ import android.content.Context;
 public interface BaseHttpImpl {
 	/**
 	 * 网络库接口定义
+	 *   public static final String GET = "GET";
+	 public static final String POST_STRING = "POST_STRING";
+	 public static final String POST_FORM = "POST_FORM";
+	 public static final String POST_FILE = "POST_FILE";
+	 public static final String DOWNLOAD_FILE = "DOWN_FILE";
+	 public static final String POST_FILE_PROGRESS = "POST_FILE_PROGRESS";
+	 public static final String POST_FORM_PROGRESS = "POST_FORM_PROGRESS";
+	 public static final String PUT = "PUT";
+	 public static final String PATCH = "PATCH";
+	 public static final String DELETE = "DELETE";
 	 */
-	Object get(String url,BaseParams params,HttpCallback callback);
-	Object downloadFile(Context context,String url,DownCallback callback,BaseParams params,String destFileDir, String destFileNam);
+	void get(BaseHttpClient client,BaseCallback callback);
+	void put(BaseHttpClient client,BaseCallback callback);
+	void patch(BaseHttpClient client,BaseCallback callback);
+	void delete(BaseHttpClient client,BaseCallback callback);
 
-	Object get(boolean shouldEncodeUrl,String url,BaseParams params,HttpCallback callback,Object head,Object config);
+	void postString(BaseHttpClient client,BaseCallback callback);
+	void postFile(BaseHttpClient client,BaseCallback callback);
+	void postForm(BaseHttpClient client,BaseCallback callback);
+	void downloadFile(BaseHttpClient client,BaseCallback callback);
 
-	Object post(String url, BaseParams params, HttpCallback callback);
-	Object post(String url, BaseParams params, HttpCallback callback,String mediatype);
-	Object post(String url, BaseParams params, HttpCallback callback,String mediatype,Object head);
+	void postFileProgress(BaseHttpClient client,BaseCallback callback);
+	void postFormProgress(BaseHttpClient client,BaseCallback callback);
 
+	void execute(BaseHttpClient client,BaseCallback callback);
+
+	/**
+	 * 配置初始化操作
+	 * @param configuration
+	 */
+	void init(HttpConfiguration configuration);
 }

@@ -1,5 +1,14 @@
 package com.apple.http.utils;
 
+import com.apple.http.common.BaseParams;
+import com.apple.http.utils.BasicNameValuePair;
+import com.apple.http.utils.NameValuePair;
+
+import java.net.FileNameMap;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
@@ -392,6 +401,52 @@ public class URLEncodedUtils {
      */
     static String encPath(final String content, final Charset charset) {
         return urlEncode(content, charset, PATHSAFE, false);
+    }
+
+    public static String guessMimeType(String path) {
+        FileNameMap fileNameMap = URLConnection.getFileNameMap();
+        String contentTypeFor = fileNameMap.getContentTypeFor(path);
+        if (contentTypeFor == null) {
+            contentTypeFor = "application/octet-stream";
+        }
+        return contentTypeFor;
+    }
+
+    /**
+     * Will encode url, if not disabled, and adds params on the end of it
+     *
+     * @param url             String with URL, should be valid URL without params
+     * @param params          RequestParams to be appended on the end of URL
+     * @param shouldEncodeUrl whether url should be encoded (replaces spaces with %20)
+     * @return encoded url if requested with params appended if any available
+     */
+    public static String getUrlWithQueryString(boolean shouldEncodeUrl, String url, BaseParams params) {
+        if (url == null)
+            return null;
+        if (shouldEncodeUrl) {
+            try {
+                String decodedURL = URLDecoder.decode(url, "UTF-8");
+                URL _url = new URL(decodedURL);
+                URI _uri = new URI(_url.getProtocol(), _url.getUserInfo(), _url.getHost(), _url.getPort(), _url.getPath(), _url.getQuery(), _url.getRef());
+                url = _uri.toASCIIString();
+            } catch (Exception ex) {
+                // Should not really happen, added just for sake of validity
+            }
+        }
+
+        if (params != null) {
+            // Construct the query string and trim it, in case it
+            // includes any excessive white spaces.
+            String paramString = params.getParamString().trim();
+            // Only add the query string if it isn't empty and it
+            // isn't equal to '?'.
+            if (!paramString.equals("") && !paramString.equals("?")) {
+                url += url.contains("?") ? "&" : "?";
+                url += paramString;
+            }
+        }
+
+        return url;
     }
 
 }
