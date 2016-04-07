@@ -40,18 +40,19 @@ public class GetActivity extends AppCompatActivity {
         BaseHttpClient.getBaseClient().newBuilder()
                 .url("http://api.dianping.com/v1/metadata/get_cities_with_deals")
                 .put("appkey", "56065429")
+                .setParse(UserBean.class)
                 .put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB")
                 .setTag("deals").build().execute(new HttpCallback() {
             @Override
-            public void onSuccess(String content, Object object, String reqType) {
+            public void onSuccess(String content, BaseHttpClient object, Object parse) {
                 Message msg = new Message();
-                msg.obj = content;
-                msg.what = 0;
+                msg.obj = parse;
+                msg.what = 1;
                 mHandler.sendMessage(msg);
             }
 
             @Override
-            public void onError(Throwable error, String content, String reqType) {
+            public void onError(Throwable error, BaseHttpClient client) {
 
             }
         });
@@ -67,17 +68,16 @@ public class GetActivity extends AppCompatActivity {
         BaseHttpClient.getBaseClient().newBuilder()
                 .url("http://sec.mobile.tiancity.com/server/mobilesecurity/version.xml").
                 setTag("deals").build().execute(new HttpCallback() {
-
             @Override
-            public void onSuccess(String content, Object object, String reqType) {
+            public void onSuccess(String content, BaseHttpClient object, Object parse) {
                 Message msg = new Message();
-                msg.obj = content;
-                msg.what = 0;
+                msg.obj = parse;
+                msg.what =0;
                 mHandler.sendMessage(msg);
             }
 
             @Override
-            public void onError(Throwable error, String content, String reqType) {
+            public void onError(Throwable error, BaseHttpClient object) {
 
             }
         });
@@ -95,6 +95,15 @@ public class GetActivity extends AppCompatActivity {
 //                    application/octet-stream
 //                    multipart/form-data
                     txt_content.setText(msg.obj.toString() + "type===" );
+                    break;
+                case 1:
+                    //得到数据并去做解析类。
+                    //    BaseEntity entity = JsonPaserFactory.paserObj(msg.obj.toString(), url);
+                    //通知UI界面
+//                    application/octet-stream
+//                    multipart/form-data
+                    UserBean userBean=(UserBean)msg.obj;
+                    txt_content.setText(userBean.getCities().get(0) + "type===" );
 
                     break;
                 default:

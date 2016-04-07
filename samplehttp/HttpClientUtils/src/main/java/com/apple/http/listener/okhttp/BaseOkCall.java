@@ -1,9 +1,9 @@
 package com.apple.http.listener.okhttp;
 
 
-
+import com.apple.http.common.BaseHttpClient;
 import com.apple.http.listener.BaseCallback;
-import com.apple.http.listener.HttpCallback;
+import com.google.gson.Gson;
 
 import android.util.Log;
 
@@ -27,13 +27,11 @@ public class BaseOkCall implements Callback {
     //httpcallback是自定义的请求返回对象
     BaseCallback callBack;
     //url是请求地址
-    String url;
-    Object parseObject;
+    BaseHttpClient mClient;
 
-    public BaseOkCall(BaseCallback response, String requestUrl, Object object) {
+    public BaseOkCall(BaseCallback response, BaseHttpClient client) {
         this.callBack = response;
-        url = requestUrl;
-        parseObject = object;
+        mClient = client;
     }
 
     /**
@@ -45,7 +43,7 @@ public class BaseOkCall implements Callback {
     @Override
     public void onFailure(Call call, IOException e) {
         Log.i("HU", "======onFailure sucesss==");
-
+        callBack.onError(e, mClient);
     }
 
     /**
@@ -54,7 +52,7 @@ public class BaseOkCall implements Callback {
      * }. The response is still live until its response body is
      * closed with {@code response.body().close()}. The recipient of the callback
      * may even consume the response body on another thread.
-     *
+     * <p/>
      * <p>Note that transport-layer success (receiving a HTTP response code,
      * headers and body) does not necessarily indicate application-layer
      * success: {@code response} may still indicate an unhappy HTTP response
@@ -64,11 +62,15 @@ public class BaseOkCall implements Callback {
     public void onResponse(Call call, Response response) throws IOException {
         try {
             Log.i("HU", "======onRespon sucesss==");
-
             if (response.isSuccessful()) {
                 //成功得到文本信息
                 String content = response.body().string();
-                callBack.onSuccess(content, null, url);
+                Object aClass = null;
+                if (callBack != null) {
+                    if (mClient != null && mClient.getClass() != null)
+                        aClass = new Gson().fromJson(content, mClient.getParse());
+                    callBack.onSuccess(content, mClient, aClass);
+                }
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block

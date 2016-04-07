@@ -34,6 +34,8 @@ public class BaseHttpClient {
     private  String url;
     private  Object tag;
     private  boolean shouldEncodeUrl;
+    //解析类
+    private Class parse;
     private String content;
     public static  HttpConfiguration configuration;
     private static final String WARNING_RE_INIT_CONFIG = "Try to initialize BaseHttpClient which had already been initialized before. " + "To re-init BaseHttpClient with new configuration call BaseHttpClient.destroy() at first.";
@@ -62,6 +64,7 @@ public class BaseHttpClient {
         this.mParams=builder.mParams;
         this.method=builder.method;
         this.shouldEncodeUrl=builder.shouldEncodeUrl;
+        this.parse=builder.parse;
     }
 
 
@@ -91,6 +94,11 @@ public class BaseHttpClient {
 
     public Object getTag() {
         return tag;
+    }
+
+
+    public Class getParse() {
+        return parse;
     }
 
     public boolean isShouldEncodeUrl() {
@@ -227,6 +235,8 @@ public class BaseHttpClient {
         String destFileName;
         BaseParams mParams;
         String method;
+        Class parse;
+
         boolean shouldEncodeUrl;
         //文本post上传字符串
         String content;
@@ -243,6 +253,12 @@ public class BaseHttpClient {
             method= METHOD.GET;
             shouldEncodeUrl=false;
             content="";
+        }
+
+
+        public Builder setParse(Class parse) {
+            this.parse = parse;
+            return this;
         }
 
         /**

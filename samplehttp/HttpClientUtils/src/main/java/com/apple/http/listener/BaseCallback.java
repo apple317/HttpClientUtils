@@ -1,5 +1,6 @@
 package com.apple.http.listener;
 
+import com.apple.http.common.BaseHttpClient;
 import com.apple.http.entity.DownEntity;
 
 import okhttp3.Call;
@@ -10,23 +11,22 @@ import okhttp3.Response;
  *
  * @author hushaoping
  */
-public abstract class BaseCallback {
+public abstract class BaseCallback{
     /**
      * 请求成功
      * @param content 返回值
      * @param object  返回的转化对象
-     * @param reqType 请求的唯一识别
+     * @param parse 解析对象
      */
-    public abstract void onSuccess(String content, Object object, String reqType);
+    public abstract void onSuccess(String content, BaseHttpClient object, Object parse);
 
     /**
      * 请求失败
      *
      * @param error   错误
-     * @param content 返回值
-     * @param reqType 请求的唯一识别
+     * @param client client发起者
      */
-    public abstract void onError(Throwable error, String content, String reqType);
+    public abstract void onError(Throwable error, BaseHttpClient client);
 
     /**
      * 文件上传进度
@@ -46,12 +46,12 @@ public abstract class BaseCallback {
     public static BaseCallback CALLBACK_DEFAULT = new BaseCallback()
     {
         @Override
-        public void onSuccess(String content, Object object, String reqType) {
+        public void onSuccess(String content, BaseHttpClient client, Object parse) {
 
         }
 
         @Override
-        public void onError(Throwable error, String content, String reqType) {
+        public void onError(Throwable error, BaseHttpClient client) {
 
         }
 

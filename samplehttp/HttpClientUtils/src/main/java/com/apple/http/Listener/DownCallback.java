@@ -1,7 +1,7 @@
 package com.apple.http.listener;
 
 
-
+import com.apple.http.common.BaseHttpClient;
 
 /**
  * 下载文件请求返回
@@ -10,12 +10,12 @@ package com.apple.http.listener;
 public abstract class DownCallback extends BaseCallback{
 
     @Override
-    public void onSuccess(String content, Object object, String reqType) {
+    public void onSuccess(String content, BaseHttpClient object, Object parse) {
 
     }
 
     @Override
-    public void onError(Throwable error, String content, String reqType) {
+    public void onError(Throwable error,BaseHttpClient client) {
 
     }
 

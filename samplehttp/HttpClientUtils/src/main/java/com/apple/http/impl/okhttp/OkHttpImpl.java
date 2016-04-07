@@ -148,7 +148,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                         .url(URLEncodedUtils.getUrlWithQueryString(client.isShouldEncodeUrl(), client.getUrl(), client.getParams()))
                         .get().build();
             }
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback,client);
             call = mOkHttpClient.newCall(request);
             call.enqueue(handler);
         } catch (Exception e) {
@@ -181,7 +181,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                         .url(client.getUrl())
                         .put(requestBody).build();
             }
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback, client);
             call = mOkHttpClient.newCall(request);
             call.enqueue(handler);
         } catch (Exception e) {
@@ -214,7 +214,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                         .url(client.getUrl())
                         .patch(requestBody).build();
             }
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback, client);
             call = mOkHttpClient.newCall(request);
             call.enqueue(handler);
         } catch (Exception e) {
@@ -236,7 +236,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                         .url(URLEncodedUtils.getUrlWithQueryString(client.isShouldEncodeUrl(), client.getUrl(), client.getParams()))
                         .delete().build();
             }
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback, client);
             call = mOkHttpClient.newCall(request);
             call.enqueue(handler);
         } catch (Exception e) {
@@ -262,7 +262,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                     .build();
         }
         try {
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback, client);
             mOkHttpClient.newCall(request).enqueue(handler);
         } catch (Exception e) {
             e.printStackTrace();
@@ -296,7 +296,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                     .build();
         }
         try {
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback, client);
             mOkHttpClient.newCall(request).enqueue(handler);
         } catch (Exception e) {
             e.printStackTrace();
@@ -338,7 +338,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                     .build();
         }
         try {
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback, client);
             mOkHttpClient.newCall(request).enqueue(handler);
         } catch (Exception e) {
             e.printStackTrace();
@@ -397,7 +397,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                     .build();
         }
         try {
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback, client);
             mOkHttpClient.newCall(request).enqueue(handler);
         } catch (Exception e) {
             e.printStackTrace();
@@ -439,7 +439,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                     .build();
         }
         try {
-            BaseOkCall handler = new BaseOkCall(callback, client.getUrl(), null);
+            BaseOkCall handler = new BaseOkCall(callback, client);
             mOkHttpClient.newCall(request).enqueue(handler);
         } catch (Exception e) {
             e.printStackTrace();

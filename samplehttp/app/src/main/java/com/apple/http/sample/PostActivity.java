@@ -72,15 +72,15 @@ public class PostActivity extends AppCompatActivity{
                     .method(METHOD.POST_FORM).build()
                     .execute(new HttpCallback() {
                         @Override
-                        public void onSuccess(String content, Object object, String reqType) {
-                            Message msg = new Message();
-                            msg.obj = content;
-                            msg.what = 0;
-                            mHandler.sendMessage(msg);
+                        public void onSuccess(String content, BaseHttpClient object, Object parse) {
+                                Message msg = new Message();
+                                msg.obj = content;
+                                msg.what = 0;
+                                mHandler.sendMessage(msg);
                         }
 
                         @Override
-                        public void onError(Throwable error, String content, String reqType) {
+                        public void onError(Throwable error, BaseHttpClient client) {
 
                         }
                     });
@@ -117,15 +117,15 @@ public class PostActivity extends AppCompatActivity{
                     .method(METHOD.POST_FORM_PROGRESS).build()
                     .execute(new UploadCallback() {
                         @Override
-                        public void onSuccess(String content, Object object, String reqType) {
+                        public void onSuccess(String content, BaseHttpClient object, Object parse) {
                             Message msg = new Message();
-                            msg.obj = content;
+                            msg.obj = parse;
                             msg.what = 0;
                             mHandler.sendMessage(msg);
                         }
 
                         @Override
-                        public void onError(Throwable error, String content, String reqType) {
+                        public void onError(Throwable error, BaseHttpClient client) {
 
                         }
 
@@ -161,15 +161,14 @@ public class PostActivity extends AppCompatActivity{
                 put("mobile", "13621937708").method(METHOD.POST_FORM)
                 .build().execute(new HttpCallback() {
             @Override
-            public void onSuccess(String content, Object object, String reqType) {
+            public void onSuccess(String content, BaseHttpClient object, Object parse) {
                 Message msg = new Message();
-                msg.obj = content;
+                msg.obj = parse;
                 msg.what = 0;
                 mHandler.sendMessage(msg);
             }
-
             @Override
-            public void onError(Throwable error, String content, String reqType) {
+            public void onError(Throwable error, BaseHttpClient client) {
 
             }
         });
@@ -190,15 +189,15 @@ public class PostActivity extends AppCompatActivity{
                 .content("你好好好").method(METHOD.POST_STRING)
                 .build().execute(new HttpCallback() {
             @Override
-            public void onSuccess(String content, Object object, String reqType) {
+            public void onSuccess(String content, BaseHttpClient object, Object parse) {
                 Message msg = new Message();
-                msg.obj = content;
+                msg.obj = parse;
                 msg.what = 0;
                 mHandler.sendMessage(msg);
             }
 
             @Override
-            public void onError(Throwable error, String content, String reqType) {
+            public void onError(Throwable error, BaseHttpClient client) {
 
             }
         });
