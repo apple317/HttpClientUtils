@@ -34,6 +34,8 @@ public class BaseHttpClient {
     private  String url;
     private  Object tag;
     private  boolean shouldEncodeUrl;
+    private String urlIdentifier;
+
     //解析类
     private Class parse;
     private String content;
@@ -65,6 +67,7 @@ public class BaseHttpClient {
         this.method=builder.method;
         this.shouldEncodeUrl=builder.shouldEncodeUrl;
         this.parse=builder.parse;
+        this.urlIdentifier=builder.urlIdentifier;
     }
 
 
@@ -96,6 +99,10 @@ public class BaseHttpClient {
         return tag;
     }
 
+
+    public String getUrlIdentifier() {
+        return urlIdentifier;
+    }
 
     public Class getParse() {
         return parse;
@@ -236,7 +243,7 @@ public class BaseHttpClient {
         BaseParams mParams;
         String method;
         Class parse;
-
+        String urlIdentifier;
         boolean shouldEncodeUrl;
         //文本post上传字符串
         String content;
@@ -253,6 +260,7 @@ public class BaseHttpClient {
             method= METHOD.GET;
             shouldEncodeUrl=false;
             content="";
+            urlIdentifier="";
         }
 
 
@@ -289,6 +297,15 @@ public class BaseHttpClient {
         }
 
 
+        /**
+         * 设置url标识
+         * @param urlIdentifier
+         * @return
+         */
+        public Builder urlIdentifier(String urlIdentifier) {
+            this.urlIdentifier = urlIdentifier;
+            return this;
+        }
 
         /**
          * 设置url地址编码格式化
