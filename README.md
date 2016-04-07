@@ -17,7 +17,28 @@
 
 **注意**
 
-目前最新版本，提供了自定Callback，可以按照下面的方式，自行解析返回结果：
+目前最新版本，提供了setParse方法，只要传入解析类对象：
+```java
+ BaseHttpClient.getBaseClient().newBuilder()
+                .url("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                .put("appkey", "56065429")
+                .setParse(UserBean.class)
+                .put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB")
+                .setTag("deals").build().execute(new HttpCallback() {
+            @Override
+            public void onSuccess(String content, BaseHttpClient object, Object parse) {
+                Message msg = new Message();
+                msg.obj = parse;
+                msg.what = 1;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onError(Throwable error, BaseHttpClient client) {
+
+            }
+        });
+```
 
 
 
@@ -59,13 +80,15 @@
                 .put("appkey", "56065429").put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB")
                 .setTag("deals").build().execute(new HttpCallback(){
             @Override
-            public void onSuccess(String content, Object object, String reqType) {
-                txt_content.setText(content+"type==="+reqType);
-
+            public void onSuccess(String content, BaseHttpClient object, Object parse) {
+                Message msg = new Message();
+                msg.obj = parse;
+                msg.what = 1;
+                mHandler.sendMessage(msg);
             }
 
             @Override
-            public void onFailure(Throwable error, String content, String reqType) {
+            public void onError(Throwable error, BaseHttpClient client) {
 
             }
              @Override
@@ -81,16 +104,16 @@
 默认是表单上传，所以在这里分离postStringRequest方法，而文本必须是apple_txt为key传入
 BaseHttpClient.getBaseClient().newBuilder().url("url")
                 .content("你好好好").method(METHOD.POST_STRING).build().execute(new HttpCallback() {
-            @Override
-            public void onSuccess(String content, Object object, String reqType) {
+             @Override
+            public void onSuccess(String content, BaseHttpClient object, Object parse) {
                 Message msg = new Message();
-                msg.obj = content;
-                msg.what = 0;
+                msg.obj = parse;
+                msg.what = 1;
                 mHandler.sendMessage(msg);
             }
 
             @Override
-            public void onError(Throwable error, String content, String reqType) {
+            public void onError(Throwable error, BaseHttpClient client) {
 
             }
         });
@@ -114,18 +137,18 @@ BaseHttpClient.getBaseClient().newBuilder().url("url")
                     .put("os","2")
                     .method(METHOD.POST_FORM).build()
                     .execute(new HttpCallback() {
-                        @Override
-                        public void onSuccess(String content, Object object, String reqType) {
-                            Message msg = new Message();
-                            msg.obj = content;
-                            msg.what = 0;
-                            mHandler.sendMessage(msg);
-                        }
-
-                        @Override
-                        public void onError(Throwable error, String content, String reqType) {
-
-                        }
+                    @Override
+	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
+	                Message msg = new Message();
+	                msg.obj = parse;
+	                msg.what = 0;
+	                mHandler.sendMessage(msg);
+	            }
+	
+	            @Override
+	            public void onError(Throwable error, BaseHttpClient client) {
+	
+	            }
 
                         //                        @Override
 //                        public void onProgress(long bytesRead, long contentLength, boolean done) {
@@ -161,18 +184,18 @@ try {
                     .put("os","2")
                     .method(METHOD.POST_FORM).build()
                     .execute(new HttpCallback() {
-                        @Override
-                        public void onSuccess(String content, Object object, String reqType) {
-                            Message msg = new Message();
-                            msg.obj = content;
-                            msg.what = 0;
-                            mHandler.sendMessage(msg);
-                        }
-
-                        @Override
-                        public void onError(Throwable error, String content, String reqType) {
-
-                        }
+                    @Override
+	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
+	                Message msg = new Message();
+	                msg.obj = parse;
+	                msg.what = 0;
+	                mHandler.sendMessage(msg);
+	            }
+	
+	            @Override
+	            public void onError(Throwable error, BaseHttpClient client) {
+	
+	            }
 
                         //                        @Override
 //                        public void onProgress(long bytesRead, long contentLength, boolean done) {
@@ -205,17 +228,17 @@ try {
                     .method(METHOD.POST_FORM_PROGRESS).build()
                     .execute(new UploadCallback() {
                         @Override
-                        public void onSuccess(String content, Object object, String reqType) {
-                            Message msg = new Message();
-                            msg.obj = content;
-                            msg.what = 0;
-                            mHandler.sendMessage(msg);
-                        }
-
-                        @Override
-                        public void onError(Throwable error, String content, String reqType) {
-
-                        }
+	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
+	                Message msg = new Message();
+	                msg.obj = parse;
+	                msg.what = 0;
+	                mHandler.sendMessage(msg);
+	            }
+	
+	            @Override
+	            public void onError(Throwable error, BaseHttpClient client) {
+	
+	            }
 
                         @Override
                         public void uploadProgress(long bytesRead, long contentLength, boolean done) {
@@ -281,16 +304,18 @@ public String name;//名称
  BaseHttpClient.getBaseClient().addUrl("http://api.dianping.com/v1/metadata/get_cities_with_deals")
                 .put("appkey","56065429").put("sign","AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB")
                 .setTag("deals").getRequest(new HttpCallback(){
-            @Override
-            public void onSuccess(String content, Object object, String reqType) {
-                txt_content.setText(content+"type==="+reqType);
-
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
+            	    @Override
+	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
+	                Message msg = new Message();
+	                msg.obj = parse;
+	                msg.what = 0;
+	                mHandler.sendMessage(msg);
+	            }
+	
+	            @Override
+	            public void onError(Throwable error, BaseHttpClient client) {
+	
+	            }
         });
 传入tag，使用方法setTag,tag是Object对象。
 第二种方式
@@ -299,15 +324,18 @@ BaseParams mParams = new BaseParams();
         mParams.setTag("tag");//设置tag传入
         BaseHttpClient.getBaseClient()
         .sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
-            @Override
-            public void onSuccess(String content, Object object, String reqType) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content, String reqType) {
-
-            }
+            	    @Override
+	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
+	                Message msg = new Message();
+	                msg.obj = parse;
+	                msg.what = 0;
+	                mHandler.sendMessage(msg);
+	            }
+	
+	            @Override
+	            public void onError(Throwable error, BaseHttpClient client) {
+	
+	            }
         });
 例如：在Activity中，当Activity销毁取消请求：
 ```
