@@ -73,10 +73,7 @@ public class PostActivity extends AppCompatActivity{
                     .execute(new HttpCallback() {
                         @Override
                         public void onSuccess(String content, BaseHttpClient object, Object parse) {
-                                Message msg = new Message();
-                                msg.obj = content;
-                                msg.what = 0;
-                                mHandler.sendMessage(msg);
+
                         }
 
                         @Override
@@ -118,10 +115,7 @@ public class PostActivity extends AppCompatActivity{
                     .execute(new UploadCallback() {
                         @Override
                         public void onSuccess(String content, BaseHttpClient object, Object parse) {
-                            Message msg = new Message();
-                            msg.obj = parse;
-                            msg.what = 0;
-                            mHandler.sendMessage(msg);
+
                         }
 
                         @Override
@@ -131,10 +125,7 @@ public class PostActivity extends AppCompatActivity{
 
                         @Override
                         public void uploadProgress(long bytesRead, long contentLength, boolean done) {
-                            Message msg = new Message();
-                            msg.obj = bytesRead * 1.0f / contentLength;
-                            msg.what = 1;
-                            mHandler.sendMessage(msg);
+                            mProgressBar.setProgress((int) (100 * (float)bytesRead * 1.0f / contentLength));
                         }
                     });
         } catch (Exception e) {
@@ -162,10 +153,7 @@ public class PostActivity extends AppCompatActivity{
                 .build().execute(new HttpCallback() {
             @Override
             public void onSuccess(String content, BaseHttpClient object, Object parse) {
-                Message msg = new Message();
-                msg.obj = parse;
-                msg.what = 0;
-                mHandler.sendMessage(msg);
+
             }
             @Override
             public void onError(Throwable error, BaseHttpClient client) {
@@ -190,10 +178,7 @@ public class PostActivity extends AppCompatActivity{
                 .build().execute(new HttpCallback() {
             @Override
             public void onSuccess(String content, BaseHttpClient object, Object parse) {
-                Message msg = new Message();
-                msg.obj = parse;
-                msg.what = 0;
-                mHandler.sendMessage(msg);
+                txt_content.setText(content);
             }
 
             @Override
@@ -217,36 +202,5 @@ public class PostActivity extends AppCompatActivity{
 
 
 
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    //得到数据并去做解析类。
-                    //    BaseEntity entity = JsonPaserFactory.paserObj(msg.obj.toString(), url);
-                    //通知UI界面
-                    JSONObject object= null;
-                    try {
-                        object = new JSONObject(msg.obj.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    JSONObject statuObj=object.optJSONObject("status");
-                    if(statuObj!=null){
-                        txt_content.setText(statuObj.optString("message") + "statue==="+statuObj.optInt("code"));
 
-                    }
-                   // txt_content.setText(statuObj.optString("message") + "type===");
-
-                    break;
-                case 1:
-                    mProgressBar.setProgress((int) (100 * (float)msg.obj));
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    };
 }

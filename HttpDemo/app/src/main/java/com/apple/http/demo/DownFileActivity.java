@@ -62,34 +62,30 @@ public class DownFileActivity extends AppCompatActivity  {
                 .downName("apple_nba").method(METHOD.DOWNLOAD_FILE).build().execute(new DownCallback() {
             @Override
             public void downProgress(DownEntity entity) {
-                Message msg = new Message();
-                msg.obj = entity;
-                msg.what = 1;
-                mHandler.sendMessage(msg);
+                Log.i("HU", "======bytes===" + entity.currentByte + "==contenLength==" + entity.totalByte);
+                id_progress.setProgress((int) (100 * (float) entity.currentByte * 1.0f / entity.totalByte));
+                txt_content.setText("当前下载的文件目录是"+entity.path+"文件名称:"+entity.name+"网络返回code"+entity.httpCode+"===服务端返回消息=="+entity.message);
             }
         });
     }
 
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    try{
-                        DownEntity entity=(DownEntity)msg.obj;
-                        Log.i("HU", "======bytes===" + entity.currentByte + "==contenLength==" + entity.totalByte);
-                        id_progress.setProgress((int) (100 * (float) entity.currentByte * 1.0f / entity.totalByte));
-                        txt_content.setText("当前下载的文件目录是"+entity.path+"文件名称:"+entity.name+"网络返回code"+entity.httpCode+"===服务端返回消息=="+entity.message);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    };
+//    Handler mHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.what) {
+//                case 1:
+//                    try{
+//
+//                    }catch (Exception e){
+//                        e.printStackTrace();
+//                    }
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//
+//    };
 
 }

@@ -366,7 +366,7 @@ public class OkHttpImpl implements BaseHttpImpl {
                                 client.getUrl(), client.getParams()))
                         .get().build();
             }
-            DownFileCall handler = new DownFileCall(BaseHttpClient.getConfiguration().getContext(),
+            DownFileCall handler = new DownFileCall(client,
                     callback, client.getUrl(), client.getDestFileDir(),client.getDestFileName());
             call = mOkHttpClient.newCall(request);
             call.enqueue(handler);

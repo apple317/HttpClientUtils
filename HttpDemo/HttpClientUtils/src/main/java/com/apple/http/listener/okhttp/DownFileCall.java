@@ -1,8 +1,8 @@
 package com.apple.http.listener.okhttp;
 
+import com.apple.http.common.BaseHttpClient;
 import com.apple.http.entity.DownEntity;
 import com.apple.http.listener.BaseCallback;
-import com.apple.http.listener.DownCallback;
 import com.apple.http.utils.MD5Util;
 import com.apple.http.utils.StorageUtils;
 
@@ -40,12 +40,15 @@ public class DownFileCall implements Callback {
 
     DownEntity mDownEntity;
 
-    public DownFileCall(Context context, BaseCallback response, String requestUrl, String destFileDir, String destFileName) {
+    BaseHttpClient baseHttpClient;
+
+    public DownFileCall(BaseHttpClient baseHttpClient, BaseCallback response, String requestUrl, String destFileDir, String destFileName) {
         this.callBack = response;
-        url = requestUrl;
+        this.url = requestUrl;
         this.destFileDir = destFileDir;
         this.destFileName = destFileName;
-        mContext = context;
+        this.mContext = baseHttpClient.getConfiguration().getContext();
+        this.baseHttpClient=baseHttpClient;
         mDownEntity = new DownEntity();
         mDownEntity.downUrl(url);
         if (destFileDir!=null&&destFileDir.trim().toString().equals(""))
@@ -73,7 +76,8 @@ public class DownFileCall implements Callback {
         mDownEntity.isCanceled = call.isCanceled();
         mDownEntity.isExecuted = call.isExecuted();
         mDownEntity.downMessage(e.toString());
-        callBack.downProgress(mDownEntity);
+        if(baseHttpClient!=null&&baseHttpClient.configuration!=null&&baseHttpClient.configuration.getHandler()!=null)
+            baseHttpClient.configuration.getHandler().post(new LoadTask(mDownEntity));
     }
 
     /**
@@ -102,7 +106,8 @@ public class DownFileCall implements Callback {
                 mDownEntity.downStatue(false);
                 mDownEntity.downCode(response.code());
                 mDownEntity.downMessage(response.body().toString());
-                callBack.downProgress(mDownEntity);
+                if(baseHttpClient!=null&&baseHttpClient.configuration!=null&&baseHttpClient.configuration.getHandler()!=null)
+                    baseHttpClient.configuration.getHandler().post(new LoadTask(mDownEntity));
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -148,7 +153,8 @@ public class DownFileCall implements Callback {
                 mDownEntity.currentByte(finalSum);
                 mDownEntity.totalByte(total);
                 mDownEntity.downStatue(sum==-1);
-                callBack.downProgress(mDownEntity);
+                if(baseHttpClient!=null&&baseHttpClient.configuration!=null&&baseHttpClient.configuration.getHandler()!=null)
+                     baseHttpClient.configuration.getHandler().post(new LoadTask(mDownEntity));
             }
             fos.flush();
             return file;
@@ -180,4 +186,16 @@ public class DownFileCall implements Callback {
         }
         return httpUrl;
     }
+
+    final class LoadTask implements Runnable{
+        private final DownEntity mDownEntity;
+        public LoadTask(DownEntity mDownEntity) {
+            this.mDownEntity = mDownEntity;
+        }
+        @Override
+        public void run() {
+            callBack.downProgress(mDownEntity);
+        }
+    }
+
 }
