@@ -57,8 +57,9 @@
 * 支持自定义Callback   已实现
 * 支持DELETE、PATCH、PUT  已实现
 * 配置、请求过程分离    已实现
-* 支持session的保持  下版本实现
-* 支持自签名网站https的访问，提供方法设置下证书就行
+* 支持session的保持  已实现
+* 支持自签名网站https的访问，提供方法设置下证书就行 已实现
+* 支持解析回来切换到ui
 ##用法示例
 ###初始化操作
 ```java
@@ -81,10 +82,7 @@
                 .setTag("deals").build().execute(new HttpCallback(){
             @Override
             public void onSuccess(String content, BaseHttpClient object, Object parse) {
-                Message msg = new Message();
-                msg.obj = parse;
-                msg.what = 1;
-                mHandler.sendMessage(msg);
+              //直接解析使用
             }
 
             @Override
@@ -139,10 +137,7 @@ BaseHttpClient.getBaseClient().newBuilder().url("url")
                     .execute(new HttpCallback() {
                     @Override
 	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
-	                Message msg = new Message();
-	                msg.obj = parse;
-	                msg.what = 0;
-	                mHandler.sendMessage(msg);
+	               //直接解析使用
 	            }
 	
 	            @Override
@@ -197,14 +192,7 @@ try {
 	
 	            }
 
-                        //                        @Override
-//                        public void onProgress(long bytesRead, long contentLength, boolean done) {
-//                            Log.i("HU", "onprogress=bytesRead=" + bytesRead);
-//                            Message msg = new Message();
-//                            msg.obj = bytesRead * 1.0f / contentLength;
-//                            msg.what = 1;
-//                            mHandler.sendMessage(msg);
-//                        }
+                      
                     });
         } catch (Exception e) {
             e.printStackTrace();
@@ -229,10 +217,7 @@ try {
                     .execute(new UploadCallback() {
                         @Override
 	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
-	                Message msg = new Message();
-	                msg.obj = parse;
-	                msg.what = 0;
-	                mHandler.sendMessage(msg);
+	              //直接解析使用
 	            }
 	
 	            @Override
@@ -242,10 +227,8 @@ try {
 
                         @Override
                         public void uploadProgress(long bytesRead, long contentLength, boolean done) {
-                            Message msg = new Message();
-                            msg.obj = bytesRead * 1.0f / contentLength;
-                            msg.what = 1;
-                            mHandler.sendMessage(msg);
+                             mProgressBar.setProgress((int) (100 * (float)bytesRead * 1.0f / contentLength));
+
                         }
                     });
         } catch (Exception e) {
@@ -326,10 +309,7 @@ BaseParams mParams = new BaseParams();
         .sendPostRequest("http://apphttpurl.com/v1", mParams, new HttpCallback() {
             	    @Override
 	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
-	                Message msg = new Message();
-	                msg.obj = parse;
-	                msg.what = 0;
-	                mHandler.sendMessage(msg);
+	                //直接解析使用
 	            }
 	
 	            @Override
