@@ -27,10 +27,7 @@
                 .setTag("deals").build().execute(new HttpCallback() {
             @Override
             public void onSuccess(String content, BaseHttpClient object, Object parse) {
-                Message msg = new Message();
-                msg.obj = parse;
-                msg.what = 1;
-                mHandler.sendMessage(msg);
+               //刷新ui
             }
 
             @Override
@@ -289,10 +286,7 @@ public String name;//名称
                 .setTag("deals").getRequest(new HttpCallback(){
             	    @Override
 	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
-	                Message msg = new Message();
-	                msg.obj = parse;
-	                msg.what = 0;
-	                mHandler.sendMessage(msg);
+	               //刷新ui
 	            }
 	
 	            @Override
