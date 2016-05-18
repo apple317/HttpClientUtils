@@ -56,7 +56,8 @@
 * 配置、请求过程分离    已实现
 * 支持session的保持  已实现
 * 支持自签名网站https的访问，提供方法设置下证书就行 已实现
-* 支持解析回来切换到ui
+* 支持解析回来切换到ui 支持
+* 支持x-www-form-urlencoded 
 ##用法示例
 ###初始化操作
 ```java
@@ -116,16 +117,14 @@ BaseHttpClient.getBaseClient().newBuilder().url("url")
 
 
 
-### Post File
+### Post 采用x-www-form-urlencoded
 
 ```java
 第一种方式
  try {
-            File file = new File(Environment.getExternalStorageDirectory()
-                    , "4cc75752fa532553bf7b6f7e00f26db8.png");
+           
             BaseHttpClient.getBaseClient().newBuilder().url("url")
                     .put("game", "lol")
-                    .put("logo", file)
                     .put("token","ee595bd5078a6e67a110c6bd8828c8e2a2388c12")
                     .put("version", "2.1.0")
                     .put("device_id","867905026687709")
@@ -174,7 +173,7 @@ try {
                     .put("version", "2.1.0")
                     .put("device_id","867905026687709")
                     .put("os","2")
-                    .method(METHOD.POST_FORM).build()
+                    .method(METHOD.POST_FORM_FILE).build()
                     .execute(new HttpCallback() {
                     @Override
 	            public void onSuccess(String content, BaseHttpClient object, Object parse) {
@@ -324,17 +323,36 @@ protected void onDestroy()
      //可以取消同一个tag的
      BaseHttpClient.getBaseClient().cancelTag("tag对象");
 }
-## 混淆
+
+
+
+
+##支持所有请求head加入
+ ConcurrentHashMap<String, String> headMap=new ConcurrentHashMap<String, String>();
+        headMap.put("device","1231231241");
+        BaseHttpClient.getBaseClient().newBuilder()
+                .url("http://api.dianping.com/v1/metadata/get_cities_with_deals")
+                .put("appkey", "56065429")
+                .setParse(UserBean.class)
+                .setHeadMap(headMap)
+                .put("sign", "AF24BF8A3F31D22D25422BCDD86AA322F43B5BAB")
+                .setTag("deals").build().execute(new HttpCallback() {
+            @Override
+            public void onSuccess(String content, BaseHttpClient object, Object parse) {
+                UserBean userBean=(UserBean)parse;
+                txt_content.setText(userBean.getCities().get(0) + "type===" );
+            }
+
+            @Override
+            public void onError(Throwable error, BaseHttpClient client) {
+
+            }
+        });
+
+
 
 ```
 
-#okhttp
-
-
-
-
-
-```
 
 
 
