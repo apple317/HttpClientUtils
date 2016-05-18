@@ -44,6 +44,7 @@ public interface BaseHttpImpl {
 
 	void postFileProgress(BaseHttpClient client,BaseCallback callback);
 	void postFormProgress(BaseHttpClient client,BaseCallback callback);
+	void postFormFile(BaseHttpClient client, BaseCallback callback);
 
 	void execute(BaseHttpClient client,BaseCallback callback);
 

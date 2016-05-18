@@ -153,7 +153,7 @@ public class PostActivity extends AppCompatActivity{
                 .build().execute(new HttpCallback() {
             @Override
             public void onSuccess(String content, BaseHttpClient object, Object parse) {
-
+                //刷新UI
             }
             @Override
             public void onError(Throwable error, BaseHttpClient client) {

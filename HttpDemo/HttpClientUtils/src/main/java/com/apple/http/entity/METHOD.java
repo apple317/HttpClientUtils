@@ -8,6 +8,7 @@ public class METHOD {
     public static final String GET = "GET";
     public static final String POST_STRING = "POST_STRING";
     public static final String POST_FORM = "POST_FORM";
+    public static final String POST_FORM_FILE = "POST_FORM_FILE";
     public static final String POST_FILE = "POST_FILE";
     public static final String DOWNLOAD_FILE = "DOWN_FILE";
     public static final String POST_FILE_PROGRESS = "POST_FILE_PROGRESS";

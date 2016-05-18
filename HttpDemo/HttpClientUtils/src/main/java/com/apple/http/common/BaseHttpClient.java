@@ -16,6 +16,7 @@ import com.apple.http.utils.MD5Util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -46,6 +47,8 @@ public class BaseHttpClient {
     private static final String WARNING_RE_INIT_CONFIG = "Try to initialize BaseHttpClient which had already been initialized before. " + "To re-init BaseHttpClient with new configuration call BaseHttpClient.destroy() at first.";
     private static final String ERROR_INIT_CONFIG_WITH_NULL = "BaseHttpClient configuration can not be initialized with null";
     static final String LOG_INIT_CONFIG = "Initialize BaseHttpClient with configuration";
+    private ConcurrentHashMap<String,String> headMap;
+
 
 
 
@@ -74,8 +77,13 @@ public class BaseHttpClient {
         this.shouldEncodeUrl=builder.shouldEncodeUrl;
         this.parse=builder.parse;
         this.urlIdentifier=builder.urlIdentifier;
+        this.headMap=builder.headMap;
     }
 
+
+    public ConcurrentHashMap<String, String> getHeadMap() {
+        return headMap;
+    }
 
     public static HttpConfiguration getConfiguration() {
         return configuration;
@@ -260,6 +268,7 @@ public class BaseHttpClient {
         Class parse;
         String urlIdentifier;
         boolean shouldEncodeUrl;
+        ConcurrentHashMap<String,String> headMap;
         //文本post上传字符串
         String content;
         public Builder() {
@@ -276,12 +285,25 @@ public class BaseHttpClient {
             shouldEncodeUrl=false;
             content="";
             urlIdentifier="";
+            if (headMap == null) {
+                headMap = new ConcurrentHashMap<String, String>();
+            } else {
+                headMap.clear();
+            }
         }
 
 
         public Builder setParse(Class parse) {
             this.parse = parse;
             return this;
+        }
+
+        /**
+         * 添加请求头部信息
+         * @param headMap
+         */
+        public void setHeadMap(ConcurrentHashMap<String, String> headMap) {
+            this.headMap = headMap;
         }
 
         /**
