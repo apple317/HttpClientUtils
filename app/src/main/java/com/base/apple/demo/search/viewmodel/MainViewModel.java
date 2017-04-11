@@ -102,60 +102,76 @@ public class MainViewModel extends ViewModel implements View.OnClickListener {
                 if (userBean != null) {
                     userData = userBean.getItems();
                     for (int k = 0; k < userData.size(); k++) {
-                        Log.e("HU", "userDatauserDatauserData===22");
-                        userIndex.put(userData.get(k).getLogin(), k);
-                        BaseHttpClient.newBuilder().urlIdentifier(userData.get(k).getLogin()).
-                                url("https://api.github.com/users/" + userData.get(k).getLogin() + "/repos")
-                                .method(METHOD.GET)
-                                .build().execute(new HttpCallback() {
+                        final int finalK = k;
+                        new Thread() {
                             @Override
-                            public void success(String content, BaseHttpClient client, Object parse) {
-                                Log.e("HU", "content====" + content);
+                            public void run() {
+                                super.run();
                                 try {
-                                    Gson gson = new Gson();
-                                    JSONArray jsonArray = new JSONArray(content);
-                                    HashMap<String, Integer> map = new HashMap<String, Integer>();
-                                    if (jsonArray != null && jsonArray.length() > 0) {
-                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                            UserReposBean userReposBean = gson.fromJson(jsonArray.get(i).toString(), UserReposBean.class);
-                                            String name = userReposBean.getOwner().getLogin();
-                                            String language = userReposBean.getLanguage();
-                                            if(language!=null){
-                                                if (map.get(name + "_" + language) != null) {
-                                                    map.put(name + "_" + language, map.get(name + "_" + language) + 1);
-                                                } else {
-                                                    map.put(name + "_" + language, 1);
-                                                }
-                                            }
-                                        }
-                                        Collection<Integer> count = map.values();
-                                        int maxCount = Collections.max(count);
-                                        StringBuilder language=new StringBuilder();
-                                        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                                            // 得到value为maxCount的key，也就是数组中出现次数最多的数字
-                                            String key=entry.getKey().replaceFirst(client.getUrlIdentifier()+"_","");
-                                            if(maxCount==1){
-                                                language.append(key+" ");
-                                            }else if(maxCount>1&&maxCount==entry.getValue()){
-                                                language.append(key+" ");
-                                            }
-                                        }
-                                        userBean.getItems().get(userIndex.get(client.getUrlIdentifier())).setLanguage(language.toString().trim().isEmpty()
-                                        ?"么有偏爱语言或者查询失败":language.toString());
-                                    }
-
-
-
-                                } catch (Exception e) {
+                                    Thread.sleep(500);//休眠3秒
+                                } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                            }
+                                /**
+                                 * 要执行的操作
+                                 */
+                                userIndex.put(userData.get(finalK).getLogin(), finalK);
+                                BaseHttpClient.newBuilder().urlIdentifier(userData.get(finalK).getLogin()).
+                                        url("https://api.github.com/users/" + userData.get(finalK).getLogin() + "/repos")
+                                        .method(METHOD.GET)
+                                        .build().execute(new HttpCallback() {
+                                    @Override
+                                    public void success(String content, BaseHttpClient client, Object parse) {
+                                        Log.e("HU", "content====" + content);
+                                        try {
+                                            Gson gson = new Gson();
+                                            JSONArray jsonArray = new JSONArray(content);
+                                            HashMap<String, Integer> map = new HashMap<String, Integer>();
+                                            if (jsonArray != null && jsonArray.length() > 0) {
+                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                    UserReposBean userReposBean = gson.fromJson(jsonArray.get(i).toString(), UserReposBean.class);
+                                                    String name = userReposBean.getOwner().getLogin();
+                                                    String language = userReposBean.getLanguage();
+                                                    if(language!=null){
+                                                        if (map.get(name + "_" + language) != null) {
+                                                            map.put(name + "_" + language, map.get(name + "_" + language) + 1);
+                                                        } else {
+                                                            map.put(name + "_" + language, 1);
+                                                        }
+                                                    }
+                                                }
+                                                Collection<Integer> count = map.values();
+                                                int maxCount = Collections.max(count);
+                                                StringBuilder language=new StringBuilder();
+                                                for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                                                    // 得到value为maxCount的key，也就是数组中出现次数最多的数字
+                                                    String key=entry.getKey().replaceFirst(client.getUrlIdentifier()+"_","");
+                                                    if(maxCount==1){
+                                                        language.append(key+" ");
+                                                    }else if(maxCount>1&&maxCount==entry.getValue()){
+                                                        language.append(key+" ");
+                                                    }
+                                                }
+                                                userBean.getItems().get(userIndex.get(client.getUrlIdentifier())).setLanguage(language.toString().trim().isEmpty()
+                                                        ?"么有偏爱语言或者查询失败":language.toString());
+                                            }
 
-                            @Override
-                            public void error(Throwable error, BaseHttpClient client) {
 
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void error(Throwable error, BaseHttpClient client) {
+
+                                    }
+                                });
                             }
-                        });
+                        }.start();
+                        Log.e("HU", "userDatauserDatauserData===22");
+
                     }
                     userListAdapter.setData(userData);
                 }
