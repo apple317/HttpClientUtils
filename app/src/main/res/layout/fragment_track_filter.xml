@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="10.0dip" />
+        //低通滤波器
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="65.0dip">
+
+            <LinearLayout
+                android:layout_width="65.0dip"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:id="@+id/view_filter_l_selected"
+                    style="@style/title_selector_v" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:text="@string/spin_filter_title_l"
+                    android:textColor="@color/text_color"
+                    android:textSize="14.0dip" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_filter_l_freq"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_filter_l_type"
+                        style="@style/spin_btn_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_filter_l_rate"
+                        style="@style/spin_btn_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        //高通滤波器
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="65.0dip">
+
+            <LinearLayout
+                android:layout_width="65.0dip"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:id="@+id/view_filter_h_selected"
+                    style="@style/title_selector_v" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:text="@string/spin_filter_title_h"
+                    android:textColor="@color/text_color"
+                    android:textSize="14.0dip" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_filter_h_freq"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_filter_h_type"
+                        style="@style/spin_btn_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_filter_h_rate"
+                        style="@style/spin_btn_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        //限幅器
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="65.0dip">
+
+            <LinearLayout
+                android:layout_width="65.0dip"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:id="@+id/view_limiter_selected"
+                    style="@style/title_selector_v" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:text="@string/spin_limiter_releasetime_title"
+                    android:textColor="@color/text_color"
+                    android:textSize="14.0dip" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_limiter_range"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_limiter_replytime"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="36.0dip"
+                    android:layout_weight="1.0">
+
+                    <Button
+                        android:id="@+id/btn_limiter_releasetime"
+                        style="@style/spin_btn_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

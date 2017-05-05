@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="5.0dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_ch_num"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:textColor="@color/text_color"
+                android:textSize="13.0dip" />
+
+            <ImageView
+                android:id="@+id/view_channel_selected"
+                style="@style/title_selector_h"
+                android:layout_width="fill_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="28.0dip">
+
+            <TextView
+                android:id="@+id/tv_ch_gain"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:textColor="@color/text_color"
+                android:textSize="13.0dip" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:gravity="center">
+
+            <com.base.apple.demo.common.VerticalSeekBar
+                android:id="@+id/track_seekbar"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginTop="5.0dip"
+                android:max="400"
+                android:progress="200"
+                android:progressDrawable="@drawable/seekbar_style"
+                android:thumb="@drawable/selector_seekbar_fader_v" />
+        </LinearLayout>
+        //水平分割线
+
+        <include layout="@layout/separator_h" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_ch_freq"
+                android:layout_width="fill_parent"
+                android:layout_height="30.0dip"
+                android:background="@drawable/selector_btn"
+                android:textColor="@color/text_color"
+                android:textSize="13.0dip" />
+
+            <Button
+                android:id="@+id/btn_ch_q"
+                android:layout_width="fill_parent"
+                android:layout_height="30.0dip"
+                android:background="@drawable/selector_btn"
+                android:textColor="@color/text_color"
+                android:textSize="13.0dip" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

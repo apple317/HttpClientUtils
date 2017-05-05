@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_segment_group"
+        android:layout_width="fill_parent"
+        android:layout_height="40.0dip"
+        android:layout_marginBottom="2.0dip"
+        android:layout_marginTop="2.0dip" />
+    //水平分割线
+
+    <include layout="@layout/separator_h" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_1"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_2"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_3"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_4"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_5"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_6"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_7"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_8"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_9"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_10"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_11"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_12"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_13"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_14"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_15"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_16"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_17"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_18"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_19"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_20"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_21"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_22"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_23"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_24"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_25"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_26"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_27"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_28"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_29"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_30"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/layout_track_seekbar_31"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+    </LinearLayout>
+    //水平分割线
+
+    <include layout="@layout/separator_h" />
+
+    <LinearLayout
+        android:id="@+id/layout_track_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:background="@color/color_setup_section" />
+</LinearLayout>

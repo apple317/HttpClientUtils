@@ -1,58 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data class=".MainBinding"></data>
 
-    <data class=".MainBinding">
-    </data>
-
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/carsystem_layout_background"
+        android:orientation="vertical">
 
 
-        <LinearLayout
-            android:id="@+id/lay_top"
-            android:layout_width="match_parent"
+        <include
+            layout="@layout/lay_title_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp" />
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/id_viewpage"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </android.support.v4.view.ViewPager>
+        //水平分割线
+        <include layout="@layout/separator_h" />
+
+        <com.viewpagerindicator.TitlePageIndicator
+            android:id="@+id/idIndicator"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal">
+            android:background="#000000"
+            android:textColor="#ffffff"
+            app:footerColor="@android:color/holo_orange_dark"
+            app:footerIndicatorHeight="1dp"
+            app:footerIndicatorStyle="underline"
+            app:footerLineHeight="1dp"
+            app:selectedBold="true"
+            app:selectedColor="#ffffff" />
 
 
-            <EditText
-                android:id="@+id/edit_search"
-                android:layout_width="0dp"
-                android:layout_weight="1.0"
-                android:layout_height="50dp" />
-
-
-            <Button
-                android:id="@+id/btn_search"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:text="搜索"/>
-
-        </LinearLayout>
-
-
-        <ProgressBar
-            android:id="@+id/main_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            />
-
-
-        <ListView
-            android:layout_below="@+id/lay_top"
-            android:id="@+id/list_serach"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>
 

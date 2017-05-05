@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">//联调设置
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="35.0dip">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="联调设置 "
+            android:textColor="@color/text_color"
+            android:textSize="16.0dip" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/checkbox_front"
+            style="@style/CustomCheckboxTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="40.0dip"
+            android:text="前声场联调"
+            android:textColor="@color/text_color"
+            android:textSize="15.0dip" />
+
+        <CheckBox
+            android:id="@+id/checkbox_back"
+            style="@style/CustomCheckboxTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40.0dip"
+            android:text="后声场联调"
+            android:textColor="@color/text_color"
+            android:textSize="15.0dip" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/checkbox_mid"
+            style="@style/CustomCheckboxTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="40.0dip"
+            android:text="超重联调"
+            android:textColor="@color/text_color"
+            android:textSize="15.0dip" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,6 +1,10 @@
 package com.apple.common;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.apple.http.common.BaseHttpClient;
 import com.apple.http.entity.DownEntity;
@@ -64,13 +68,11 @@ public abstract class ViewModel extends HttpCallback {
     /**
      * @deprecated 初始化视图
      */
-    public abstract void initView(Bundle bundle);
+    public abstract View initView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState);
 
 
-    /**
-     * @deprecated 初始化事件
-     */
-    public abstract void initLintener(Bundle bundle);
+
+
 
 
 

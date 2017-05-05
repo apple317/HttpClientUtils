@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_segment_group"
+        android:layout_width="fill_parent"
+        android:layout_height="40.0dip"
+        android:layout_marginBottom="2.0dip"
+        android:layout_marginTop="2.0dip" />
+    //水平分割线
+
+    <include layout="@layout/separator_h" />
+
+    <LinearLayout
+        android:id="@+id/layout_track_filter"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="4.0" />
+    //水平分割线
+
+    <include layout="@layout/separator_h" />
+
+    <LinearLayout
+        android:id="@+id/layout_combin_setup"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="5.0" />
+
+    <LinearLayout
+        android:id="@id/layout_track_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:background="@color/color_setup_section" />
+</LinearLayout>

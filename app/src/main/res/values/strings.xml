@@ -1,3 +1,38 @@
 <resources>
     <string name="app_name">BaseDemo</string>
+
+    <string name="abc_action_bar_home_description">Navigate home</string>
+    <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
+    <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
+    <string name="abc_action_bar_up_description">Navigate up</string>
+    <string name="abc_action_menu_overflow_description">More options</string>
+    <string name="abc_action_mode_done">Done</string>
+    <string name="abc_activity_chooser_view_see_all">See all</string>
+    <string name="abc_activitychooserview_choose_application">Choose an app</string>
+    <string name="abc_capital_off">OFF</string>
+    <string name="abc_capital_on">ON</string>
+    <string name="abc_search_hint">Search…</string>
+    <string name="abc_searchview_description_clear">Clear query</string>
+    <string name="abc_searchview_description_query">Search query</string>
+    <string name="abc_searchview_description_search">Search</string>
+    <string name="abc_searchview_description_submit">Submit query</string>
+    <string name="abc_searchview_description_voice">Voice search</string>
+    <string name="abc_shareactionprovider_share_with">Share with</string>
+    <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
+    <string name="abc_toolbar_collapse_description">Collapse</string>
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="action_settings">Settings</string>
+    <string name="dialog_file_operate">模式操作</string>
+    <string name="dialog_filter_rate">请选择滤波器斜率</string>
+    <string name="dialog_filter_type">请选择滤波器类型</string>
+    <string name="dialog_limiter_releasetime">请选择限幅器释放时间</string>
+    <string name="dialog_setup_mode">模式选择</string>
+    <string name="dialog_sound_back">后声场联调</string>
+    <string name="dialog_sound_front">前声场联调</string>
+    <string name="dialog_sound_mid">超重联调</string>
+    <string name="spin_filter_title_h">"高通滤波器"</string>
+    <string name="spin_filter_title_l">"低通滤波器"</string>
+    <string name="spin_limiter_releasetime_title">限幅器</string>
+    <string name="title_activity_track">CarApp</string>
+
 </resources>

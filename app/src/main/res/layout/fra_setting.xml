@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="35.0dip">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/border_title"
+            android:gravity="center"
+            android:text="模式设置 "
+            android:textColor="@color/text_color"
+            android:textSize="16.0dip" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="130.0dip"
+        android:orientation="vertical">
+
+        //模式选择
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginTop="5.0dip">
+
+            <TextView
+                android:layout_width="60.0dip"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="模式 : "
+                android:textColor="@color/text_color"
+                android:textSize="14.0dip" />
+
+            <Button
+                android:id="@+id/btn_setup_mode"
+                style="@style/spin_btn_style"
+                android:layout_width="110.0dip"
+                android:layout_height="fill_parent"
+                android:layout_margin="4.0dip" />
+        </LinearLayout>
+        //模式名编辑
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip">
+
+            <TextView
+                android:layout_width="60.0dip"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="名称 : "
+                android:textColor="@color/text_color"
+                android:textSize="14.0dip" />
+
+            <EditText
+                android:id="@+id/edittxt_mode_name"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ"
+                android:gravity="center"
+                android:inputType="phone"
+                android:textColor="@color/text_color" />
+        </LinearLayout>
+        //模式按键
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="30.0dip"
+            android:layout_marginTop="5.0dip">
+
+            <Button
+                android:id="@+id/btn_call_mode"
+                android:layout_width="100.0dip"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="60.0dip"
+                android:background="@drawable/selector_btn"
+                android:text="调用模式"
+                android:textColor="@color/text_color"
+                android:textSize="14.0dip" />
+
+            <Button
+                android:id="@+id/btn_save_mode"
+                android:layout_width="100.0dip"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="60.0dip"
+                android:background="@drawable/selector_btn"
+                android:text="保存模式"
+                android:textColor="@color/text_color"
+                android:textSize="14.0dip" />
+        </RelativeLayout>
+    </LinearLayout>
+    //上传/保存
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="35.0dip">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/border_title"
+            android:gravity="center"
+            android:text="上传/保存 "
+            android:textColor="@color/text_color"
+            android:textSize="16.0dip" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:orientation="vertical">//上传/保存 按键
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="30.0dip"
+            android:layout_marginTop="5.0dip">
+
+            <TextView
+                android:layout_width="60.0dip"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="文件名 : "
+                android:textColor="@color/text_color"
+                android:textSize="14.0dip" />
+
+            <EditText
+                android:id="@+id/edittxt_file_name"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ"
+                android:gravity="center"
+                android:inputType="phone"
+                android:textColor="@color/text_color"
+                android:textSize="14.0dip" />
+
+            <Button
+                android:id="@+id/btn_save_file"
+                android:layout_width="120.0dip"
+                android:layout_height="fill_parent"
+                android:background="@drawable/selector_btn"
+                android:text="保存模式至手机"
+                android:textColor="@color/text_color"
+                android:textSize="14.0dip" />
+        </LinearLayout>
+        //本地模式列表
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
+
+            <ListView
+                android:id="@+id/listview_file"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="3.0dip" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

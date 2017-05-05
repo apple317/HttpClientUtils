@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class=".MainDelayBinding">
+
+        <variable
+            name="delay"
+            type="com.base.apple.demo.delay.viewmodel.DelayViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/carsystem_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:id="@+id/carpic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="60.0dip"
+                    android:layout_marginTop="30.0dip"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/car_topview_full" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/car_circle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="130.0dip"
+                        android:layout_marginTop="130.0dip"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/car_circle" />
+                </LinearLayout>
+            </FrameLayout>
+            //LF
+
+            <LinearLayout
+                android:id="@+id/layout_track_lf"
+                android:layout_width="90.0dip"
+                android:layout_height="140.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="80.0dip"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btn_lf_ms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayLfMs}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:id="@+id/btn_lf_mm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayLfMM}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:layout_width="45dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="10.0dip"
+                        android:background="@drawable/selector_btn_mute"
+                        android:enabled="false"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/line_normal" />
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+            //RF
+
+            <LinearLayout
+                android:id="@+id/layout_track_rf"
+                android:layout_width="90.0dip"
+                android:layout_height="140.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="80.0dip"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="right"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btn_rf_ms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayRfMs}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:id="@+id/btn_rf_mm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayRfMM}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:layout_width="45dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left|bottom"
+                        android:layout_marginBottom="10.0dip"
+                        android:background="@drawable/selector_btn_mute"
+                        android:enabled="false"
+                        android:rotationY="180.0"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/line_normal"
+                        android:rotationY="180.0" />
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+            //LB
+
+            <LinearLayout
+                android:id="@+id/layout_track_lb"
+                android:layout_width="90.0dip"
+                android:layout_height="140.0dip"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="50.0dip"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:layout_width="45dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="right"
+                        android:layout_marginBottom="10.0dip"
+                        android:background="@drawable/selector_btn_mute"
+                        android:enabled="false"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/line_normal"
+                        android:rotationX="180.0" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btn_lb_ms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayLbMs}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:id="@+id/btn_lb_mm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayLbMM}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+            //RB
+
+            <LinearLayout
+                android:id="@+id/layout_track_rb"
+                android:layout_width="90.0dip"
+                android:layout_height="140.0dip"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="50.0dip"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:layout_width="45dp"
+                        android:layout_height="60dp"
+                        android:layout_marginBottom="10.0dip"
+                        android:background="@drawable/selector_btn_mute"
+                        android:editable="false"
+                        android:rotationY="180.0"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/line_normal"
+                        android:rotationX="180.0"
+                        android:rotationY="180.0" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="right"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btn_rb_ms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayRbMs}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:id="@+id/btn_rb_mm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayRbMM}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+            //MF
+
+            <LinearLayout
+                android:id="@+id/layout_track_mf"
+                android:layout_width="70.0dip"
+                android:layout_height="110.0dip"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5.0dip"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btn_up_ms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayUpMs}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:id="@+id/btn_up_mm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayUpMM}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/line_v_normal"
+                      />
+
+                    <ToggleButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:layout_marginLeft="5.0dip"
+                        android:layout_marginRight="5.0dip"
+                        android:background="@drawable/selector_btn_mute_v"
+                        android:enabled="false"
+                        android:textOff=""
+                        android:textOn="" />
+
+
+                </FrameLayout>
+
+
+            </LinearLayout>
+            //MB
+
+            <LinearLayout
+                android:id="@+id/layout_track_mb"
+                android:layout_width="70.0dip"
+                android:layout_height="110.0dip"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5.0dip"
+                android:orientation="vertical">
+
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <ToggleButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="5.0dip"
+                        android:layout_marginRight="5.0dip"
+                        android:background="@drawable/selector_btn_mute_v"
+                        android:enabled="false"
+                        android:rotationX="180.0"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <ImageView
+                        android:id="@+id/line_frame"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginTop="45dp"
+                        android:background="@drawable/line_v_normal"
+                        android:rotationX="180.0" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btn_down_ms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayDownMs}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+
+                    <TextView
+                        android:id="@+id/btn_down_mm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayDownMM}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:background="@color/color_setup_section"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/layout_track_bottom"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="90.0dip"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/tv_parm_title"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/color_title_background"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btn_parm_sub"
+                            android:layout_width="55.0dip"
+                            android:layout_height="fill_parent"
+                            android:background="@drawable/selector_btn"
+                            android:onClick="@{delay.onDelayParamSub}"
+                            android:text="-"
+                            android:textColor="@color/text_color"
+                            android:textSize="22.0dip" />
+
+                        <TextView
+                            android:id="@+id/tv_parm"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
+                            android:textColor="@color/text_color"
+                            android:textSize="18.0dip" />
+
+                        <Button
+                            android:id="@+id/btn_parm_add"
+                            android:layout_width="55.0dip"
+                            android:layout_height="fill_parent"
+                            android:background="@drawable/selector_btn"
+                            android:onClick="@{delay.onDelayParamAdd}"
+                            android:text="+"
+                            android:textColor="@color/text_color"
+                            android:textSize="22.0dip" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
