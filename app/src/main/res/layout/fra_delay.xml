@@ -28,25 +28,21 @@
                     android:id="@+id/carpic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="60.0dip"
                     android:layout_marginTop="30.0dip"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/car_topview_full" />
+                    android:src="@mipmap/car_topview_full" />
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center">
+                <ImageView
+                    android:id="@+id/car_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:src="@mipmap/car_circle" />
 
-                    <ImageView
-                        android:id="@+id/car_circle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="130.0dip"
-                        android:layout_marginTop="130.0dip"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/car_circle" />
-                </LinearLayout>
+
             </FrameLayout>
             //LF
 
@@ -57,7 +53,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="80.0dip"
+                android:layout_marginTop="40.0dip"
                 android:orientation="vertical">
 
 
@@ -66,6 +62,20 @@
                     android:layout_height="55dp"
                     android:layout_gravity="left"
                     android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/btn_lf_mm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayLfMM}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/btn_lf_ms"
@@ -79,17 +89,6 @@
                         android:textColor="@color/text_color"
                         android:textSize="14.0sp" />
 
-                    <TextView
-                        android:id="@+id/btn_lf_mm"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1.0"
-                        android:background="@drawable/selector_btn"
-                        android:gravity="center"
-                        android:onClick="@{delay.onDelayLfMM}"
-                        android:text=""
-                        android:textColor="@color/text_color"
-                        android:textSize="14.0sp" />
                 </LinearLayout>
 
 
@@ -129,7 +128,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="80.0dip"
+                android:layout_marginTop="40.0dip"
                 android:orientation="vertical">
 
 
@@ -139,17 +138,6 @@
                     android:layout_gravity="right"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/btn_rf_ms"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1.0"
-                        android:background="@drawable/selector_btn"
-                        android:gravity="center"
-                        android:onClick="@{delay.onDelayRfMs}"
-                        android:text=""
-                        android:textColor="@color/text_color"
-                        android:textSize="14.0sp" />
 
                     <TextView
                         android:id="@+id/btn_rf_mm"
@@ -159,6 +147,19 @@
                         android:background="@drawable/selector_btn"
                         android:gravity="center"
                         android:onClick="@{delay.onDelayRfMM}"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0sp"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/btn_rf_ms"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:onClick="@{delay.onDelayRfMs}"
                         android:text=""
                         android:textColor="@color/text_color"
                         android:textSize="14.0sp" />
@@ -217,7 +218,7 @@
                         android:layout_width="45dp"
                         android:layout_height="60dp"
                         android:layout_gravity="right"
-                        android:layout_marginBottom="10.0dip"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/selector_btn_mute"
                         android:enabled="false"
                         android:textOff=""
@@ -262,7 +263,8 @@
                         android:onClick="@{delay.onDelayLbMM}"
                         android:text=""
                         android:textColor="@color/text_color"
-                        android:textSize="14.0sp" />
+                        android:textSize="14.0sp"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -287,7 +289,7 @@
                     <ToggleButton
                         android:layout_width="45dp"
                         android:layout_height="60dp"
-                        android:layout_marginBottom="10.0dip"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/selector_btn_mute"
                         android:editable="false"
                         android:rotationY="180.0"
@@ -334,7 +336,8 @@
                         android:onClick="@{delay.onDelayRbMM}"
                         android:text=""
                         android:textColor="@color/text_color"
-                        android:textSize="14.0sp" />
+                        android:textSize="14.0sp"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -347,7 +350,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5.0dip"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
                 <LinearLayout
@@ -392,8 +396,7 @@
                         android:layout_width="14dp"
                         android:layout_height="12dp"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/line_v_normal"
-                      />
+                        android:background="@drawable/line_v_normal" />
 
                     <ToggleButton
                         android:layout_width="fill_parent"
@@ -420,7 +423,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5.0dip"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
                 <FrameLayout

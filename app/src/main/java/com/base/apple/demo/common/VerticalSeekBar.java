@@ -9,152 +9,187 @@ import android.view.ViewConfiguration;
 import android.view.ViewParent;
 import android.widget.SeekBar;
 
+
 @SuppressLint("AppCompatCustomView")
-public class VerticalSeekBar extends SeekBar
-{
-  private boolean isInScrollingContainer = false;
-  private boolean mIsDragging;
-  private int mScaledTouchSlop;
-  private float mTouchDownY;
-  float mTouchProgressOffset;
+public class VerticalSeekBar extends SeekBar {
+    private boolean mIsDragging;
+    private float mTouchDownY;
+    private int mScaledTouchSlop;
+    private boolean isInScrollingContainer = false;
 
-  public VerticalSeekBar(Context paramContext)
-  {
-    super(paramContext);
-  }
-
-  public VerticalSeekBar(Context paramContext, AttributeSet paramAttributeSet)
-  {
-    super(paramContext, paramAttributeSet);
-  }
-
-  public VerticalSeekBar(Context paramContext, AttributeSet paramAttributeSet, int paramInt)
-  {
-    super(paramContext, paramAttributeSet, paramInt);
-    this.mScaledTouchSlop = ViewConfiguration.get(paramContext).getScaledTouchSlop();
-  }
-
-  private void attemptClaimDrag()
-  {
-    ViewParent localViewParent = getParent();
-    if (localViewParent != null)
-      localViewParent.requestDisallowInterceptTouchEvent(true);
-  }
-
-  private void trackTouchEvent(MotionEvent paramMotionEvent)
-  {
-    int i = getHeight();
-    int j = getPaddingTop();
-    int k = getPaddingBottom();
-    int m = i - j - k;
-    int n = (int)paramMotionEvent.getY();
-    float f2 = 0.0F;
-    float f1= 0.0F;
-    if (n > i - k)
-      f1 = 0.0F;
-    while (true)
-    {
-      setProgress((int)(f2 + getMax() * f1));
-      if (n < j)
-      {
-        f1 = 1.0F;
-      }
-      else
-      {
-        f1 = (m - n + j) / m;
-        f2 = this.mTouchProgressOffset;
-      }
+    public boolean isInScrollingContainer() {
+        return isInScrollingContainer;
     }
-  }
 
-  public boolean isInScrollingContainer()
-  {
-    return this.isInScrollingContainer;
-  }
+    public void setInScrollingContainer(boolean isInScrollingContainer) {
+        this.isInScrollingContainer = isInScrollingContainer;
+    }
 
-  protected void onDraw(Canvas paramCanvas)
-  {
-      paramCanvas.rotate(-90.0F);
-      paramCanvas.translate(-getHeight(), 0.0F);
-      super.onDraw(paramCanvas);
-      return;
-  }
+    /**
+     * On touch, this offset plus the scaled value from the position of the
+     * touch will form the progress value. Usually 0.
+     */
+    float mTouchProgressOffset;
 
-  protected void onMeasure(int paramInt1, int paramInt2)
-  {
-      super.onMeasure(paramInt2, paramInt1);
-      setMeasuredDimension(getMeasuredHeight(), getMeasuredWidth());
-      return;
-  }
+    public VerticalSeekBar(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        mScaledTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+    }
 
-  protected void onSizeChanged(int paramInt1, int paramInt2, int paramInt3, int paramInt4)
-  {
-    super.onSizeChanged(paramInt2, paramInt1, paramInt4, paramInt3);
-  }
+    public VerticalSeekBar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-  void onStartTrackingTouch()
-  {
-    this.mIsDragging = true;
-  }
+    public VerticalSeekBar(Context context) {
+        super(context);
+    }
 
-  void onStopTrackingTouch()
-  {
-    this.mIsDragging = false;
-  }
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 
-  public boolean onTouchEvent(MotionEvent paramMotionEvent) {
-    if (!isEnabled())
-      return false;
-    switch (paramMotionEvent.getAction()) {
-      case MotionEvent.ACTION_DOWN:
+        super.onSizeChanged(h, w, oldh, oldw);
 
-        if (isInScrollingContainer()) {
-          this.mTouchDownY = paramMotionEvent.getY();
+    }
+
+    @Override
+    protected synchronized void onMeasure(int widthMeasureSpec,
+                                          int heightMeasureSpec) {
+        super.onMeasure(heightMeasureSpec, widthMeasureSpec);
+        setMeasuredDimension(getMeasuredHeight(), getMeasuredWidth());
+    }
+
+    @Override
+    protected synchronized void onDraw(Canvas canvas) {
+        canvas.rotate(-90);
+        canvas.translate(-getHeight(), 0);
+        super.onDraw(canvas);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled()) {
+            return false;
+        }
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (isInScrollingContainer()) {
+
+                    mTouchDownY = event.getY();
+                } else {
+                    setPressed(true);
+
+                    invalidate();
+                    onStartTrackingTouch();
+                    trackTouchEvent(event);
+                    attemptClaimDrag();
+
+                    onSizeChanged(getWidth(), getHeight(), 0, 0);
+                }
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                if (mIsDragging) {
+                    trackTouchEvent(event);
+
+                } else {
+                    final float y = event.getY();
+                    if (Math.abs(y - mTouchDownY) > mScaledTouchSlop) {
+                        setPressed(true);
+
+                        invalidate();
+                        onStartTrackingTouch();
+                        trackTouchEvent(event);
+                        attemptClaimDrag();
+
+                    }
+                }
+                onSizeChanged(getWidth(), getHeight(), 0, 0);
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if (mIsDragging) {
+                    trackTouchEvent(event);
+                    onStopTrackingTouch();
+                    setPressed(false);
+
+                } else {
+                    // Touch up when we never crossed the touch slop threshold
+                    // should
+                    // be interpreted as a tap-seek to that location.
+                    onStartTrackingTouch();
+                    trackTouchEvent(event);
+                    onStopTrackingTouch();
+
+                }
+                onSizeChanged(getWidth(), getHeight(), 0, 0);
+                // ProgressBar doesn't know to repaint the thumb drawable
+                // in its inactive state when the touch stops (because the
+                // value has not apparently changed)
+                invalidate();
+                break;
+        }
+        return true;
+
+    }
+
+    private void trackTouchEvent(MotionEvent event) {
+        final int height = getHeight();
+        final int top = getPaddingTop();
+        final int bottom = getPaddingBottom();
+        final int available = height - top - bottom;
+
+        int y = (int) event.getY();
+
+        float scale;
+        float progress = 0;
+
+        // 下面是最小值
+        if (y > height - bottom) {
+            scale = 0.0f;
+        } else if (y < top) {
+            scale = 1.0f;
         } else {
-          setPressed(true);
-          invalidate();
-          onStartTrackingTouch();
-          trackTouchEvent(paramMotionEvent);
-          attemptClaimDrag();
-          onSizeChanged(getWidth(), getHeight(), 0, 0);
+            scale = (float) (available - y + top) / (float) available;
+            progress = mTouchProgressOffset;
         }
-        return true;
-      case MotionEvent.ACTION_HOVER_MOVE:
-        if (this.mIsDragging)
-          trackTouchEvent(paramMotionEvent);
-        onSizeChanged(getWidth(), getHeight(), 0, 0);
-        if (Math.abs(paramMotionEvent.getY() - this.mTouchDownY) > this.mScaledTouchSlop) {
-          setPressed(true);
-          invalidate();
-          onStartTrackingTouch();
-          trackTouchEvent(paramMotionEvent);
-          attemptClaimDrag();
-        }
-        return true;
-      case MotionEvent.ACTION_POINTER_UP:
-        if (this.mIsDragging) {
-          trackTouchEvent(paramMotionEvent);
-          onStopTrackingTouch();
-          setPressed(false);
-        }
-        onSizeChanged(getWidth(), getHeight(), 0, 0);
-        invalidate();
-        onStartTrackingTouch();
-        trackTouchEvent(paramMotionEvent);
-        onStopTrackingTouch();
-        return true;
+
+        final int max = getMax();
+        progress += scale * max;
+
+        setProgress((int) progress);
+
     }
-    return false;
-  }
 
-  public void setInScrollingContainer(boolean paramBoolean)
-  {
-    this.isInScrollingContainer = paramBoolean;
-  }
+    /**
+     * This is called when the user has started touching this widget.
+     */
+    void onStartTrackingTouch() {
+        mIsDragging = true;
+    }
 
-  public void setProgress(int paramInt)
-  {
-      super.setProgress(paramInt);
-      onSizeChanged(getWidth(), getHeight(), 0, 0);
-  }
+    /**
+     * This is called when the user either releases his touch or the touch is
+     * canceled.
+     */
+    void onStopTrackingTouch() {
+        mIsDragging = false;
+    }
+
+    private void attemptClaimDrag() {
+        ViewParent p = getParent();
+        if (p != null) {
+            p.requestDisallowInterceptTouchEvent(true);
+        }
+    }
+
+    @Override
+    public synchronized void setProgress(int progress) {
+
+        super.setProgress(progress);
+        onSizeChanged(getWidth(), getHeight(), 0, 0);
+
+    }
+
+
 }

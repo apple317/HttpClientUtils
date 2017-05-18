@@ -31,7 +31,8 @@
                     android:layout_marginBottom="60.0dip"
                     android:layout_marginTop="30.0dip"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/car_topview_full" />
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/car_topview_full" />
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -56,7 +57,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="40dp"
                 android:orientation="vertical">
 
 
@@ -130,7 +131,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="80.0dp"
+                android:layout_marginTop="40.0dp"
                 android:orientation="vertical">
 
 
@@ -220,7 +221,7 @@
                         android:layout_width="45dp"
                         android:layout_height="60dp"
                         android:layout_gravity="right"
-                        android:layout_marginBottom="10.0dip"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/selector_btn_mute"
                         android:enabled="false"
                         android:textOff=""
@@ -292,9 +293,9 @@
                     <ToggleButton
                         android:layout_width="45dp"
                         android:layout_height="60dp"
-                        android:layout_marginBottom="10.0dip"
                         android:background="@drawable/selector_btn_mute"
                         android:editable="false"
+                        android:layout_marginTop="10dp"
                         android:rotationY="180.0"
                         android:textOff=""
                         android:textOn="" />
@@ -354,6 +355,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5.0dip"
+                android:visibility="gone"
                 android:orientation="vertical">
 
 
@@ -428,6 +430,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5.0dip"
+                android:visibility="gone"
                 android:orientation="vertical">
 
 
@@ -538,7 +541,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5.0dip"
                         android:layout_marginRight="5.0dip"
-                        android:max="60"
+                        android:max="80"
                         android:progress="0"
                         android:progressDrawable="@drawable/seekbar_style"
                         android:thumb="@drawable/selector_seekbar_fader_h" />

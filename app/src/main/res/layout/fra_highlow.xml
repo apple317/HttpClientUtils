@@ -1,37 +1,478 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class=".HighlowBinding">
+
+        <variable
+            name="highlow"
+            type="com.base.apple.demo.highlow.viewmodel.HighlowViewModel" />
+
+
+    </data>
 
     <LinearLayout
-        android:id="@+id/layout_segment_group"
-        android:layout_width="fill_parent"
-        android:layout_height="40.0dip"
-        android:layout_marginBottom="2.0dip"
-        android:layout_marginTop="2.0dip" />
-    //水平分割线
-
-    <include layout="@layout/separator_h" />
-
-    <LinearLayout
-        android:id="@+id/layout_track_filter"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="4.0" />
-    //水平分割线
+        android:orientation="vertical">
 
-    <include layout="@layout/separator_h" />
+        <LinearLayout
+            android:id="@+id/layout_segment_group"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginBottom="2.0dip"
+            android:layout_marginTop="2.0dip"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/layout_combin_setup"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="5.0" />
+            <TextView
+                android:id="@+id/tv_front_left"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/selector_segment_background"
+                android:gravity="center"
+                android:text="前左"
+                android:onClick="@{highlow.highlowFrontLeft}"
+                android:textColor="@color/selector_segment_text_color"
+                android:textSize="14.0dip" />
 
-    <LinearLayout
-        android:id="@id/layout_track_bottom"
-        android:layout_width="fill_parent"
-        android:layout_height="50.0dip"
-        android:background="@color/color_setup_section" />
-</LinearLayout>
+            <TextView
+                android:id="@+id/tv_front_right"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/selector_segment_background"
+                android:gravity="center"
+                android:text="前右"
+                android:onClick="@{highlow.highlowFrontRight}"
+                android:textColor="@color/selector_segment_text_color"
+                android:textSize="14.0dip" />
+
+            <TextView
+                android:id="@+id/tv_after_left"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/selector_segment_background"
+                android:gravity="center"
+                android:text="后左"
+                android:onClick="@{highlow.highlowAfterLeft}"
+                android:textColor="@color/selector_segment_text_color"
+                android:textSize="14.0dip" />
+
+            <TextView
+                android:id="@+id/tv_after_right"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/selector_segment_background"
+                android:gravity="center"
+                android:text="后右"
+                android:onClick="@{highlow.highlowAfterRight}"
+                android:textColor="@color/selector_segment_text_color"
+                android:textSize="14.0dip" />
+        </LinearLayout>
+        //水平分割线
+
+        <include layout="@layout/separator_h" />
+
+        <LinearLayout
+            android:id="@+id/layout_track_filter"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+
+                //低通滤波器
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="fill_parent">
+
+                        <ImageView
+                            android:id="@+id/view_filter_l_selected"
+                            style="@style/title_selector_v" />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
+                            android:text="@string/spin_filter_title_l"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <TextView
+                                android:id="@+id/btn_filter_l_freq"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:onClick="@{highlow.LowpassFrq}"
+                                android:gravity="center"
+                                android:background="@drawable/selector_btn"
+                                android:textColor="@color/text_color"
+                                android:textSize="14.0dip" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <Button
+                                android:id="@+id/btn_filter_l_type"
+                                style="@style/spin_btn_style"
+                                android:layout_width="fill_parent"
+                                android:onClick="@{highlow.LowpsssType}"
+                                android:layout_height="fill_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <Button
+                                android:id="@+id/btn_filter_l_rate"
+                                style="@style/spin_btn_style"
+                                android:layout_width="fill_parent"
+                                android:onClick="@{highlow.LowpsssSlope}"
+                                android:layout_height="fill_parent" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                //高通滤波器
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="fill_parent">
+
+                        <ImageView
+                            android:id="@+id/view_filter_h_selected"
+                            style="@style/title_selector_v" />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
+                            android:text="@string/spin_filter_title_h"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <TextView
+                                android:id="@+id/btn_filter_h_freq"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:onClick="@{highlow.HighlowFrq}"
+                                android:gravity="center"
+                                android:background="@drawable/selector_btn"
+                                android:textColor="@color/text_color"
+                                android:textSize="14.0dip" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <Button
+                                android:id="@+id/btn_filter_h_type"
+                                style="@style/spin_btn_style"
+                                android:layout_width="fill_parent"
+                                android:onClick="@{highlow.HighlowType}"
+                                android:layout_height="fill_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <Button
+                                android:id="@+id/btn_filter_h_rate"
+                                style="@style/spin_btn_style"
+                                android:layout_width="fill_parent"
+                                android:onClick="@{highlow.HighlowSlope}"
+                                android:layout_height="fill_parent" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                //限幅器
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="fill_parent">
+
+                        <ImageView
+                            android:id="@+id/view_limiter_selected"
+                            style="@style/title_selector_v" />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
+                            android:text="@string/spin_limiter_releasetime_title"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <TextView
+                                android:id="@+id/btn_limiter_range"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:onClick="@{highlow.ClippingLevelFrq}"
+                                android:background="@drawable/selector_btn"
+                                android:gravity="center"
+                                android:textColor="@color/text_color"
+                                android:textSize="14.0dip" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <TextView
+                                android:id="@+id/btn_limiter_replytime"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:gravity="center"
+                                android:onClick="@{highlow.ClippingResponseTime}"
+                                android:background="@drawable/selector_btn"
+                                android:textColor="@color/text_color"
+                                android:textSize="14.0dip" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="36.0dip"
+                            android:layout_weight="1.0">
+
+                            <TextView
+                                android:id="@+id/btn_limiter_releasetime"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:gravity="center"
+                                android:onClick="@{highlow.ClippingCloseTime}"
+                                android:background="@drawable/selector_btn"
+                                android:textColor="@color/text_color"
+                                android:textSize="14.0dip" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        //水平分割线
+
+        <include layout="@layout/separator_h" />
+
+        <LinearLayout
+            android:id="@+id/layout_combin_setup"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="5.0"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="35.0dip">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="联调设置 "
+                    android:textColor="@color/text_color"
+                    android:textSize="16.0dip" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50.0dip"
+                android:gravity="center_vertical">
+
+                <CheckBox
+                    android:id="@+id/checkbox_front"
+                    style="@style/CustomCheckboxTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="41dp"
+                    android:text="前声场联调"
+                    android:onClick="@{highlow.beforeSoundSetting}"
+                    android:textColor="@color/text_color"
+                    android:textSize="15.0dip"
+                    android:layout_alignBaseline="@+id/checkbox_back"
+                    android:layout_alignBottom="@+id/checkbox_back"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="41dp" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_back"
+                    style="@style/CustomCheckboxTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40.0dip"
+                    android:text="后声场联调"
+                    android:onClick="@{highlow.afterSoundSetting}"
+                    android:textColor="@color/text_color"
+                    android:textSize="15.0dip" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50.0dip"
+                android:gravity="center_vertical">
+
+                <CheckBox
+                    android:id="@+id/checkbox_mid"
+                    style="@style/CustomCheckboxTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="40.0dip"
+                    android:text="全车联调"
+                    android:onClick="@{highlow.fullcourtSetting}"
+                    android:textColor="@color/text_color"
+                    android:textSize="15.0dip" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:background="@color/color_setup_section"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/layout_track_bottom"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="90.0dip"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/tv_parm_title"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/color_title_background"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btn_parm_sub"
+                            android:layout_width="55.0dip"
+                            android:layout_height="fill_parent"
+                            android:onClick="@{highlow.highlowBottomSub}"
+                            android:background="@drawable/selector_btn"
+                            android:text="-"
+                            android:textColor="@color/text_color"
+                            android:textSize="22.0dip" />
+
+                        <TextView
+                            android:id="@+id/tv_parm"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
+                            android:textColor="@color/text_color"
+                            android:textSize="18.0dip" />
+
+                        <Button
+                            android:id="@+id/btn_parm_add"
+                            android:layout_width="55.0dip"
+                            android:layout_height="fill_parent"
+                            android:onClick="@{highlow.highlowBottomAdd}"
+                            android:background="@drawable/selector_btn"
+                            android:text="+"
+                            android:textColor="@color/text_color"
+                            android:textSize="22.0dip" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

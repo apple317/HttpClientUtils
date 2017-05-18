@@ -15,6 +15,8 @@ import com.base.apple.demo.BR;
 import com.base.apple.demo.MainSoundBinding;
 import com.base.apple.demo.R;
 
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 
 
@@ -28,24 +30,24 @@ public class SoundViewModel extends ViewModel {
     MainSoundBinding delayBinding;
 
 
-    int lbDb=60,lfDb=60,rbDb=60,rfDb=60,downDb=60,UpDb=60;
 
 
     /**
      * 1-6
-     * 1:中置，顶中心
-     * 2:前左边 前左增益
-     * 3:后左边 后左增益
-     * 4:前右边 前右增益
-     * 5:后右边 后右增益
+     * 1:前左边 前左增益
+     * 2:后左边 后左增益
+     * 3:前右边 前右增益
+     * 4:后右边 后右增益
+     * 5:中置，顶中心
      * 6:底下中心 重低音增益
      */
-    int type=0;
+    int type=-1;
+
+    private ArrayList<Integer> delayList;
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = act.getLayoutInflater().inflate(R.layout.fra_sound, null);
-        ButterKnife.bind(view);
         delayBinding = DataBindingUtil.bind(view);
         initData(savedInstanceState);
         return view;
@@ -55,6 +57,11 @@ public class SoundViewModel extends ViewModel {
     @Override
     public void initData(Bundle bundle) {
         delayBinding.setVariable(BR.delay, this);
+        delayList=new ArrayList<Integer>();
+        delayList.add(0);
+        delayList.add(0);
+        delayList.add(0);
+        delayList.add(0);
         initLintener();
     }
 
@@ -64,25 +71,20 @@ public class SoundViewModel extends ViewModel {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 switch (type){
                     case 1:
-                        UpDb=progress;
+                        delayBinding.btnLfMm.setText(progress==0?"关闭":(progress+"db"));
                         break;
                     case 2:
-                        lfDb=progress;
+                        delayBinding.btnLbMm.setText(progress==0?"关闭":(progress+"db"));
                         break;
                     case 3:
-                        lbDb=progress;
+                        delayBinding.btnRfMm.setText(progress==0?"关闭":(progress+"db"));
                         break;
                     case 4:
-                        rfDb=progress;
-                        break;
-                    case 5:
-                        rbDb=progress;
-                        break;
-                    case 6:
-                        downDb=progress;
+                        delayBinding.btnRbMm.setText(progress==0?"关闭":(progress+"db"));
                         break;
                 }
-                delayBinding.tvGainValue.setText(progress==60?"关闭":(-progress+"db"));
+                delayList.set(type-1,progress);
+                delayBinding.tvGainValue.setText(progress==0?"关闭":(progress+"db"));
             }
 
             @Override
@@ -141,7 +143,7 @@ public class SoundViewModel extends ViewModel {
         type=6;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("重低音延时");
-        delayBinding.tvGainValue.setText(downDb==60?"关闭":(downDb+"db"));
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
     }
 
 
@@ -152,8 +154,8 @@ public class SoundViewModel extends ViewModel {
         type=6;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("重低音延时");
-        delayBinding.tvGainValue.setText(downDb==60?"关闭":(downDb+"db"));
-        delayBinding.seekbarGain.setProgress(downDb);
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
+        delayBinding.seekbarGain.setProgress(delayList.get(type-1));
     }
 
 
@@ -161,10 +163,10 @@ public class SoundViewModel extends ViewModel {
      * 延迟down－ms按下操作
      */
     public void onDelayRbMs(View view) {
-        type=5;
+        type=4;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("后右增益");
-        delayBinding.tvGainValue.setText(rbDb==60?"关闭":(rbDb+"db"));
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
     }
 
 
@@ -172,11 +174,11 @@ public class SoundViewModel extends ViewModel {
      * 延迟down－mm按下操作
      */
     public void onDelayRbMM(View view) {
-        type=5;
+        type=4;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("后右增益");
-        delayBinding.tvGainValue.setText(rbDb==60?"关闭":(rbDb+"db"));
-        delayBinding.seekbarGain.setProgress(rbDb);
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
+        delayBinding.seekbarGain.setProgress(delayList.get(type-1));
     }
 
 
@@ -186,10 +188,10 @@ public class SoundViewModel extends ViewModel {
      * 左下角控制－ms按下操作
      */
     public void onDelayLbMs(View view) {
-        type=3;
+        type=2;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("后左增益");
-        delayBinding.tvGainValue.setText(lbDb==60?"关闭":(rbDb+"db"));
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
     }
 
 
@@ -197,11 +199,11 @@ public class SoundViewModel extends ViewModel {
      * 左下角控制－mm按下操作
      */
     public void onDelayLbMM(View view) {
-        type=3;
+        type=2;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("后左增益");
-        delayBinding.tvGainValue.setText(lbDb==60?"关闭":(rbDb+"db"));
-        delayBinding.seekbarGain.setProgress(lbDb);
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
+        delayBinding.seekbarGain.setProgress(delayList.get(type-1));
     }
 
 
@@ -211,10 +213,10 @@ public class SoundViewModel extends ViewModel {
      * 前左边－ms按下操作
      */
     public void onDelayLfMs(View view) {
-        type=2;
+        type=1;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("前左增益");
-        delayBinding.tvGainValue.setText(lfDb==60?"关闭":(lfDb+"db"));
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
     }
 
 
@@ -222,11 +224,11 @@ public class SoundViewModel extends ViewModel {
      * 前左边－－mm按下操作
      */
     public void onDelayLfMM(View view) {
-        type=2;
+        type=1;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("前左增益");
-        delayBinding.tvGainValue.setText(lfDb==60?"关闭":(lfDb+"db"));
-        delayBinding.seekbarGain.setProgress(lfDb);
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
+        delayBinding.seekbarGain.setProgress(delayList.get(type-1));
     }
 
 
@@ -234,10 +236,10 @@ public class SoundViewModel extends ViewModel {
      * 前左边－ms按下操作
      */
     public void onDelayRfMs(View view) {
-        type=4;
+        type=3;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("前右增益");
-        delayBinding.tvGainValue.setText(rfDb==60?"关闭":(rfDb+"db"));
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
     }
 
 
@@ -245,11 +247,11 @@ public class SoundViewModel extends ViewModel {
      * 前左边－－mm按下操作
      */
     public void onDelayRfMM(View view) {
-        type=4;
+        type=3;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("前右增益");
-        delayBinding.tvGainValue.setText(rfDb==60?"关闭":(rfDb+"db"));
-        delayBinding.seekbarGain.setProgress(rfDb);
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
+        delayBinding.seekbarGain.setProgress(delayList.get(type-1));
 
     }
 
@@ -258,10 +260,10 @@ public class SoundViewModel extends ViewModel {
      * 延迟down－ms按下操作
      */
     public void onDelayUpMs(View view) {
-        type=1;
+        type=5;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("中置延迟");
-        delayBinding.tvGainValue.setText(UpDb==60?"关闭":(UpDb+"db"));
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
     }
 
 
@@ -269,11 +271,11 @@ public class SoundViewModel extends ViewModel {
      * 延迟down－mm按下操作
      */
     public void onDelayUpMM(View view) {
-        type=1;
+        type=5;
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         delayBinding.tvParmTitle.setText("中置延迟");
-        delayBinding.tvGainValue.setText(UpDb==60?"关闭":(UpDb+"db"));
-        delayBinding.seekbarGain.setProgress(UpDb);
+        delayBinding.tvGainValue.setText(delayList.get(type-1)==0?"关闭":(delayList.get(type-1)+"db"));
+        delayBinding.seekbarGain.setProgress(delayList.get(type-1));
     }
 
 

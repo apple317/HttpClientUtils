@@ -1,198 +1,552 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/layout_segment_group"
-        android:layout_width="fill_parent"
-        android:layout_height="40.0dip"
-        android:layout_marginBottom="2.0dip"
-        android:layout_marginTop="2.0dip" />
-    //水平分割线
+    <data class=".MainEqBinding">
 
-    <include layout="@layout/separator_h" />
+        <variable
+            name="highlow"
+            type="com.base.apple.demo.eq.viewmodel.EqViewModel" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1.0">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_segment_group"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginBottom="2.0dip"
+            android:layout_marginTop="2.0dip"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_front_left"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/selector_segment_background"
+                android:gravity="center"
+                android:onClick="@{highlow.highlowFrontLeft}"
+                android:text="前左"
+                android:textColor="@color/selector_segment_text_color"
+                android:textSize="14.0dip" />
+
+            <TextView
+                android:id="@+id/tv_front_right"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/selector_segment_background"
+                android:gravity="center"
+                android:onClick="@{highlow.highlowFrontRight}"
+                android:text="前右"
+                android:textColor="@color/selector_segment_text_color"
+                android:textSize="14.0dip" />
+
+            <TextView
+                android:id="@+id/tv_after_left"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/selector_segment_background"
+                android:gravity="center"
+                android:onClick="@{highlow.highlowAfterLeft}"
+                android:text="后左"
+                android:textColor="@color/selector_segment_text_color"
+                android:textSize="14.0dip" />
+
+            <TextView
+                android:id="@+id/tv_after_right"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/selector_segment_background"
+                android:gravity="center"
+                android:onClick="@{highlow.highlowAfterRight}"
+                android:text="后右"
+                android:textColor="@color/selector_segment_text_color"
+                android:textSize="14.0dip" />
+        </LinearLayout>
+        //水平分割线
+
+        <include layout="@layout/separator_h" />
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
 
             <LinearLayout
-                android:id="@+id/layout_track_seekbar_1"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
-
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_2"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
-
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_3"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
-
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_4"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
-
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_5"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.0" />
+                android:layout_height="fill_parent">
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_6"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                <LinearLayout
+                    android:id="@+id/layout_track_seekbar_1"
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_7"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <TextView
+                        android:id="@+id/tv_ch_gain1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="28dp"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_8"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <com.base.apple.demo.common.VerticalSeekBar
+                        android:id="@+id/track_seekbar1"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.0"
+                        android:max="400"
+                        android:progress="200"
+                        android:progressDrawable="@drawable/seekbar_style"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/selector_seekbar_fader_v"
+                        app:seekBarRotation="CW270" />
+                    //水平分割线
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_9"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.0" />
+                    <include layout="@layout/separator_h" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_10"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_11"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <Button
+                        android:id="@+id/btn_ch_freq1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:onClick="@{highlow.hzBottomSetting}"
+                        android:tag="1"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_12"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <Button
+                        android:id="@+id/btn_ch_q1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.eqBottomSetting}"
+                        android:tag="1"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_13"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.0" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_14"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_15"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                <LinearLayout
+                    android:id="@+id/layout_track_seekbar_2"
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_16"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <TextView
+                        android:id="@+id/tv_ch_gain2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="28dp"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_17"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.0" />
+                    <com.base.apple.demo.common.VerticalSeekBar
+                        android:id="@+id/track_seekbar2"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.0"
+                        android:max="400"
+                        android:progress="200"
+                        android:progressDrawable="@drawable/seekbar_style"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/selector_seekbar_fader_v"
+                        app:seekBarRotation="CW270" />
+                    //水平分割线
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_18"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <include layout="@layout/separator_h" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_19"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_20"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <Button
+                        android:id="@+id/btn_ch_freq2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:onClick="@{highlow.hzBottomSetting}"
+                        android:tag="2"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_21"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.0" />
+                    <Button
+                        android:id="@+id/btn_ch_q2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.eqBottomSetting}"
+                        android:tag="2"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_22"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_23"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                <LinearLayout
+                    android:id="@+id/layout_track_seekbar_3"
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_24"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <TextView
+                        android:id="@+id/tv_ch_gain3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="28dp"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_25"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <com.base.apple.demo.common.VerticalSeekBar
+                        android:id="@+id/track_seekbar3"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.0"
+                        android:max="400"
+                        android:progress="200"
+                        android:progressDrawable="@drawable/seekbar_style"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/selector_seekbar_fader_v"
+                        app:seekBarRotation="CW270" />
+                    //水平分割线
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_26"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.0" />
+                    <include layout="@layout/separator_h" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_27"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_28"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <Button
+                        android:id="@+id/btn_ch_freq3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.hzBottomSetting}"
+                        android:tag="3"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_29"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                    <Button
+                        android:id="@+id/btn_ch_q3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.eqBottomSetting}"
+                        android:tag="3"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_30"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1.0" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_track_seekbar_31"
-                android:layout_width="0.0dip"
-                android:layout_height="fill_parent" />
+                <LinearLayout
+                    android:id="@+id/layout_track_seekbar_4"
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_ch_gain4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="28dp"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                    <com.base.apple.demo.common.VerticalSeekBar
+                        android:id="@+id/track_seekbar4"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.0"
+                        android:max="400"
+                        android:progress="200"
+                        android:progressDrawable="@drawable/seekbar_style"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/selector_seekbar_fader_v"
+                        app:seekBarRotation="CW270" />
+                    //水平分割线
+
+                    <include layout="@layout/separator_h" />
+
+
+                    <Button
+                        android:id="@+id/btn_ch_freq4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.hzBottomSetting}"
+                        android:tag="4"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                    <Button
+                        android:id="@+id/btn_ch_q4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.eqBottomSetting}"
+                        android:tag="4"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_track_seekbar_5"
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_ch_gain5"
+                        android:layout_width="fill_parent"
+                        android:layout_height="28dp"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                    <com.base.apple.demo.common.VerticalSeekBar
+                        android:id="@+id/track_seekbar5"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.0"
+                        android:max="400"
+                        android:progress="200"
+                        android:progressDrawable="@drawable/seekbar_style"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/selector_seekbar_fader_v"
+                        app:seekBarRotation="CW270" />
+                    //水平分割线
+
+                    <include layout="@layout/separator_h" />
+
+
+                    <Button
+                        android:id="@+id/btn_ch_freq5"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.hzBottomSetting}"
+                        android:tag="5"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                    <Button
+                        android:id="@+id/btn_ch_q5"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.eqBottomSetting}"
+                        android:tag="5"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_track_seekbar_6"
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_ch_gain6"
+                        android:layout_width="fill_parent"
+                        android:layout_height="28dp"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                    <com.base.apple.demo.common.VerticalSeekBar
+                        android:id="@+id/track_seekbar6"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.0"
+                        android:max="400"
+                        android:progress="200"
+                        android:progressDrawable="@drawable/seekbar_style"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/selector_seekbar_fader_v" />
+                    //水平分割线
+
+                    <include layout="@layout/separator_h" />
+
+
+                    <Button
+                        android:id="@+id/btn_ch_freq6"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.hzBottomSetting}"
+                        android:tag="6"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                    <Button
+                        android:id="@+id/btn_ch_q6"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.eqBottomSetting}"
+                        android:tag="6"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_track_seekbar_7"
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tv_ch_gain7"
+                        android:layout_width="fill_parent"
+                        android:layout_height="28dp"
+                        android:background="@drawable/selector_btn"
+                        android:gravity="center"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                    <com.base.apple.demo.common.VerticalSeekBar
+                        android:id="@+id/track_seekbar7"
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.0"
+                        android:max="400"
+                        android:progress="200"
+                        android:progressDrawable="@drawable/seekbar_style"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/selector_seekbar_fader_v" />
+                    //水平分割线
+
+                    <include layout="@layout/separator_h" />
+
+
+                    <Button
+                        android:id="@+id/btn_ch_freq7"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.hzBottomSetting}"
+                        android:tag="7"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+                    <Button
+                        android:id="@+id/btn_ch_q7"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30.0dip"
+                        android:onClick="@{highlow.eqBottomSetting}"
+                        android:tag="7"
+                        android:background="@drawable/selector_btn"
+                        android:textColor="@color/text_color"
+                        android:textSize="13.0dip" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
+        //水平分割线
+
+        <include layout="@layout/separator_h" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:background="@color/color_setup_section"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_track_bottom"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="90.0dip"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/tv_parm_title"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/color_title_background"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/text_color"
+                        android:textSize="14.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btn_parm_sub"
+                            android:layout_width="55.0dip"
+                            android:layout_height="fill_parent"
+                            android:onClick="@{highlow.highlowBottomSub}"
+                            android:background="@drawable/selector_btn"
+                            android:text="-"
+                            android:textColor="@color/text_color"
+                            android:textSize="22.0dip" />
+
+                        <TextView
+                            android:id="@+id/tv_parm"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
+                            android:textColor="@color/text_color"
+                            android:textSize="18.0dip" />
+
+                        <Button
+                            android:id="@+id/btn_parm_add"
+                            android:layout_width="55.0dip"
+                            android:layout_height="fill_parent"
+                            android:onClick="@{highlow.highlowBottomAdd}"
+                            android:background="@drawable/selector_btn"
+                            android:text="+"
+                            android:textColor="@color/text_color"
+                            android:textSize="22.0dip" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
-    //水平分割线
-
-    <include layout="@layout/separator_h" />
-
-    <LinearLayout
-        android:id="@+id/layout_track_bottom"
-        android:layout_width="fill_parent"
-        android:layout_height="50.0dip"
-        android:background="@color/color_setup_section" />
-</LinearLayout>
+</layout>
