@@ -82,32 +82,32 @@ public class EqViewModel extends ViewModel implements SeekBar.OnSeekBarChangeLis
         switch (seekBar.getId()){
             case R.id.track_seekbar1:
                 setEq.set(7*(type-1)+0,progress);
-                delayBinding.tvChGain1.setText(String.format("%ddB",(setEq.get(7*(type-1)+0)-200)/10));
+                delayBinding.tvChGain1.setText(String.format("%fdB",(setEq.get(7*(type-1)+0)-200)/10.0));
                 break;
             case R.id.track_seekbar2:
                 setEq.set(7*(type-1)+1,progress);
-                delayBinding.tvChGain2.setText(String.format("%ddB",(setEq.get(7*(type-1)+1)-200)/10));
+                delayBinding.tvChGain2.setText(String.format("%fdB",(setEq.get(7*(type-1)+1)-200)/10.0));
                 break;
             case R.id.track_seekbar3:
                 setEq.set(7*(type-1)+2,progress);
-                delayBinding.tvChGain3.setText(String.format("%ddB",(setEq.get(7*(type-1)+2)-200)/10));
+                delayBinding.tvChGain3.setText(String.format("%fdB",(setEq.get(7*(type-1)+2)-200)/10.0));
                 break;
             case R.id.track_seekbar4:
                 setEq.set(7*(type-1)+3,progress);
-                delayBinding.tvChGain4.setText(String.format("%ddB",(setEq.get(7*(type-1)+3)-200)/10));
+                delayBinding.tvChGain4.setText(String.format("%fdB",(setEq.get(7*(type-1)+3)-200)/10.0));
                 break;
             case R.id.track_seekbar5:
                 setEq.set(7*(type-1)+4,progress);
-                delayBinding.tvChGain5.setText(String.format("%ddB",(setEq.get(7*(type-1)+4)-200)/10));
+                delayBinding.tvChGain5.setText(String.format("%fdB",(setEq.get(7*(type-1)+4)-200)/10.0));
                 break;
             case R.id.track_seekbar6:
                 setEq.set(7*(type-1)+5,progress);
-                delayBinding.tvChGain6.setText(String.format("%ddB",(setEq.get(7*(type-1)+5)-200)/10));
+                delayBinding.tvChGain6.setText(String.format("%fdB",(setEq.get(7*(type-1)+5)-200)/10.0));
 
                 break;
             case R.id.track_seekbar7:
                 setEq.set(7*(type-1)+6,progress);
-                delayBinding.tvChGain7.setText(String.format("%ddB",(setEq.get(7*(type-1)+6)-200)/10));
+                delayBinding.tvChGain7.setText(String.format("%fdB",(setEq.get(7*(type-1)+6)-200)/10.0));
                 break;
         }
     }
@@ -315,7 +315,6 @@ public class EqViewModel extends ViewModel implements SeekBar.OnSeekBarChangeLis
             case "2":
                 double value1=setQl.get(index);
                 value1=value1>=15?15:add(value1,0.1);
-                Log.e("HU","=========value1=="+value1);
                 setQl.set(index,value1);
                 delayBinding.tvParm.setText(value1+"");
                 switch (view.getTag().toString()){
