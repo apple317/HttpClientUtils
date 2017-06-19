@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.base.apple.demo.main.view.MainActivity;
 import com.base.apple.demo.sound.viewmodel.SoundViewModel;
 
 
@@ -21,7 +22,7 @@ public class SoundFragement extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        soundViewModel=new SoundViewModel(getActivity());
+        soundViewModel=new SoundViewModel((MainActivity)getActivity());
     }
 
     @Nullable

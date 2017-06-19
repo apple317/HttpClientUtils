@@ -6,15 +6,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 
 import com.apple.common.ViewModel;
 import com.apple.http.common.BaseHttpClient;
 import com.base.apple.demo.BR;
 import com.base.apple.demo.HighlowBinding;
 import com.base.apple.demo.R;
+import com.base.apple.demo.main.view.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +44,7 @@ public class HighlowViewModel extends ViewModel {
      * 5:中置，顶中心
      * 6:底下中心 重低音增益
      */
-    int type=1;
+    int type=0;
 
 
     ArrayList<Integer>  LowFrequency;
@@ -190,9 +195,9 @@ public class HighlowViewModel extends ViewModel {
     }
 
 
-    Activity act;
+    MainActivity act;
 
-    public HighlowViewModel(Activity activity) {
+    public HighlowViewModel(MainActivity activity) {
         this.act = activity;
     }
 
@@ -214,31 +219,31 @@ public class HighlowViewModel extends ViewModel {
         delayBinding.tvAfterLeft.setSelected(false);
         delayBinding.tvAfterRight.setSelected(false);
         switch (type){
-            case 1:
+            case 0://前左
                 delayBinding.tvFrontLeft.setSelected(true);
                 break;
-            case 2:
+            case 2://后左
                 delayBinding.tvAfterLeft.setSelected(true);
                 break;
-            case 3:
+            case 1://前右
                 delayBinding.tvFrontRight.setSelected(true);
                 break;
-            case 4:
+            case 3://后右
                 delayBinding.tvAfterRight.setSelected(true);
                 break;
         }
 
-        delayBinding.btnFilterLFreq.setText(String.format("%dHz",intPin(LowFrequency.get(type-1))));
-        delayBinding.btnFilterLType.setText(filterType.get(LowType.get(type-1))+"");
-        delayBinding.btnFilterLRate.setText(slope.get(LowRate.get(type-1))+"");
+        delayBinding.btnFilterLFreq.setText(String.format("%dHz",intPin(act.mainViewModel.CHhcut.get(type))));
+        delayBinding.btnFilterLType.setText(filterType.get(act.mainViewModel.CHhcuttype.get(type))+"");
+        delayBinding.btnFilterLRate.setText(slope.get(act.mainViewModel.CHHcutsope.get(type))+"");
 
-        delayBinding.btnFilterHFreq.setText(String.format("%dHz",intPin(HighFreguency.get(type-1))));
-        delayBinding.btnFilterHType.setText(filterType.get(HighType.get(type-1))+"");
-        delayBinding.btnFilterHRate.setText(slope.get(HighRate.get(type-1))+"");
+        delayBinding.btnFilterHFreq.setText(String.format("%dHz",intPin(act.mainViewModel.CHLcut.get(type))));
+        delayBinding.btnFilterHType.setText(filterType.get(act.mainViewModel.CHhcuttype.get(type))+"");
+        delayBinding.btnFilterHRate.setText(slope.get(act.mainViewModel.CHLcutsope.get(type))+"");
 
-        delayBinding.btnLimiterRange.setText(String.format("%ddB",ClippingLevel.get(type-1)-30));
-        delayBinding.btnLimiterReplytime.setText(String.format("%dms",ClippingResponseTime.get(type-1)));
-        delayBinding.btnLimiterReleasetime.setText(String.format("%dms",ClippingReleaseTime.get(type-1)));
+        delayBinding.btnLimiterRange.setText(String.format("%ddB",ClippingLevel.get(type)-30));
+        delayBinding.btnLimiterReplytime.setText(String.format("%dms",ClippingResponseTime.get(type)));
+        delayBinding.btnLimiterReleasetime.setText(String.format("%dms",ClippingReleaseTime.get(type)));
 
     }
 
@@ -252,7 +257,7 @@ public class HighlowViewModel extends ViewModel {
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         bottomType=1;
         delayBinding.tvParmTitle.setText("低通频率设置");
-        delayBinding.tvParm.setText(String.format("%dHz",intPin(LowFrequency.get(type-1))));
+        delayBinding.tvParm.setText(String.format("%dHz",intPin(act.mainViewModel.CHhcut.get(type))));
     }
 
     /**
@@ -262,7 +267,7 @@ public class HighlowViewModel extends ViewModel {
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
         bottomType=2;
         delayBinding.tvParmTitle.setText("高通频率设置");
-        delayBinding.tvParm.setText(String.format("%dHz",intPin(HighFreguency.get(type-1))));
+        delayBinding.tvParm.setText(String.format("%dHz",intPin(act.mainViewModel.CHLcut.get(type))));
     }
 
 
@@ -290,26 +295,26 @@ public class HighlowViewModel extends ViewModel {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                HighType.set(type-1,which);
-                delayBinding.btnFilterHType.setText(filterType.get(HighType.get(type-1))+"");
-                int afterType=setAfter.get(0);
-                int beforeType=setBefore.get(0);
-                int fullType=setFull.get(0);
-                if(fullType==4){
-                    if(afterType!=2){
-                        HighType.set(1,which);
-                        HighType.set(3,which);
-                    }
-                    if(beforeType!=2){
-                        HighType.set(0,which);
-                        HighType.set(2,which);
-                    }
-                }else{
-                    for(int i=0;i<4;i++){
-                        HighType.set(i,which);
-                    }
-                }
-                updateView();
+                act.mainViewModel.CHLcuttype.set(type,which);
+                delayBinding.btnFilterHType.setText(filterType.get(act.mainViewModel.CHLcuttype.get(type))+"");
+//                int afterType=setAfter.get(0);
+//                int beforeType=setBefore.get(0);
+//                int fullType=setFull.get(0);
+//                if(fullType==4){
+//                    if(afterType!=2){
+//                        HighType.set(1,which);
+//                        HighType.set(3,which);
+//                    }
+//                    if(beforeType!=2){
+//                        HighType.set(0,which);
+//                        HighType.set(2,which);
+//                    }
+//                }else{
+//                    for(int i=0;i<4;i++){
+//                        HighType.set(i,which);
+//                    }
+//                }
+                //updateView();
             }
         });
         builder.show();
@@ -327,26 +332,26 @@ public class HighlowViewModel extends ViewModel {
         builder.setItems(filterType.toArray(new String[filterType.size()]), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                LowType.set(type-1,which);
-                delayBinding.btnFilterLType.setText(filterType.get(LowType.get(type-1))+"");
-                int afterType=setAfter.get(0);
-                int beforeType=setBefore.get(0);
-                int fullType=setFull.get(0);
-                if(fullType==4){
-                    if(afterType!=2){
-                        LowType.set(1,which);
-                        LowType.set(3,which);
-                    }
-                    if(beforeType!=2){
-                        LowType.set(0,which);
-                        LowType.set(2,which);
-                    }
-                }else{
-                    for(int i=0;i<4;i++){
-                        LowType.set(i,which);
-                    }
-                }
-                updateView();
+                act.mainViewModel.CHhcuttype.set(type,which);
+                delayBinding.btnFilterLType.setText(filterType.get(act.mainViewModel.CHhcuttype.get(type))+"");
+//                int afterType=setAfter.get(0);
+//                int beforeType=setBefore.get(0);
+//                int fullType=setFull.get(0);
+//                if(fullType==4){
+//                    if(afterType!=2){
+//                        LowType.set(1,which);
+//                        LowType.set(3,which);
+//                    }
+//                    if(beforeType!=2){
+//                        LowType.set(0,which);
+//                        LowType.set(2,which);
+//                    }
+//                }else{
+//                    for(int i=0;i<4;i++){
+//                        LowType.set(i,which);
+//                    }
+//                }
+               // updateView();
             }
         });
         builder.show();
@@ -433,6 +438,13 @@ public class HighlowViewModel extends ViewModel {
      *
      */
     public  void beforeSoundSetting(View view){
+        delayBinding.checkboxFront.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.e("HU","onCheckedChanged==ischecked="+isChecked);
+                delayBinding.checkboxFront.setChecked(setBefore.get(0)==2?false:true);
+            }
+        });
         AlertDialog.Builder builder = new AlertDialog.Builder(act);
         // builder.setTitle(_title);
         //    指定下拉列表的显示数据
@@ -481,6 +493,13 @@ public class HighlowViewModel extends ViewModel {
         //    指定下拉列表的显示数据
         //    设置一个下拉的列表选择项
         String[] fullVal={"后左","后右","取消"};
+        delayBinding.checkboxBack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.e("HU","onCheckedChanged==ischecked="+isChecked);
+                delayBinding.checkboxBack.setChecked(setBefore.get(0)==2?false:true);
+            }
+        });
         builder.setItems(fullVal, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -523,6 +542,13 @@ public class HighlowViewModel extends ViewModel {
         // builder.setTitle(_title);
         //    指定下拉列表的显示数据
         //    设置一个下拉的列表选择项
+        delayBinding.checkboxMid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.e("HU","onCheckedChanged==ischecked="+isChecked);
+                delayBinding.checkboxMid.setChecked(setBefore.get(0)==4?false:true);
+            }
+        });
         builder.setItems(fullVal, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -824,7 +850,7 @@ public class HighlowViewModel extends ViewModel {
      * 前左边
      */
     public  void highlowFrontLeft(View view){
-        type=1;
+        type=0;
         delayBinding.layoutTrackBottom.setVisibility(View.INVISIBLE);
         updateView();
     }
@@ -833,7 +859,7 @@ public class HighlowViewModel extends ViewModel {
      * 前右边
      */
     public  void highlowFrontRight(View view){
-        type=3;
+        type=1;
         delayBinding.layoutTrackBottom.setVisibility(View.INVISIBLE);
         updateView();
     }
@@ -852,7 +878,7 @@ public class HighlowViewModel extends ViewModel {
      */
     public  void highlowAfterRight(View view){
         delayBinding.layoutTrackBottom.setVisibility(View.INVISIBLE);
-        type=4;
+        type=3;
         updateView();
     }
 

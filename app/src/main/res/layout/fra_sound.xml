@@ -74,12 +74,13 @@
                         android:layout_weight="1.0"
                         android:background="@drawable/selector_btn"
                         android:gravity="center"
-                        android:onClick="@{delay.onDelayLfMs}"
-                        android:text=""
+                        android:onClick="@{delay.Lfphase}"
+                        android:text="正相"
                         android:textColor="@color/text_color"
-                        android:textOff="正相"
-                        android:textOn="反相"
                         android:textSize="14.0sp" />
+                        <!--android:textOff="正相"-->
+                        <!--android:textOn="反相"-->
+
 
                     <TextView
                         android:id="@+id/btn_lf_mm"
@@ -101,22 +102,25 @@
                     android:layout_weight="1.0"
                     android:orientation="vertical">
 
-                    <ToggleButton
-                        android:layout_width="45dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="bottom|right"
-                        android:layout_marginBottom="10.0dip"
-                        android:background="@drawable/selector_btn_mute"
-                        android:enabled="false"
-                        android:textOff=""
-                        android:textOn="" />
-
                     <ImageView
                         android:layout_width="10dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/line_normal" />
+
+                    <ToggleButton
+                        android:id="@+id/ch1mutebtn"
+                        android:layout_width="45dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="10.0dip"
+                        android:background="@drawable/selector_btn_mute"
+                        android:textOff=""
+                        android:textOn=""
+                        android:enabled="true"
+
+               />
                 </FrameLayout>
 
 
@@ -148,7 +152,7 @@
                         android:layout_weight="1.0"
                         android:background="@drawable/selector_btn"
                         android:gravity="center"
-                        android:onClick="@{delay.onDelayRfMs}"
+                        android:onClick="@{delay.Rfphase}"
                         android:text=""
                         android:textColor="@color/text_color"
                         android:textOff="正相"
@@ -176,12 +180,13 @@
                     android:orientation="vertical">
 
                     <ToggleButton
+                        android:id="@+id/ch2mutebtn"
                         android:layout_width="45dp"
                         android:layout_height="60dp"
                         android:layout_gravity="left|bottom"
                         android:layout_marginBottom="10.0dip"
                         android:background="@drawable/selector_btn_mute"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:rotationY="180.0"
                         android:textOff=""
                         android:textOn="" />
@@ -218,12 +223,13 @@
                     android:orientation="vertical">
 
                     <ToggleButton
+                        android:id="@+id/ch3mutebtn"
                         android:layout_width="45dp"
                         android:layout_height="60dp"
                         android:layout_gravity="right"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/selector_btn_mute"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:textOff=""
                         android:textOn="" />
 
@@ -251,7 +257,7 @@
                         android:layout_weight="1.0"
                         android:background="@drawable/selector_btn"
                         android:gravity="center"
-                        android:onClick="@{delay.onDelayLbMs}"
+                        android:onClick="@{delay.Lbphase}"
                         android:text=""
                         android:textColor="@color/text_color"
                         android:textOff="正相"
@@ -291,10 +297,11 @@
                     android:orientation="vertical">
 
                     <ToggleButton
+                        android:id="@+id/ch4mutebtn"
                         android:layout_width="45dp"
                         android:layout_height="60dp"
                         android:background="@drawable/selector_btn_mute"
-                        android:editable="false"
+                        android:editable="true"
                         android:layout_marginTop="10dp"
                         android:rotationY="180.0"
                         android:textOff=""
@@ -325,7 +332,7 @@
                         android:layout_weight="1.0"
                         android:background="@drawable/selector_btn"
                         android:gravity="center"
-                        android:onClick="@{delay.onDelayRbMs}"
+                        android:onClick="@{delay.Rbphase}"
                         android:text=""
                         android:textColor="@color/text_color"
                         android:textOff="正相"

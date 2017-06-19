@@ -48,15 +48,17 @@
         android:supportsRtl="true"
         android:name=".common.ZhiHuApp"
         android:theme="@style/AppTheme" >
-        <activity android:name=".main.view.MainActivity" >
+        <activity android:name=".main.view.MainActivity"
+            >
+
+        </activity>
+
+        <activity android:name=".main.view.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".main.view.SplashActivity" >
         </activity>
 
 

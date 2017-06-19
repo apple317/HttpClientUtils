@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.apple.demo.highlow.viewmodel.HighlowViewModel;
+import com.base.apple.demo.main.view.MainActivity;
 import com.base.apple.demo.sound.viewmodel.SoundViewModel;
 
 
@@ -23,7 +24,7 @@ public class HighlowFragement extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        highlowViewModel=new HighlowViewModel(getActivity());
+        highlowViewModel=new HighlowViewModel((MainActivity)getActivity());
     }
 
     @Nullable

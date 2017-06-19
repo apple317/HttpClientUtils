@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-
+import android.widget.Toast;
 /**
  * Created by apple_hsp on 17/5/18.
  */
 
 public class EchoServer extends Service {
-
+    private Toast toast;
 
     @Override
     public boolean onUnbind(Intent intent) {

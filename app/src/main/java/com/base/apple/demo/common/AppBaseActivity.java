@@ -29,7 +29,6 @@ public class AppBaseActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mBaseAct = this;
         super.onCreate(savedInstanceState);
 //        View view=initView(savedInstanceState);

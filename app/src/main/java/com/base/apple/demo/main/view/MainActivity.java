@@ -17,7 +17,7 @@ import com.base.apple.demo.server.EchoServer;
 public class MainActivity extends AppBaseActivity {
 
 
-    MainViewModel mainViewModel;
+   public MainViewModel mainViewModel;
     EchoServer echoServer;
     @Override
     public void initView(Bundle bundle) {

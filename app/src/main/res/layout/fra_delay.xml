@@ -225,6 +225,7 @@
                         android:textOn="" />
 
                     <ImageView
+                        android:id="@+id/imageView"
                         android:layout_width="10dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center_horizontal"
@@ -291,7 +292,7 @@
                         android:layout_height="60dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/selector_btn_mute"
-                        android:editable="false"
+                        android:enabled="false"
                         android:rotationY="180.0"
                         android:textOff=""
                         android:textOn="" />

@@ -11,10 +11,43 @@
         android:orientation="vertical">
 
 
-        <include
-            layout="@layout/lay_title_bar"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="45dp" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/color_setup_section"
+            >
+
+            <TextView
+                android:id="@+id/tv_titlebar"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="11111"
+                android:textColor="@color/text_color"
+                android:textSize="19.0dip" />
+            //垂直分割线
+
+            <include layout="@layout/separator_v" />
+
+            <LinearLayout
+                android:layout_width="45.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="3.0dip"
+                android:layout_marginRight="3.0dip">
+
+                <ToggleButton
+                    android:id="@+id/btn_dev_connect"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="3.0dip"
+                    android:background="@drawable/selector_btn_dev"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+        </LinearLayout>
 
 
         <android.support.v4.view.ViewPager

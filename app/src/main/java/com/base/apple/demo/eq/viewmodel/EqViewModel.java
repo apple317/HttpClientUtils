@@ -4,8 +4,11 @@ package com.base.apple.demo.eq.viewmodel;
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
@@ -66,6 +69,7 @@ public class EqViewModel extends ViewModel implements SeekBar.OnSeekBarChangeLis
      * 0.3-15 0.1
      */
     ArrayList<Double> setQl;
+    boolean isOnLongClick=false;
 
     public void initLintener(){
         delayBinding.trackSeekbar1.setOnSeekBarChangeListener(this);
@@ -82,32 +86,32 @@ public class EqViewModel extends ViewModel implements SeekBar.OnSeekBarChangeLis
         switch (seekBar.getId()){
             case R.id.track_seekbar1:
                 setEq.set(7*(type-1)+0,progress);
-                delayBinding.tvChGain1.setText(String.format("%fdB",(setEq.get(7*(type-1)+0)-200)/10.0));
+                delayBinding.tvChGain1.setText(String.format("%.1fdB",(setEq.get(7*(type-1)+0)-200)/10.0));
                 break;
             case R.id.track_seekbar2:
                 setEq.set(7*(type-1)+1,progress);
-                delayBinding.tvChGain2.setText(String.format("%fdB",(setEq.get(7*(type-1)+1)-200)/10.0));
+                delayBinding.tvChGain2.setText(String.format("%.1fdB",(setEq.get(7*(type-1)+1)-200)/10.0));
                 break;
             case R.id.track_seekbar3:
                 setEq.set(7*(type-1)+2,progress);
-                delayBinding.tvChGain3.setText(String.format("%fdB",(setEq.get(7*(type-1)+2)-200)/10.0));
+                delayBinding.tvChGain3.setText(String.format("%.1fdB",(setEq.get(7*(type-1)+2)-200)/10.0));
                 break;
             case R.id.track_seekbar4:
                 setEq.set(7*(type-1)+3,progress);
-                delayBinding.tvChGain4.setText(String.format("%fdB",(setEq.get(7*(type-1)+3)-200)/10.0));
+                delayBinding.tvChGain4.setText(String.format("%.1fdB",(setEq.get(7*(type-1)+3)-200)/10.0));
                 break;
             case R.id.track_seekbar5:
                 setEq.set(7*(type-1)+4,progress);
-                delayBinding.tvChGain5.setText(String.format("%fdB",(setEq.get(7*(type-1)+4)-200)/10.0));
+                delayBinding.tvChGain5.setText(String.format("%.1fdB",(setEq.get(7*(type-1)+4)-200)/10.0));
                 break;
             case R.id.track_seekbar6:
                 setEq.set(7*(type-1)+5,progress);
-                delayBinding.tvChGain6.setText(String.format("%fdB",(setEq.get(7*(type-1)+5)-200)/10.0));
+                delayBinding.tvChGain6.setText(String.format("%.1fdB",(setEq.get(7*(type-1)+5)-200)/10.0));
 
                 break;
             case R.id.track_seekbar7:
                 setEq.set(7*(type-1)+6,progress);
-                delayBinding.tvChGain7.setText(String.format("%fdB",(setEq.get(7*(type-1)+6)-200)/10.0));
+                delayBinding.tvChGain7.setText(String.format("%.1fdB",(setEq.get(7*(type-1)+6)-200)/10.0));
                 break;
         }
     }
@@ -144,7 +148,69 @@ public class EqViewModel extends ViewModel implements SeekBar.OnSeekBarChangeLis
         delayBinding.layoutTrackBottom.setVisibility(View.INVISIBLE);
         updateView();
         initLintener();
+        delayBinding.btnParmAdd.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    isOnLongClick = true;
+                    myHandler.postDelayed(addRunable,300);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    isOnLongClick = false;
+                    myHandler.removeCallbacks(addRunable);
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    isOnLongClick = true;
+                }
+                return false;
+            }
+        });
+
+        delayBinding.btnParmSub.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    isOnLongClick = true;
+                    myHandler.postDelayed(subRunable,300);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    isOnLongClick = false;
+                    myHandler.removeCallbacks(subRunable);
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    isOnLongClick = true;
+                }
+                return false;
+            }
+        });
+
     }
+
+    Runnable addRunable=new Runnable(){
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            //要做的事情，这里再次调用此Runnable对象，以实现每两秒实现一次的定时器操作
+            if(isOnLongClick){
+                Message msg=new Message();
+                msg.what=1;
+                myHandler.sendMessage(msg);
+                myHandler.postDelayed(this, 300);
+            }
+        }
+
+    };
+
+    Runnable subRunable=new Runnable(){
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            //要做的事情，这里再次调用此Runnable对象，以实现每两秒实现一次的定时器操作
+            if(isOnLongClick){
+                Message msg=new Message();
+                msg.what=2;
+                myHandler.sendMessage(msg);
+                myHandler.postDelayed(this, 300);
+            }
+        }
+
+    };
 
 
     Activity act;
@@ -250,11 +316,11 @@ public class EqViewModel extends ViewModel implements SeekBar.OnSeekBarChangeLis
 
 
     /**
-     * eq设置
+     * Q设置
      */
     public  void eqBottomSetting(View view){
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
-        delayBinding.tvParmTitle.setText("CH"+view.getTag()+"频率设置");
+        delayBinding.tvParmTitle.setText("CH"+view.getTag()+"Q值");
         delayBinding.tvParmTitle.setTag(2);
         delayBinding.tvParm.setText(setQl.get(7*(type-1)+Integer.valueOf(view.getTag().toString())-1)+"");
         delayBinding.btnParmAdd.setTag(view.getTag());
@@ -269,12 +335,25 @@ public class EqViewModel extends ViewModel implements SeekBar.OnSeekBarChangeLis
      */
     public  void hzBottomSetting(View view){
         delayBinding.layoutTrackBottom.setVisibility(View.VISIBLE);
-        delayBinding.tvParmTitle.setText("CH"+view.getTag()+"Q值");
+        delayBinding.tvParmTitle.setText("CH"+view.getTag()+"频率");
         delayBinding.tvParmTitle.setTag(1);
         delayBinding.tvParm.setText(intPin(setHz.get(7*(type-1)+Integer.valueOf(view.getTag().toString())-1))+"");
         delayBinding.btnParmAdd.setTag(view.getTag());
         delayBinding.btnParmSub.setTag(view.getTag());
     }
+
+    Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    highlowBottomAdd(delayBinding.btnParmAdd);
+                    break;
+                case 2:
+                    highlowBottomSub(delayBinding.btnParmSub);
+                    break;
+            }
+        }
+    };
 
 
     /**
